@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import LogoContainer from "../../containers/CAuth/LogoContainer";
-import BodyContainer from "../../containers/CAuth/BodyContainer";
+import LogoContainer from "../../containers/Auth/LogoContainer";
+import BodyContainer from "../../containers/Auth/BodyContainer";
 
-function CreatorAuth() {
+function Auth() {
   return (
     <Section>
       <LogoContainer />
@@ -12,11 +12,11 @@ function CreatorAuth() {
   );
 }
 
-export default CreatorAuth;
+export default Auth;
 
 const Section = styled.div`
   /* border: 2px solid red; */
   flex-direction: column;
   height: 100vh;
-  background-color: #303030;
+  /* background-color: #303030; */
 `;

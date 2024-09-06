@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Userinfo from '../../../components/Auth/VAuth/Userinfo';
+import Userinfo from '../../components/Auth/Userinfo';
 function UseinfoContainer(props) {
     return (
         <BodySection>

@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import { FaGoogle } from 'react-icons/fa';
-import {requestLoginGoogleV} from "../../lib/request"
+import {requestLoginGoogle} from "../../lib/request"
 
-function googleloginV(props) {
+function googlelogin(props) {
 
   return (
     <Section>
-    <StyledButton onClick={()=>requestLoginGoogleV()}>
+    <StyledButton onClick={()=>requestLoginGoogle()}>
       <FaGoogle className="icon" size={30}/>
       Login With Google
     </StyledButton>
@@ -15,7 +15,7 @@ function googleloginV(props) {
   );
 }
 
-export default googleloginV;
+export default googlelogin;
 
 const Section = styled.div`
 
@@ -50,6 +50,7 @@ const StyledButton = styled.button`
   border-radius: 4px;
   outline: none;
   transition: background-color 0.3s ease;
+  width: 230px;
 
   .icon {
     margin-right: 8px;

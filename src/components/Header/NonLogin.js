@@ -12,10 +12,10 @@ export default function NonLogin() {
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
-        <Dropdown.Item href="/oauth/viewer">로그인</Dropdown.Item>
-        <Dropdown.Item href="/oauth/viewer">회원가입</Dropdown.Item>
+        <Dropdown.Item href="/oauth">로그인</Dropdown.Item>
+        <Dropdown.Item href="/oauth">회원가입</Dropdown.Item>
         <li><hr class="dropdown-divider"/></li>
-        <Dropdown.Item href="/oauth/creator">판매자 페이지</Dropdown.Item>
+        <Dropdown.Item href="/oauth">판매자 페이지</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
 

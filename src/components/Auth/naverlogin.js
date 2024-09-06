@@ -1,21 +1,21 @@
 import React from "react";
 import styled from "styled-components";
-import { FaGoogle } from 'react-icons/fa';
-import {requestLoginGoogleC} from "../../lib/request"
+import { SiNaver } from "react-icons/si";
+import {requestLoginNaver} from "../../lib/request"
 
-function googleloginC(props) {
+function naverlogin(props) {
 
   return (
     <Section>
-    <StyledButton onClick={()=>requestLoginGoogleC()}>
-      <FaGoogle className="icon" size={30}/>
-      Login With Google
+    <StyledButton onClick={()=>requestLoginNaver()}>
+      <SiNaver className="icon" size={30}/>
+      Login With Naver
     </StyledButton>
     </Section>
   );
 }
 
-export default googleloginC;
+export default naverlogin;
 
 const Section = styled.div`
 
@@ -38,8 +38,8 @@ const Section = styled.div`
     }
 `;
 const StyledButton = styled.button`
-  background-color: #3f85f4;
-  border: 1px solid #0f66f1;
+  background-color: #2EBD59;
+  border: 1px solid #249446;
   display: flex;
   align-items: center;
   padding: 10px 20px;
@@ -50,10 +50,11 @@ const StyledButton = styled.button`
   border-radius: 4px;
   outline: none;
   transition: background-color 0.3s ease;
+  width: 230px;
 
   .icon {
     margin-right: 8px;
-    border-right: 1px solid #0f66f1;
+    border-right: 1px solid #249446;
     padding-right: 8px;
     position: relative;
 
@@ -63,11 +64,11 @@ const StyledButton = styled.button`
       top: 0;
       right: 0;
       bottom: 0;
-      border-right: 1px solid #6fa4f7;
+      border-right: 1px solid #4bd374;
     }
   }
 
   &:hover {
-    background-color: #2776f3;
+    background-color: #29a84f;
   }
 `;

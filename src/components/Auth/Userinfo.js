@@ -6,7 +6,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import styled from "styled-components";
 import axios from "axios";
 import { useDaumPostcodePopup } from "react-daum-postcode";
-import onclickURLinfoV from "../../../lib/onclickURL/onclickURLinfoV";
+import {requestSignup} from "../../lib/request"
 
 function Userinfo(props) {
   const [userName, setUserName] = useState("");
@@ -245,11 +245,11 @@ function Userinfo(props) {
       </Form>
       <Nextbutton
         className="next"
-        onClick={() => onclickURLinfoV(userName, userPhone, Zonecode, FuAddress, ExAddress, DeAddress, recommender)}
+        onClick={() => requestSignup(userName, userPhone, Zonecode, FuAddress, ExAddress, DeAddress, recommender)}
         state={!userNameError && CertificationSuccess && AddressError}
         disabled={!(!userNameError && CertificationSuccess && AddressError)}
       >
-        확 인
+        회원 가입
       </Nextbutton>
     </Section>
   );

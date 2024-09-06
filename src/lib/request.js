@@ -38,11 +38,11 @@ export const requestChekLogin = async () => {
     }
   };
   
-  export const requestLoginGoogleV = async (data) => {
+  export const requestLoginNaver = async (data) => {
     // data = { email, password };
     try {
       const response = await axios.post(
-        `${process.env.VITE_SERVER_URL}/auth/loginGoogleV`,
+        `${process.env.VITE_SERVER_URL}/auth/logiNnaver`,
         data,
       );
       // console.log('로그인 성공:', response.data);
@@ -55,11 +55,11 @@ export const requestChekLogin = async () => {
       console.error('로그인 실패:', error);
     }
   };
-  export const requestLoginGoogleC = async (data) => {
+  export const requestLoginGoogle = async (data) => {
     // data = { email, password };
     try {
       const response = await axios.post(
-        `${process.env.VITE_SERVER_URL}/auth/loginGoogleC`,
+        `${process.env.VITE_SERVER_URL}/auth/loginGoogle`,
         data,
       );
       // console.log('로그인 성공:', response.data);
