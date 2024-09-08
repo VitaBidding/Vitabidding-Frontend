@@ -37,7 +37,7 @@ export const requestChekLogin = async () => {
       console.error('로그인 실패:', error);
     }
   };
-  
+  //소셜로그인 네이버
   export const requestLoginNaver = async (data) => {
     // data = { email, password };
     try {
@@ -55,6 +55,7 @@ export const requestChekLogin = async () => {
       console.error('로그인 실패:', error);
     }
   };
+  //소설로그인 구글
   export const requestLoginGoogle = async (data) => {
     // data = { email, password };
     try {
@@ -72,6 +73,7 @@ export const requestChekLogin = async () => {
       console.error('로그인 실패:', error);
     }
   };
+  
   export const requestLogout = async () => {
     const accessToken = localStorage.getItem('access_token');
     localStorage.removeItem('access_token');
@@ -122,3 +124,7 @@ export const requestUserProfile = async () => {
       console.error('유저 정보 조회 실패:', error);
     }
   };
+
+  //회원정보 갱신
+
+  //회원 탈퇴

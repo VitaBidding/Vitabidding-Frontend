@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { search } from "../../redux/features/search/searchSlice";
+import { search } from "../../redux/features/search/search.slice";
 function Searchbar(props) {
   const [searchField, setSearchField] = useState("");
   // console.log("🚀 ~ file: Searchbar.js:10 ~ Searchbar ~ searchField:", searchField);

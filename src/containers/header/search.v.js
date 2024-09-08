@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Searchbar from "../../components/Header/Searchbar";
+import Searchbar from "../../components/header/searchbar";
 function SearchV(props) {
   return (
     <SearchSection>

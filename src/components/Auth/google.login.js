@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { FaGoogle } from 'react-icons/fa';
 import {requestLoginGoogle} from "../../lib/request"
 
-function googlelogin(props) {
+function GoogleLogin(props) {
 
   return (
     <Section>
@@ -15,7 +15,7 @@ function googlelogin(props) {
   );
 }
 
-export default googlelogin;
+export default GoogleLogin;
 
 const Section = styled.div`
 

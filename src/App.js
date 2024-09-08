@@ -1,9 +1,9 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import Mainpage from "./pages/mainpage/Mainpage";
-import Auth from "./pages/authpage/Auth";
-import Termsagreed from "./pages/termspage/TermsAgreed"
-import Info from "./pages/infopage/Userinput"
+import Mainpage from "./pages/mainpage/mainpage";
+import Auth from "./pages/authpage/auth";
+import Termsagreed from "./pages/termspage/terms.agreed"
+import Info from "./pages/infopage/user.input"
 function App() {
   return (
     <Routes >

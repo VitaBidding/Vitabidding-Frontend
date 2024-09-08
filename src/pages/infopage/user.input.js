@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import UseinfoContainer from "../../containers/Auth/UseinfoContainer";
-import LogoContainer from "../../containers/Auth/LogoContainer";
+import UseinfoContainer from "../../containers/auth/user.info.container";
+import LogoContainer from "../../containers/auth/logo.container";
 
 function Userinput(props) {
 

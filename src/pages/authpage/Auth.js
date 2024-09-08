@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import LogoContainer from "../../containers/Auth/LogoContainer";
-import BodyContainer from "../../containers/Auth/BodyContainer";
+import LogoContainer from "../../containers/auth/logo.container";
+import BodyContainer from "../../containers/auth/body.container";
 
 function Auth() {
   return (

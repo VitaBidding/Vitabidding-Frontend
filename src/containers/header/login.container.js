@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { requestChekLogin } from '../../lib/request';
-import NonLogin from '../../components/Header/NonLogin';
+import NonLogin from '../../components/header/non.login';
 
 
 export default function LoginContainer() {

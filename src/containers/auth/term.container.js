@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import TermsV from '../../components/Auth/TermsV';
+import TermsV from '../../components/auth/terms.v';
 function TermContainer(props) {
     return (
         <BodySection>

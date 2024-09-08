@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Logo from '../../components/Auth/Logo';
+import Logo from '../../components/auth/logo';
 
 function LogoContainer(props) {
     return (

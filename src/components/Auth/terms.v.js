@@ -4,11 +4,11 @@ import { BiChevronRight } from "react-icons/bi";
 import axios from "axios";
 function TermsV(props) {
   function onclickURLTermsC1() {
-    window.open(`${process.env.REACT_APP_MAIN_CLIENT_URL}/terms/detail/creator/usegepolicy`);
+    window.open(`${process.env.REACT_APP_MAIN_CLIENT_URL}/terms/detail/usegepolicy`);
   }
   
   function onclickURLTermsC2() {
-    window.open(`${process.env.REACT_APP_MAIN_CLIENT_URL}/terms/detail/creator/personalInformation`);
+    window.open(`${process.env.REACT_APP_MAIN_CLIENT_URL}/terms/detail/personalInformation`);
   }
 
   function onclickURLAgreedC(checkItems) {

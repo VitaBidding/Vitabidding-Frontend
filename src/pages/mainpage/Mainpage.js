@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from "styled-components";
-import SearchV from "../../containers/Header/SearchV";
-import LogoContainer from "../../containers/Header/LogoContainer"
-import LoginContainer from '../../containers/Header/LoginContainer';
+import SearchV from "../../containers/header/search.v";
+import LogoContainer from "../../containers/header/logo.container"
+import LoginContainer from '../../containers/header/login.container';
 import "./bootstrapUnited.min.css"
 
 export default function Mainpage() {

@@ -65,11 +65,11 @@ const Section = styled.div`
 `;
 
 const UserIcon = styled(FaRegUserCircle)`
-  color: #e95420;
+  color: #efb73e;
   transition: color 0.3s ease; /* 색상 변화 시 부드럽게 전환 */
 
   &:hover {
-    background-color: #e95420;
+    background-color: #efb73e;
     color: white; /* 마우스를 올렸을 때 색상 변경 */
     border-radius: 50%; /* 아이콘을 동그랗게 만듭니다 */
   }

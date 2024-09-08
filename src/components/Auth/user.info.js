@@ -59,7 +59,7 @@ function Userinfo(props) {
   const time = useRef(VALIDTIME);
   const timerId = useRef(null);
   const reset = () => {
-    axios.post(`${process.env.REACT_APP_SERVER_URL}/sms/send`, { phoneNumber: userPhone }, { withCredentials: true });
+    axios.post(`${process.env.VITE_SERVER_URL}/sms/send`, { phoneNumber: userPhone }, { withCredentials: true });
     settimer(true);
     setCertificationDisabled(false);
     setTimeout(() => setCertificationDisabled(true), 179000);

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import Userinfo from '../../components/Auth/Userinfo';
-function UseinfoContainer(props) {
+import Userinfo from '../../components/auth/user.info';
+function UserinfoContainer(props) {
     return (
         <BodySection>
             <Userinfo/>
@@ -9,7 +9,7 @@ function UseinfoContainer(props) {
     );
 }
 
-export default UseinfoContainer;
+export default UserinfoContainer;
 
 const BodySection=styled.div`
     /* border: 1px solid red; */

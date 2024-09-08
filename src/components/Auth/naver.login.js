@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { SiNaver } from "react-icons/si";
 import {requestLoginNaver} from "../../lib/request"
 
-function naverlogin(props) {
+function NaverLogin(props) {
 
   return (
     <Section>
@@ -15,7 +15,7 @@ function naverlogin(props) {
   );
 }
 
-export default naverlogin;
+export default NaverLogin;
 
 const Section = styled.div`
 
