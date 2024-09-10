@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { BiChevronRight } from "react-icons/bi";
-import axios from "axios";
+import { onclickURLAgreedC } from "../../lib/request";
 function TermsC(props) {
   function onclickURLTermsC1() {
     window.open(`${process.env.REACT_APP_MAIN_CLIENT_URL}/terms/detail/creator/usegepolicy`);
@@ -11,32 +11,6 @@ function TermsC(props) {
     window.open(`${process.env.REACT_APP_MAIN_CLIENT_URL}/terms/detail/creator/personalInformation`);
   }
 
-  function onclickURLAgreedC(checkItems) {
-    //컬럼값 확인
-    const usage_policy = checkItems.includes("usage_policy");
-    const personal_information = checkItems.includes("personal_information");
-    axios
-      .post(
-        `${process.env.REACT_APP_SERVER_URL}/creator/agreement`,
-        {
-          usage_policy: usage_policy,
-          personal_information: personal_information,
-        },
-        { withCredentials: true }
-      )
-      .then((req) => {
-        // console.log("🚀 ~ file: onclickURLAgreedC.js:17 ~ .then ~ req", req);
-        if (req.data.code === 1005) {
-          window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}/info/creator`;
-        } else if (req.data.code === 3005) {
-          window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}`;
-        }
-      })
-      .catch((err) => {
-        // console.log("🚀 ~ file: onclickURLAgreedC.js:22 ~ onclickURLAgreedC ~ err", err);
-        window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}`;
-      });
-  }
   const data = [
     { id: 0, column: "usage_policy", click: onclickURLTermsC1, title: "이용약관 동의 (필수)" },
     { id: 1, column: "personal_information", click: onclickURLTermsC2, title: "개인정보 수집 및 이용 동의 (필수)" },

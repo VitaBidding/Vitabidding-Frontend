@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import whiteLogo from '../../assets/img/vitaBiddingLogoWhite.png'
 function Logo(props) {
     function onclickURLLogo() {
-        window.location.href = "https://localhost:3000";
+        window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}`;
       }
     return (
         <div>

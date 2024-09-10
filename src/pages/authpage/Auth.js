@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import LogoContainer from "../../containers/auth/logo.container";
 import BodyContainer from "../../containers/auth/body.container";
+import "../../assets/bootstrap/bootstrapUnited.min.css";
 
 function Auth() {
   return (

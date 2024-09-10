@@ -2,8 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import { FaRegUserCircle } from "react-icons/fa";
 import Dropdown from "react-bootstrap/Dropdown";
+import { requestLogout } from "../../lib/request";
 
-export default function NonLogin() {
+export default function LoginVIcon() {
+  function LogOut() {
+    requestLogout();
+    window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}`;
+  }
+
   return (
     <Section>
       <Dropdown>
@@ -14,12 +20,13 @@ export default function NonLogin() {
         </Dropdown.Toggle>
 
         <Dropdown.Menu>
-          <Dropdown.Item href="/oauth">로그인</Dropdown.Item>
-          <Dropdown.Item href="/oauth">회원가입</Dropdown.Item>
+          <Dropdown.Item href="/viewer/point">POINT</Dropdown.Item>
+          <Dropdown.Item href="/viewer/bidlist">낙찰물품</Dropdown.Item>
+          <Dropdown.Item href="/viewer/info">내 정보</Dropdown.Item>
           <li>
             <hr class="dropdown-divider" />
           </li>
-          <Dropdown.Item href="/oauth">판매자 페이지</Dropdown.Item>
+          <Dropdown.Item onClick={() => LogOut()}>로그아웃</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
     </Section>
@@ -63,12 +70,12 @@ const Section = styled.div`
 `;
 
 const UserIcon = styled(FaRegUserCircle)`
-  color: #efb73e;
   transition: color 0.3s ease; /* 색상 변화 시 부드럽게 전환 */
-
+  background-color: #efb73e;
+  color: white; /* 마우스를 올렸을 때 색상 변경 */
+  border-radius: 50%; /* 아이콘을 동그랗게 만듭니다 */
   &:hover {
-    background-color: #efb73e;
-    color: white; /* 마우스를 올렸을 때 색상 변경 */
-    border-radius: 50%; /* 아이콘을 동그랗게 만듭니다 */
+    color: #efb73e;
+    background-color: white;
   }
 `;

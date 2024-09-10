@@ -6,12 +6,11 @@ import InputGroup from "react-bootstrap/InputGroup";
 import styled from "styled-components";
 import axios from "axios";
 import { useDaumPostcodePopup } from "react-daum-postcode";
-import {requestSignup} from "../../lib/request"
-
+import {requestUserProfile} from "../../lib/request"
+import { EnterPhoneNumber,Certification } from "../../lib/request";
 function Userinfo(props) {
   const [userName, setUserName] = useState("");
   const [userNameError, setUserNameError] = useState(false);
-  // console.log("🚀 ~ file: Userinfo.js:14 ~ Userinfo ~ userNameError", userNameError)
   const [userPhone, setUserPhone] = useState("");
   const [userPhoneError, setUserPhoneError] = useState(true);
   const [CertificationNumber, setCertificationNumber] = useState("");
@@ -21,14 +20,11 @@ function Userinfo(props) {
   const [min, setMin] = useState(3);
   const [sec, setSec] = useState(0);
   const [CertificationSuccess, setCertificationSuccess] = useState(false);
-  // console.log("🚀 ~ file: Userinfo.js:23 ~ Userinfo ~ CertificationSuccess", CertificationSuccess)
   const [Zonecode, setZonecode] = useState("");
   const [FuAddress, setFuAddress] = useState("");
   const [ExAddress, setExAddress] = useState("");
   const [DeAddress, setDeAddress] = useState("");
   const [AddressError, setAddressError] = useState(false);
-  // console.log("🚀 ~ file: Userinfo.js:28 ~ Userinfo ~ AddressError", AddressError)
-  const [recommender, setrecommender] = useState("");
 
   const onChangeDeAddres = (e) => {
     setDeAddress(e.target.value);
@@ -58,8 +54,8 @@ function Userinfo(props) {
 
   const time = useRef(VALIDTIME);
   const timerId = useRef(null);
-  const reset = () => {
-    axios.post(`${process.env.VITE_SERVER_URL}/sms/send`, { phoneNumber: userPhone }, { withCredentials: true });
+  const PhoneNumberRequestButton = () => {
+    EnterPhoneNumber(userPhone)
     settimer(true);
     setCertificationDisabled(false);
     setTimeout(() => setCertificationDisabled(true), 179000);
@@ -87,22 +83,9 @@ function Userinfo(props) {
     }
   }, [sec]);
 
-  function Certification() {
-    axios
-      .post(
-        `${process.env.REACT_APP_SERVER_URL}/sms/verify`,
-        {
-          phoneNumber: userPhone,
-          verifyCode: CertificationNumber,
-        },
-        { withCredentials: true }
-      )
-      .then((req) => {
-        if (req.data.message === "본인인증 성공") {
-          setCertificationSuccess(true);
-        } else {
-        }
-      });
+  function CertificationBotton() {
+    const data= Certification(userPhone,CertificationNumber)
+    setCertificationSuccess(data)
   }
 
   const open = useDaumPostcodePopup("//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js");
@@ -133,13 +116,10 @@ function Userinfo(props) {
     });
   };
 
-  const onChangerecommender = (e) => {
-    setrecommender(e.target.value);
-  };
+
 
   return (
     <Section>
-      <div>&nbsp;</div>
       <Form className="form">
         <Form.Label className="Label">추가정보입력</Form.Label>
         <div>&nbsp;</div>
@@ -163,7 +143,7 @@ function Userinfo(props) {
               className="button"
               variant="outline-primary"
               disabled={userPhoneError || CertificationSuccess}
-              onClick={() => reset()}
+              onClick={() => PhoneNumberRequestButton()}
             >
               인증 요청
             </Button>
@@ -183,7 +163,7 @@ function Userinfo(props) {
             <Button
               variant="outline-info"
               disabled={userPhoneError || CertificationNumberError || CertificationDisabled || CertificationSuccess}
-              onClick={() => Certification()}
+              onClick={() => CertificationBotton()}
             >
               인증 확인
             </Button>
@@ -208,7 +188,7 @@ function Userinfo(props) {
               <Form.Control className="address" type="text" placeholder="우편번호" value={Zonecode} disabled={true} />
             </Col>
             <Col>
-              <Button className="address-button" variant="outline-light" onClick={handleClick}>
+              <Button className="address-button" variant="outline-secondary" onClick={handleClick}>
                 주소찾기
               </Button>
             </Col>
@@ -232,20 +212,11 @@ function Userinfo(props) {
         <Form.Label className="Label">
           <Form.Text className="text-muted">&nbsp;</Form.Text>
         </Form.Label>
-        <div>&nbsp;</div>
-        <Form.Group>
-          <Form.Control
-            className="address"
-            type="text"
-            placeholder="추천 크리에이터 입력"
-            value={recommender}
-            onChange={onChangerecommender}
-          />
-        </Form.Group>
+  
       </Form>
       <Nextbutton
         className="next"
-        onClick={() => requestSignup(userName, userPhone, Zonecode, FuAddress, ExAddress, DeAddress, recommender)}
+        onClick={() => requestUserProfile(userName, userPhone, Zonecode, FuAddress, ExAddress, DeAddress)}
         state={!userNameError && CertificationSuccess && AddressError}
         disabled={!(!userNameError && CertificationSuccess && AddressError)}
       >
@@ -260,7 +231,7 @@ const Timer = styled.div`
   float: right;
 `;
 const Section = styled.div`
-  width: 100vw;
+  width: 100%;
   /* border: 1px solid red; */
   display: flex;
   flex-direction: column;
@@ -272,7 +243,8 @@ const Section = styled.div`
     width: 600px;
     border-bottom: 2px solid lightgray;
     font-family: "NotoSansKR-Bold";
-    color: white;
+    color: gray;
+    font-weight:bold;
     font-size: 20px;
   }
   .timer {
@@ -300,7 +272,7 @@ const Nextbutton = styled.button`
   height: 50px;
   margin: 35px 0 0;
   color: ${(props) => (props.state ? "white" : "gray")};
-  background: ${(props) => (props.state ? "Blue" : "lightgrey")};
+  background: ${(props) => (props.state ? "#fd9800" : "lightgrey")};
   border-radius: 24px;
   font-family: "NotoSansKR-Bold";
   font-size: 25px;

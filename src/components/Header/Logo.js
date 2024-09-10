@@ -1,17 +1,17 @@
-import React from 'react'
-import Logopng from "../../assets/img/vitaBiddingLogo.png"
+import React from "react";
+import Logopng from "../../assets/img/vitaBiddingLogo.png";
 import styled from "styled-components";
 
 function onclickURLLogo() {
-    window.location.href = "https://localhost:3000";
-  }
+  window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}`;
+}
 
 export default function Logo() {
   return (
     <div>
       <Logoimg src={Logopng} alt="" onClick={onclickURLLogo} />
     </div>
-  )
+  );
 }
 
 const Logoimg = styled.img`
@@ -27,5 +27,4 @@ const Logoimg = styled.img`
     max-width: 180px;
     max-height: 180px;
   }
- 
 `;

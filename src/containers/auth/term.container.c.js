@@ -1,15 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
-import TermsV from '../../components/auth/terms.v';
-function TermContainer(props) {
+import TermsC from '../../components/auth/terms.c';
+function TermContainerC(props) {
     return (
         <BodySection>
-            <TermsV/>
+            <TermsC/>
         </BodySection>
     );
 }
 
-export default TermContainer;
+export default TermContainerC;
 
 const BodySection=styled.div`
     display: flex;

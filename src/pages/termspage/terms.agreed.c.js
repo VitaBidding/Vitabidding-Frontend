@@ -1,24 +1,20 @@
 import React from "react";
 import styled from "styled-components";
-import UseinfoContainer from "../../containers/auth/user.info.container";
+import TermContainer from "../../containers/auth/term.container.c";
 import LogoContainer from "../../containers/auth/logo.container";
-
-function Userinput(props) {
-
+function TermsAgreedC(props) {
   return (
     <Section>
       <LogoContainer />
-      <UseinfoContainer />
+      <TermContainer />
     </Section>
   );
 }
 
-export default Userinput;
+export default TermsAgreedC;
 
 const Section = styled.div`
   /* border: 2px solid red; */
-/* width: auto; */    
-  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;

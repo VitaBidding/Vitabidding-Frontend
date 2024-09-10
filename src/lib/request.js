@@ -1,130 +1,271 @@
-import axios from 'axios';
+import axios from "axios";
 
+//로그인체크
 export const requestChekLogin = async () => {
-    const accessToken = localStorage.getItem('access_token');
-    if (!accessToken) return null;
-    try {
-      const response = await axios.get(
-        `${process.env.VITE_SERVER_URL}/user/profile`,
-        {
-          headers: { Authorization: `Bearer ${accessToken}` },
-          // withCredentials: true,
-        },
-      );
-      // console.log(response.data);
-      return response;
-    } catch (error) {
-      console.error('유저 정보 조회 실패:', error);
-      if (accessToken) localStorage.removeItem('access_token');
-      return null;
-    }
-  };
-
-  export const requestLogin = async (data) => {
-    // data = { email, password };
-    try {
-      const response = await axios.post(
-        `${process.env.VITE_SERVER_URL}/auth/login`,
-        data,
-      );
-      // console.log('로그인 성공:', response.data);
-  
-      const { access_token } = response.data;
-      localStorage.setItem('access_token', access_token);
-  
-      return response;
-    } catch (error) {
-      console.error('로그인 실패:', error);
-    }
-  };
-  //소셜로그인 네이버
-  export const requestLoginNaver = async (data) => {
-    // data = { email, password };
-    try {
-      const response = await axios.post(
-        `${process.env.VITE_SERVER_URL}/auth/logiNnaver`,
-        data,
-      );
-      // console.log('로그인 성공:', response.data);
-  
-      const { access_token } = response.data;
-      localStorage.setItem('access_token', access_token);
-  
-      return response;
-    } catch (error) {
-      console.error('로그인 실패:', error);
-    }
-  };
-  //소설로그인 구글
-  export const requestLoginGoogle = async (data) => {
-    // data = { email, password };
-    try {
-      const response = await axios.post(
-        `${process.env.VITE_SERVER_URL}/auth/loginGoogle`,
-        data,
-      );
-      // console.log('로그인 성공:', response.data);
-  
-      const { access_token } = response.data;
-      localStorage.setItem('access_token', access_token);
-  
-      return response;
-    } catch (error) {
-      console.error('로그인 실패:', error);
-    }
-  };
-  
-  export const requestLogout = async () => {
-    const accessToken = localStorage.getItem('access_token');
-    localStorage.removeItem('access_token');
-    try {
-      const response = await axios.post(
-        `${process.env.VITE_SERVER_URL}/auth/logout`,
-        {},
-        {
-          headers: { Authorization: `Bearer ${accessToken}` },
-          // withCredentials: true,
-        },
-      );
-      return response;
-    } catch (error) {
-      console.error('유저 정보 조회 실패:', error);
-      if (accessToken) {
-        localStorage.removeItem('access_token');
+  const accessToken = localStorage.getItem("access_token");
+  if (!accessToken) return null;
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_VITE_SERVER_URL}/user/profile`,
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+        // withCredentials: true,
       }
-    }
-  };
-  export const requestSignup = async (data) => {
-    // data = { email, password, passwordConfirm, nick_name };
-    try {
-      const response = await axios.post(
-        `${process.env.VITE_SERVER_URL}/user`,
-        data,
-      );
-      // console.log('회원가입 성공:', response.data);
-      return response;
-    } catch (error) {
-      console.error('회원가입 실패:', error);
-    }
-  };
+    );
+    // console.log(response.data);
+    return response;
+  } catch (error) {
+    console.error("유저 정보 조회 실패:", error);
+    if (accessToken) localStorage.removeItem("access_token");
+    return null;
+  }
+};
 
-  
-export const requestUserProfile = async () => {
-    const accessToken = localStorage.getItem('access_token');
-    try {
-      const response = await axios.get(
-        `${process.env.VITE_SERVER_URL}/user/profile`,
+//로그인
+export const requestLogin = async (data) => {
+  // data = { email, password };
+  try {
+    const response = await axios.post(
+      `${process.env.REACT_APP_VITE_SERVER_URL}/auth/login`,
+      data
+    );
+    // console.log('로그인 성공:', response.data);
+
+    const { access_token } = response.data;
+    localStorage.setItem("access_token", access_token);
+
+    return response;
+  } catch (error) {
+    console.error("로그인 실패:", error);
+  }
+};
+
+//소셜로그인 네이버
+export const requestLoginNaver = async (data) => {
+  // data = { email, password };
+  try {
+    const response = await axios.post(
+      `${process.env.REACT_APP_VITE_SERVER_URL}/auth/logiNnaver`,
+      data
+    );
+    // console.log('로그인 성공:', response.data);
+
+    const { access_token } = response.data;
+    localStorage.setItem("access_token", access_token);
+
+    return response;
+  } catch (error) {
+    console.error("로그인 실패:", error);
+  }
+};
+
+//소설로그인 구글
+export const requestLoginGoogle = async (data) => {
+  // data = { email, password };
+  try {
+    const response = await axios.post(
+      `${process.env.REACT_APP_VITE_SERVER_URL}/auth/loginGoogle`,
+      data
+    );
+    // console.log('로그인 성공:', response.data);
+
+    const { access_token } = response.data;
+    localStorage.setItem("access_token", access_token);
+
+    return response;
+  } catch (error) {
+    console.error("로그인 실패:", error);
+  }
+};
+
+//로그아웃
+export const requestLogout = async () => {
+  const accessToken = localStorage.getItem("access_token");
+  localStorage.removeItem("access_token");
+  try {
+    const response = await axios.post(
+      `${process.env.REACT_APP_VITE_SERVER_URL}/auth/logout`,
+      {},
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+        // withCredentials: true,
+      }
+    );
+    return response;
+  } catch (error) {
+    console.error("유저 정보 조회 실패:", error);
+    if (accessToken) {
+      localStorage.removeItem("access_token");
+    }
+  }
+};
+
+//회원가입
+export const requestSignup = async (data) => {
+  // data = { email, password, passwordConfirm, nick_name };
+  try {
+    const response = await axios.post(
+      `${process.env.REACT_APP_VITE_SERVER_URL}/user`,
+      data
+    );
+    // console.log('회원가입 성공:', response.data);
+    return response;
+  } catch (error) {
+    console.error("회원가입 실패:", error);
+  }
+};
+
+//회원추가정보(핸드폰,주소)
+export const requestUserProfile = async (
+  userName,
+  userPhone,
+  Zonecode,
+  FuAddress,
+  ExAddress,
+  DeAddress
+) => {
+  if (DeAddress === "") {
+    DeAddress = null;
+  }
+  try {
+    await axios
+      .get(
+        `${process.env.REACT_APP_VITE_SERVER_URL}/creator/register`,
         {
-          headers: { Authorization: `Bearer ${accessToken}` },
-          // withCredentials: true,
+          userName: userName,
+          userPhone: userPhone,
+          Zonecode: Zonecode,
+          FuAddress: FuAddress,
+          ExAddress: ExAddress,
+          DeAddress: DeAddress,
         },
-      );
-      return response;
-    } catch (error) {
-      console.error('유저 정보 조회 실패:', error);
-    }
-  };
+        { withCredentials: true }
+      )
+      .then(() => {
+        window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}/creator/widget`;
+      });
+  } catch (error) {
+    window.location.href = process.env.REACT_APP_MAIN_CLIENT_URL;
+    console.error("회원추가정보(핸드폰,주소) 등록 실패", error);
+  }
+};
+//핸드폰번호 입력
+export const EnterPhoneNumber = async (userPhone) => {
+  try {
+    await axios.post(
+      `${process.env.REACT_APP_VITE_SERVER_URL}/sms/send`,
+      { phoneNumber: userPhone },
+      { withCredentials: true }
+    );
+  } catch (error) {
+    console.error("핸드폰 번호 전송 실패:", error);
+  }
+};
+//핸드폰 인증
+export const Certification = async (userPhone, CertificationNumber) => {
+  axios
+    .post(
+      `${process.env.REACT_APP_VITE_SERVER_URL}/sms/verify`,
+      {
+        phoneNumber: userPhone,
+        verifyCode: CertificationNumber,
+      },
+      { withCredentials: true }
+    )
+    .then((req) => {
+      if (req.data.message === "본인인증 성공") {
+        return true;
+      } else {
+      }
+    })
+    .catch((error) => console.log(error));
+};
 
-  //회원정보 갱신
+//회원정보 갱신
 
-  //회원 탈퇴
+//회원 탈퇴
+
+//이용약관,개인정보 수집 및 동의 (뷰어)
+export const onclickURLAgreedV = async (checkItems) => {
+  const usage_policy = checkItems.includes("usage_policy");
+  const personal_information = checkItems.includes("personal_information");
+  try {
+    await axios
+      .get(
+        `${process.env.REACT_APP_VITE_SERVER_URL}/viewer/agreement`,
+        {
+          usage_policy: usage_policy,
+          personal_information: personal_information,
+        },
+        { withCredentials: true }
+      )
+      .then((req) => {
+        if (req.data.code === 1005) {
+          window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}/info`;
+        } else if (req.data.code === 3005) {
+          window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}`;
+        }
+      });
+  } catch (error) {
+    console.error("이용약관,개인정보 수집 및 동의 실패:", error);
+  }
+};
+
+//이용약관,개인정보 수집 및 동의 (크리에이터)
+export const onclickURLAgreedC = async (checkItems) => {
+  const usage_policy = checkItems.includes("usage_policy");
+  const personal_information = checkItems.includes("personal_information");
+  try {
+    await axios
+      .get(
+        `${process.env.REACT_APP_VITE_SERVER_URL}/creator/agreement`,
+        {
+          usage_policy: usage_policy,
+          personal_information: personal_information,
+        },
+        { withCredentials: true }
+      )
+      .then((req) => {
+        if (req.data.code === 1005) {
+          window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}/creator`;
+        } else if (req.data.code === 3005) {
+          window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}`;
+        }
+      });
+  } catch (error) {
+    console.error("이용약관,개인정보 수집 및 동의 실패(크리에이터):", error);
+  }
+};
+
+//방송 등록 URL
+export const Channelurl = async (data) => {
+  // data = { email, password, passwordConfirm, nick_name };
+  try {
+    const response = await axios.post(
+      `${process.env.REACT_APP_VITE_SERVER_URL}/creator/studio/edit`,
+      data,
+      {
+        withCredentials: true,
+      }
+    );
+    return response;
+  } catch (error) {
+    console.error("방송 LIVE URL 등록 실패", error);
+  }
+};
+
+// 경매위젯, 경매장주소, 등록된 live url 받아오기
+export const Loadwidget = async () => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_VITE_SERVER_URL}/creator/studio`,
+      {
+        withCredentials: true,
+      }
+    ); // 서버의 API 엔드포인트에 맞게 설정
+    return response;
+  } catch (error) {
+    console.error("경매위젯주소 불러오기 실패", error);
+    return;
+  }
+};

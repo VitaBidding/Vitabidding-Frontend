@@ -1,10 +1,10 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import styled from "styled-components";
-import TermsContainerC from "../../containers/Auth/TermsContainerC";
-import UsagePolicy from "../../components/Auth/UsagePolicy";
-import PersonalInformation from "../../components/Auth/PersonalInformation";
-function TermsPage(props) {
+import TermsContainerC from "../../containers/auth/terms.container.c";
+import UsagePolicy from "../../components/auth/termsdetail/termsc/usage.policy.c";
+import PersonalInformation from "../../components/auth/termsdetail/termsc/personal.information.c";
+function TermsPageC(props) {
   return (
     <TermsPageCSection>
       <TermsContainerC />
@@ -16,7 +16,7 @@ function TermsPage(props) {
   );
 }
 
-export default TermsPage;
+export default TermsPageC;
 
 const TermsPageCSection = styled.div`
   /* border: 1px solid red; */

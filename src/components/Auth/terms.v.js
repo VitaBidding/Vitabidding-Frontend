@@ -1,45 +1,45 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { BiChevronRight } from "react-icons/bi";
-import axios from "axios";
+import { onclickURLAgreedV } from "../../lib/request";
 function TermsV(props) {
-  function onclickURLTermsC1() {
-    window.open(`${process.env.REACT_APP_MAIN_CLIENT_URL}/terms/detail/usegepolicy`);
+  function onclickURLTermsV1() {
+    window.open(`${process.env.REACT_APP_MAIN_CLIENT_URL}/terms/detail/viewer/usegepolicy`);
   }
   
-  function onclickURLTermsC2() {
-    window.open(`${process.env.REACT_APP_MAIN_CLIENT_URL}/terms/detail/personalInformation`);
+  function onclickURLTermsV2() {
+    window.open(`${process.env.REACT_APP_MAIN_CLIENT_URL}/terms/detail/viewer/personalInformation`);
   }
 
-  function onclickURLAgreedC(checkItems) {
-    //컬럼값 확인
-    const usage_policy = checkItems.includes("usage_policy");
-    const personal_information = checkItems.includes("personal_information");
-    axios
-      .post(
-        `${process.env.REACT_APP_SERVER_URL}/creator/agreement`,
-        {
-          usage_policy: usage_policy,
-          personal_information: personal_information,
-        },
-        { withCredentials: true }
-      )
-      .then((req) => {
-        // console.log("🚀 ~ file: onclickURLAgreedC.js:17 ~ .then ~ req", req);
-        if (req.data.code === 1005) {
-          window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}/info/creator`;
-        } else if (req.data.code === 3005) {
-          window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}`;
-        }
-      })
-      .catch((err) => {
-        // console.log("🚀 ~ file: onclickURLAgreedC.js:22 ~ onclickURLAgreedC ~ err", err);
-        window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}`;
-      });
-  }
+  // function onclickURLAgreedV(checkItems) {
+  //   //컬럼값 확인
+  //   const usage_policy = checkItems.includes("usage_policy");
+  //   const personal_information = checkItems.includes("personal_information");
+  //   axios
+  //     .post(
+  //       `${process.env.REACT_APP_SERVER_URL}/viewer/agreement`,
+  //       {
+  //         usage_policy: usage_policy,
+  //         personal_information: personal_information,
+  //       },
+  //       { withCredentials: true }
+  //     )
+  //     .then((req) => {
+  //       // console.log("🚀 ~ file: onclickURLAgreedC.js:17 ~ .then ~ req", req);
+  //       if (req.data.code === 1005) {
+  //         window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}/info/viewer`;
+  //       } else if (req.data.code === 3005) {
+  //         window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}`;
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       // console.log("🚀 ~ file: onclickURLAgreedC.js:22 ~ onclickURLAgreedC ~ err", err);
+  //       window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}`;
+  //     });
+  // }
   const data = [
-    { id: 0, column: "usage_policy", click: onclickURLTermsC1, title: "이용약관 동의 (필수)" },
-    { id: 1, column: "personal_information", click: onclickURLTermsC2, title: "개인정보 수집 및 이용 동의 (필수)" },
+    { id: 0, column: "usage_policy", click: onclickURLTermsV1, title: "이용약관 동의 (필수)" },
+    { id: 1, column: "personal_information", click: onclickURLTermsV2, title: "개인정보 수집 및 이용 동의 (필수)" },
     // {id: 2, title: '개인정보 제3자 제공 동의(필수)',body:''},
     // {id: 3, title: '개인정보 개인정보 처리 위탁 동의(필수)',body:''},
     // {id: 4, title: '개인정보 수집 및 이용 동의(선택)',body:''},
@@ -120,7 +120,7 @@ function TermsV(props) {
           ))}
         </tbody>
       </StyledTable>
-      <Nextbutton onClick={() => onclickURLAgreedC(checkItems)} state={buttonColor} disabled={!buttonColor}>
+      <Nextbutton onClick={() => onclickURLAgreedV(checkItems)} state={buttonColor} disabled={!buttonColor}>
         약관 동의
       </Nextbutton>
     </>
