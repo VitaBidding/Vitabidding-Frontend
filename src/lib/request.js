@@ -269,3 +269,38 @@ export const Loadwidget = async () => {
     return;
   }
 };
+
+//물건등록
+
+export const EnrollmentItem = async (Data) => {
+  try {
+    await axios.get(
+      `${process.env.REACT_APP_VITE_SERVER_URL}/creator/products/new`,
+      Data,
+      {
+        withCredentials: true,
+      }
+    ); // 서버의 API 엔드포인트에 맞게 설정
+    return true;
+  } catch (error) {
+    console.error("물건등록 실패", error);
+    return false;
+  }
+};
+
+//시간체크
+
+export const TimeCheck = async () => {
+  try {
+    const res = axios.get(
+      `${process.env.REACT_APP_VITE_SERVER_URL}/auth/timechk`,
+      {
+        withCredentials: true,
+      }
+    );
+    return res;
+  } catch (error) {
+    console.error("시간불러오기 실패", error);
+    return false;
+  }
+};

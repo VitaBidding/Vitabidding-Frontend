@@ -17,12 +17,18 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
-  @media only screen and (max-width: 600px) {
+  height: 90%;
+  @media only screen and (max-width: 280px) {
     width: 100%;
   }
-  @media only screen and (min-width: 600px) {
+  @media only screen and (min-width: 280px) {
     width: 100%;
+  }
+  @media only screen and (min-width: 360px) {
+  }
+  @media only screen and (min-width: 420px) {
+  }
+  @media only screen and (min-width: 600px) {
   }
   @media only screen and (min-width: 768px) {
   }

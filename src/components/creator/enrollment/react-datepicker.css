@@ -24,7 +24,7 @@
   font-size: 0.8rem;
   background-color: #fff;
   color: #000;
-  border: 1px solid #fd9800;
+  border: 1px solid #000;
   border-radius: 0.3rem;
   display: inline-block;
   position: relative;
@@ -45,7 +45,7 @@
   line-height: 0;
 }
 .react-datepicker-popper .react-datepicker__triangle {
-  stroke: #fd9800;
+  stroke: #000;
 }
 .react-datepicker-popper[data-placement^="bottom"] .react-datepicker__triangle {
   fill: #fff;
@@ -399,7 +399,7 @@ h2.react-datepicker__current-month {
 }
 .react-datepicker__week-number--keyboard-selected {
   border-radius: 0.3rem;
-  background-color: #2a87d0;
+  background-color: #fd9800;
   color: #fff;
 }
 .react-datepicker__week-number--keyboard-selected:hover {

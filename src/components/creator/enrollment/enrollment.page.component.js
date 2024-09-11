@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
-import axios from "axios";
 import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import { BsCamera } from "react-icons/bs";
 import ValidationModal from "./validation.modal";
 import SuccessModal from "./success.modal";
+import { EnrollmentItem, TimeCheck } from "../../../lib/request";
 import "./react-datepicker.css";
 const EnrollmentPageComponent = () => {
   //반응형 넓이설정
@@ -105,19 +105,18 @@ const EnrollmentPageComponent = () => {
     const formData = new FormData();
     formData.append("thumbnail", selectedFile);
     formData.append("item", JSON.stringify(item));
-    axios
-      .post(
-        `${process.env.REACT_APP_SERVER_URL}/creator/products/new`,
-        formData,
-        { withCredentials: true }
-      )
+    EnrollmentItem(formData)
       .then((response) => {
-        setmesseage(response.data.message);
-        SuccessShow();
+        if (response) {
+          setmesseage(response.data.message);
+          SuccessShow();
+        } else {
+          setmesseage("등록 실패");
+          handleShow();
+        }
       })
       .catch((error) => {
-        setmesseage(error.data.message);
-        handleShow();
+        console.error(error);
       });
   };
   // console.log("🚀 ~ file: enrollmentpagecomponent.js:38 ~ EnrollmentPageComponent ~ item:", item);
@@ -162,14 +161,15 @@ const EnrollmentPageComponent = () => {
   };
   const [currentTime, setcurrentTime] = useState({});
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_SERVER_URL}/auth/timechk`, {
-        withCredentials: true,
-      })
+    TimeCheck()
       .then((res) => {
-        setcurrentTime(res.data.currentTime);
+        if (res) {
+          setcurrentTime(res.data.currentTime);
+        }
       })
-      .catch((err) => {});
+      .catch((error) => {
+        console.error(error);
+      });
   }, []);
 
   const getMaxDate = () => {
@@ -230,19 +230,63 @@ const EnrollmentPageComponent = () => {
 
   // 썸네일 관련 함수
 
-  // console.log("🚀 ~ file: EnrollmentPageComponent.js:173 ~ EnrollmentPageComponent ~ selectedFile:", selectedFile);
   const handleThumbnailChange = (event) => {
-    setSelectedFile(event.target.files[0]);
-    const formData = new FormData();
-    formData.append("thumbnail", selectedFile);
     const imageFile = event.target.files[0];
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setThumbnail(reader.result);
-    };
+    setSelectedFile(imageFile);
 
-    setItem((prevItem) => ({ ...prevItem, thumbnail: formData }));
-    reader.readAsDataURL(imageFile);
+    if (imageFile) {
+      // FileReader로 이미지 읽기
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const img = new Image();
+        img.src = reader.result;
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          const ctx = canvas.getContext("2d");
+
+          // 이미지 크기 조정 (예: 800px 고정 너비)
+          const maxWidth = 800;
+          const scale = maxWidth / img.width;
+          canvas.width = maxWidth;
+          canvas.height = img.height * scale;
+
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+          // canvas에서 PNG로 변환
+          canvas.toBlob(
+            (blob) => {
+              // PNG 형식의 blob 생성
+              const pngFile = new File(
+                [blob],
+                imageFile.name.replace(/\.\w+$/, ".png"),
+                {
+                  type: "image/png",
+                }
+              );
+
+              // PNG 파일을 FormData에 추가
+              const formData = new FormData();
+              formData.append("thumbnail", pngFile);
+
+              // 미리보기 업데이트
+              const readerForPreview = new FileReader();
+              readerForPreview.onloadend = () => {
+                setThumbnail(readerForPreview.result);
+              };
+              readerForPreview.readAsDataURL(pngFile);
+
+              // setItem 호출 (업데이트된 PNG 파일 전송)
+              setItem((prevItem) => ({ ...prevItem, thumbnail: formData }));
+              console.log("🚀 ~ handleThumbnailChange ~ pngFile:", pngFile);
+            },
+            "image/png" // 파일 형식을 PNG로 지정
+          );
+        };
+      };
+
+      reader.readAsDataURL(imageFile);
+    }
+    console.log("🚀 ~ handleThumbnailChange ~ imageFile:", imageFile);
   };
 
   return (
@@ -327,9 +371,6 @@ const EnrollmentPageComponent = () => {
               value={item.category}
               onChange={handleInputChange}
               style={{
-                height: "30px",
-                borderRadius: "10px",
-                padding: "0 5px",
                 color: item.category === "" ? "gray" : "inherit",
               }}
             >
@@ -401,7 +442,7 @@ const EnrollmentPageComponent = () => {
 export default EnrollmentPageComponent;
 
 const Wrapper = styled.div`
-  border: 1px solid black;
+  /* border: 1px solid black; */
   display: flex;
   flex-direction: column;
   /* justify-content: center; */
@@ -419,11 +460,12 @@ const Wrapper = styled.div`
   @media only screen and (min-width: 420px) {
   }
   @media only screen and (min-width: 600px) {
+    width: 580px;
   }
   @media only screen and (min-width: 768px) {
   }
   @media only screen and (min-width: 992px) {
-    width: 95%;
+    width: 700px;
   }
   @media only screen and (min-width: 1200px) {
   }
@@ -432,7 +474,7 @@ const Wrapper = styled.div`
 `;
 
 const Form = styled.form`
-  border: 1px solid red;
+  /* border: 1px solid red; */
   /* width: 650px; */
 
   @media only screen and (max-width: 280px) {
@@ -448,7 +490,6 @@ const Form = styled.form`
   @media only screen and (min-width: 600px) {
   }
   @media only screen and (min-width: 768px) {
-    width: 90%;
   }
   @media only screen and (min-width: 992px) {
   }
@@ -460,25 +501,29 @@ const Form = styled.form`
 //타이틀
 const Title = styled.div`
   font-family: "KBO-Dia-Gothic_bold";
-  font-size: 20pt;
-  font-weight: bolder;
+
   color: darkslateblue;
-  height: 50px;
 
   @media only screen and (max-width: 280px) {
+    font-size: 20pt;
     margin: 0 0 10px 0;
+    height: 30px;
   }
   @media only screen and (min-width: 280px) {
     margin: 0 0 10px 0;
+    font-size: 20pt;
+    height: 30px;
   }
   @media only screen and (min-width: 360px) {
   }
   @media only screen and (min-width: 420px) {
   }
   @media only screen and (min-width: 600px) {
-    margin: 20px;
   }
   @media only screen and (min-width: 768px) {
+    height: 40px;
+    font-size: 24pt;
+    font-weight: bolder;
   }
   @media only screen and (min-width: 992px) {
   }
@@ -508,18 +553,10 @@ const TimeSection = styled.div`
   @media only screen and (min-width: 360px) {
   }
   @media only screen and (min-width: 420px) {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
   }
   @media only screen and (min-width: 600px) {
   }
   @media only screen and (min-width: 768px) {
-    font-size: 12pt;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    height: 50px;
   }
   @media only screen and (min-width: 992px) {
   }
@@ -547,9 +584,6 @@ const Timelabel = styled.label`
   @media only screen and (min-width: 600px) {
   }
   @media only screen and (min-width: 768px) {
-    width: 150px;
-    padding: 0px;
-    margin: 0 0 0 50px;
   }
   @media only screen and (min-width: 992px) {
   }
@@ -566,17 +600,18 @@ const Timecontents = styled.div`
 
 const StyledDatePicker = styled(DatePicker)`
   text-align: center;
-  border-radius: 10px;
   /* DatePicker 화살표 숨기기 */
 
   @media only screen and (max-width: 280px) {
-    width: 125px;
+    width: 120px;
+    border-radius: 10px;
   }
   @media only screen and (min-width: 280px) {
-    width: 135px;
+    width: 130px;
+    border-radius: 10px;
   }
   @media only screen and (min-width: 360px) {
-    width: 175px;
+    width: 170px;
   }
   @media only screen and (min-width: 420px) {
   }
@@ -594,16 +629,17 @@ const StyledDatePicker = styled(DatePicker)`
 const StyledDatePicker2 = styled(DatePicker)`
   margin: 0 5px;
   text-align: center;
-  border-radius: 10px;
 
   @media only screen and (max-width: 280px) {
-    width: 130px;
+    width: 120px;
+    border-radius: 10px;
   }
   @media only screen and (min-width: 280px) {
-    width: 140px;
+    width: 130px;
+    border-radius: 10px;
   }
   @media only screen and (min-width: 360px) {
-    width: 180px;
+    width: 170px;
   }
   @media only screen and (min-width: 420px) {
   }
@@ -657,10 +693,6 @@ const CategorySection = styled.div`
   @media only screen and (min-width: 600px) {
   }
   @media only screen and (min-width: 768px) {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    font-size: 12pt;
   }
   @media only screen and (min-width: 992px) {
   }
@@ -688,9 +720,6 @@ const Categorylabel = styled.label`
   @media only screen and (min-width: 600px) {
   }
   @media only screen and (min-width: 768px) {
-    width: 150px;
-    padding: 0px;
-    margin: 0 0 0 50px;
   }
   @media only screen and (min-width: 992px) {
   }
@@ -701,8 +730,32 @@ const Categorylabel = styled.label`
 `;
 const Categorycontents = styled.div`
   select {
-    min-width: 200px;
-    width: 50%;
+    height: 30px;
+    padding: 0 5px;
+    @media only screen and (max-width: 280px) {
+      min-width: 200px;
+      border-radius: 10px;
+    }
+    @media only screen and (min-width: 280px) {
+      min-width: 200px;
+      border-radius: 10px;
+    }
+    @media only screen and (min-width: 360px) {
+    }
+    @media only screen and (min-width: 420px) {
+    }
+    @media only screen and (min-width: 420px) {
+    }
+    @media only screen and (min-width: 600px) {
+    }
+    @media only screen and (min-width: 768px) {
+    }
+    @media only screen and (min-width: 992px) {
+    }
+    @media only screen and (min-width: 1200px) {
+    }
+    @media only screen and (min-width: 1480px) {
+    }
   }
 `;
 
@@ -730,10 +783,6 @@ const NameSection = styled.div`
   @media only screen and (min-width: 600px) {
   }
   @media only screen and (min-width: 768px) {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    font-size: 12pt;
   }
   @media only screen and (min-width: 992px) {
   }
@@ -761,9 +810,6 @@ const Namelabel = styled.label`
   @media only screen and (min-width: 600px) {
   }
   @media only screen and (min-width: 768px) {
-    width: 150px;
-    padding: 0px;
-    margin: 0 0 0 50px;
   }
   @media only screen and (min-width: 992px) {
   }
@@ -774,16 +820,18 @@ const Namelabel = styled.label`
 `;
 const NameInput = styled.input`
   height: 30px;
-  border-radius: 10px;
+
   border-width: 1.8px;
   padding: 10px;
 
   @media only screen and (max-width: 280px) {
     width: 100%;
+    border-radius: 10px;
   }
 
   @media only screen and (min-width: 280px) {
     width: 100%;
+    border-radius: 10px;
   }
   @media only screen and (min-width: 360px) {
   }
@@ -792,7 +840,6 @@ const NameInput = styled.input`
   @media only screen and (min-width: 600px) {
   }
   @media only screen and (min-width: 768px) {
-    width: 450px;
   }
   @media only screen and (min-width: 992px) {
   }
@@ -826,10 +873,6 @@ const PriceSection = styled.div`
   @media only screen and (min-width: 600px) {
   }
   @media only screen and (min-width: 768px) {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    font-size: 12pt;
   }
   @media only screen and (min-width: 992px) {
   }
@@ -858,9 +901,6 @@ const Pricelabel = styled.label`
   @media only screen and (min-width: 600px) {
   }
   @media only screen and (min-width: 768px) {
-    width: 150px;
-    padding: 0px;
-    margin: 0 0 0 50px;
   }
   @media only screen and (min-width: 992px) {
   }
@@ -891,7 +931,6 @@ const PriceContents = styled.div`
   @media only screen and (min-width: 600px) {
   }
   @media only screen and (min-width: 768px) {
-    font-size: 11pt;
   }
   @media only screen and (min-width: 992px) {
   }
@@ -903,20 +942,20 @@ const PriceContents = styled.div`
 
 const Priceinput = styled.input`
   height: 30px;
-  border-radius: 10px;
   border-width: 1.8px;
   padding: 10px;
-  min-width: 200px;
-  width: 50%;
+
   @media only screen and (max-width: 280px) {
     min-width: 200px;
-    width: 50%;
+
     font-size: 11pt;
+    border-radius: 10px;
   }
   @media only screen and (min-width: 280px) {
     min-width: 200px;
-    width: 50%;
+
     font-size: 11pt;
+    border-radius: 10px;
   }
   @media only screen and (min-width: 360px) {
   }
@@ -925,7 +964,6 @@ const Priceinput = styled.input`
   @media only screen and (min-width: 600px) {
   }
   @media only screen and (min-width: 768px) {
-    font-size: 12pt;
   }
   @media only screen and (min-width: 992px) {
   }
@@ -974,10 +1012,6 @@ const DescriptionSection = styled.div`
     align-items: start;
   }
   @media only screen and (min-width: 768px) {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    height: 120px;
   }
   @media only screen and (min-width: 992px) {
   }
@@ -1006,9 +1040,6 @@ const Descriptionlabel = styled.label`
   @media only screen and (min-width: 600px) {
   }
   @media only screen and (min-width: 768px) {
-    width: 150px;
-    padding: 0px;
-    margin: 0 0 0 50px;
   }
   @media only screen and (min-width: 992px) {
   }
@@ -1022,17 +1053,18 @@ const Descriptiontextarea = styled.textarea`
   font-family: "KBO-Dia-Gothic_light";
   padding: 2px 5px;
 
-  border-radius: 10px;
   resize: none;
   @media only screen and (max-width: 280px) {
     width: 100%;
     height: 100px;
     font-size: 10pt;
+    border-radius: 10px;
   }
   @media only screen and (min-width: 280px) {
     width: 100%;
     height: 100px;
     font-size: 10pt;
+    border-radius: 10px;
   }
   @media only screen and (min-width: 360px) {
   }
@@ -1041,11 +1073,9 @@ const Descriptiontextarea = styled.textarea`
   @media only screen and (min-width: 600px) {
   }
   @media only screen and (min-width: 768px) {
-    width: 450px;
-    height: 130px;
-    font-size: 12pt;
   }
   @media only screen and (min-width: 992px) {
+    height: 200px;
   }
   @media only screen and (min-width: 1200px) {
   }
@@ -1073,12 +1103,8 @@ const ThumbnailSection = styled.div`
   @media only screen and (min-width: 420px) {
   }
   @media only screen and (min-width: 600px) {
-    font-size: 12pt;
   }
   @media only screen and (min-width: 768px) {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
   }
   @media only screen and (min-width: 992px) {
   }
@@ -1102,21 +1128,10 @@ const Thumbnaillabel = styled.label`
   @media only screen and (min-width: 360px) {
   }
   @media only screen and (min-width: 420px) {
-    width: 150px;
-    margin: 5px 0 0 0;
-  }
-  @media only screen and (min-width: 420px) {
-    width: 150px;
-    margin: 5px 0 0 0;
   }
   @media only screen and (min-width: 600px) {
-    width: 150px;
-    margin: 5px 0 0 0;
   }
   @media only screen and (min-width: 768px) {
-    width: 150px;
-    padding: 0px;
-    margin: 0 50px;
   }
   @media only screen and (min-width: 992px) {
   }
@@ -1132,14 +1147,41 @@ const Thumbnaillabelno = styled.label`
   }
   padding: 36px 40px;
   border: 1px lightgray;
-  border-radius: 10px;
+
   background-color: lightgray;
-  font-size: 11pt;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
+
+  @media only screen and (max-width: 280px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    font-size: 11pt;
+    border-radius: 10px;
+  }
+  @media only screen and (min-width: 280px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    font-size: 11pt;
+    border-radius: 10px;
+  }
+  @media only screen and (min-width: 360px) {
+  }
+  @media only screen and (min-width: 420px) {
+  }
+  @media only screen and (min-width: 600px) {
+  }
+  @media only screen and (min-width: 768px) {
+  }
+  @media only screen and (min-width: 992px) {
+  }
+  @media only screen and (min-width: 1200px) {
+  }
+  @media only screen and (min-width: 1480px) {
+  }
 `;
 
 const Thumbnaillabelfor = styled.label`
@@ -1159,9 +1201,9 @@ const ThumbnailWrapper = styled.div`
 const Thumbnailimg = styled.img`
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain; /* 한쪽 축에 맞게 이미지 표시 */
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain; /* 배경 이미지 사이즈 조정 */
 `;
 //등록 버튼
 

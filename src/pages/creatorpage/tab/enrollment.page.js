@@ -17,6 +17,6 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center; /* 수평 중앙 정렬 */
-  height: 100%;
+  height: 90%;
   margin: 30px 0;
 `;
