@@ -4,18 +4,22 @@ import { BiChevronRight } from "react-icons/bi";
 import { onclickURLAgreedV } from "../../lib/request";
 function TermsV(props) {
   function onclickURLTermsV1() {
-    window.open(`${process.env.REACT_APP_MAIN_CLIENT_URL}/terms/detail/viewer/usegepolicy`);
+    window.open(
+      `${process.env.REACT_APP_MAIN_CLIENT_URL}/terms/detail/viewer/usegepolicy`
+    );
   }
-  
+
   function onclickURLTermsV2() {
-    window.open(`${process.env.REACT_APP_MAIN_CLIENT_URL}/terms/detail/viewer/personalInformation`);
+    window.open(
+      `${process.env.REACT_APP_MAIN_CLIENT_URL}/terms/detail/viewer/personalInformation`
+    );
   }
 
   // function onclickURLAgreedV(checkItems) {
   //   //컬럼값 확인
   //   const usage_policy = checkItems.includes("usage_policy");
   //   const personal_information = checkItems.includes("personal_information");
-  //   axios
+
   //     .post(
   //       `${process.env.REACT_APP_SERVER_URL}/viewer/agreement`,
   //       {
@@ -38,8 +42,18 @@ function TermsV(props) {
   //     });
   // }
   const data = [
-    { id: 0, column: "usage_policy", click: onclickURLTermsV1, title: "이용약관 동의 (필수)" },
-    { id: 1, column: "personal_information", click: onclickURLTermsV2, title: "개인정보 수집 및 이용 동의 (필수)" },
+    {
+      id: 0,
+      column: "usage_policy",
+      click: onclickURLTermsV1,
+      title: "이용약관 동의 (필수)",
+    },
+    {
+      id: 1,
+      column: "personal_information",
+      click: onclickURLTermsV2,
+      title: "개인정보 수집 및 이용 동의 (필수)",
+    },
     // {id: 2, title: '개인정보 제3자 제공 동의(필수)',body:''},
     // {id: 3, title: '개인정보 개인정보 처리 위탁 동의(필수)',body:''},
     // {id: 4, title: '개인정보 수집 및 이용 동의(선택)',body:''},
@@ -106,7 +120,9 @@ function TermsV(props) {
                 <input
                   type="checkbox"
                   className={`select`}
-                  onChange={(e) => handleSingleCheck(e.target.checked, data.column)}
+                  onChange={(e) =>
+                    handleSingleCheck(e.target.checked, data.column)
+                  }
                   // 체크된 아이템 배열에 해당 아이템이 있을 경우 선택 활성화, 아닐 시 해제
                   checked={checkItems.includes(data.column) ? true : false}
                 />
@@ -120,7 +136,11 @@ function TermsV(props) {
           ))}
         </tbody>
       </StyledTable>
-      <Nextbutton onClick={() => onclickURLAgreedV(checkItems)} state={buttonColor} disabled={!buttonColor}>
+      <Nextbutton
+        onClick={() => onclickURLAgreedV(checkItems)}
+        state={buttonColor}
+        disabled={!buttonColor}
+      >
         약관 동의
       </Nextbutton>
     </>

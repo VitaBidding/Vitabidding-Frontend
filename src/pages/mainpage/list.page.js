@@ -1,20 +1,20 @@
 import React from "react";
 import styled from "styled-components";
-import InfoContainers from "../../../containers/creator/info.containers";
-function Infopage(props) {
+import ListContainers from "../../containers/main/list.container";
+function listpage(props) {
   return (
     <Wrapper>
-      <InfoContainers />
+      <ListContainers />
     </Wrapper>
   );
 }
 
-export default Infopage;
+export default listpage;
 
 const Wrapper = styled.div`
+  /* border: 1px solid blue; */
   display: flex;
   flex-direction: column;
-  /* border: 1px solid blue; */
   width: 100%;
   justify-content: center;
   align-items: center;

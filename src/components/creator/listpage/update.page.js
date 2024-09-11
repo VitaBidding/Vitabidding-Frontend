@@ -1,29 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import { BsCamera } from "react-icons/bs";
 import ValidationModal from "./validation.modal";
-import SuccessModal from "./success.modal";
-import { EnrollmentItem, TimeCheck } from "../../../lib/request";
+import EditModal from "./edit.modal";
+import DeleteModal from "./delete.modal";
+import { EditItem, DeleteItem } from "../../../lib/request";
 import "../../../assets/bootstrap/react-datepicker.fd9800.css";
-const EnrollmentPageComponent = () => {
-  //반응형 넓이설정
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    // cleanup function to remove the event listener
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
+const Updatepage = ({ upproduct, UphandleClose }) => {
   const categories = [
     "전자기기",
     "공구용품",
@@ -38,15 +24,16 @@ const EnrollmentPageComponent = () => {
   ];
 
   const CurrentTime = new Date();
-
   const [item, setItem] = useState({
-    category: "",
-    item_name: "",
-    detailed_description: "",
-    starting_price: "",
-    thumbnail: null,
-    start_day: null,
-    start_time: null, // 현재 시간 기준으로 설정
+    item_id: upproduct.id,
+    category: upproduct.category,
+    item_name: upproduct.item_name,
+    detailed_description: upproduct.detailed_description,
+    starting_price: upproduct.starting_price,
+    thumbnail: upproduct.Item_thumbnail.thumbnail,
+    // detailed_images: [],
+    start_day: upproduct.start_day,
+    start_time: upproduct.start_time, // 현재 시간 기준으로 설정
   });
 
   // 유효성검사
@@ -83,33 +70,23 @@ const EnrollmentPageComponent = () => {
   }
 
   // aixos
-  const [Thumbnail, setThumbnail] = useState(null);
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [enrollmentSuccess, setenrollmentSuccess] = useState(false);
+  const [editSuccess, setEditSuccess] = useState(false);
   const SuccessClose = () => {
-    setenrollmentSuccess(false);
-    setItem({
-      category: "",
-      item_name: "",
-      detailed_description: "",
-      starting_price: "",
-      thumbnail: null,
-      start_day: null,
-      start_time: null,
-    });
-    setSelectedDate(null);
-    setSelectedTime(null);
+    setEditSuccess(false);
+    UphandleClose();
   };
-  const SuccessShow = () => setenrollmentSuccess(true);
+  const EditShow = () => setEditSuccess(true);
   const handleSubmit = () => {
     const formData = new FormData();
-    formData.append("thumbnail", selectedFile);
+
     formData.append("item", JSON.stringify(item));
-    EnrollmentItem(formData)
+    // console.log(formData);
+
+    EditItem(formData)
       .then((response) => {
         if (response) {
           setmesseage(response.data.message);
-          SuccessShow();
+          EditShow();
         } else {
           setmesseage("등록 실패");
           handleShow();
@@ -119,63 +96,55 @@ const EnrollmentPageComponent = () => {
         console.error(error);
       });
   };
-  // console.log("🚀 ~ file: enrollmentpagecomponent.js:38 ~ EnrollmentPageComponent ~ item:", item);
 
   // 데이터 변경함수
   const [koreanCurrency, setkoreanCurrency] = useState("포인트");
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-
     setItem((prevItem) => ({ ...prevItem, [name]: value }));
     if (name === "starting_price") {
     }
   };
   // 날짜 관련 함수
+  const result = convertToDateTime(upproduct.start_day, upproduct.start_time);
+
   const yesterday = new Date(CurrentTime); // 현재 날짜를 복사하여 새로운 Date 객체 생성
   yesterday.setDate(CurrentTime.getDate() - 1); // 하루를 빼줌
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [selectedTime, setSelectedTime] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(result);
+
+  const [selectedTime, setSelectedTime] = useState(result);
+
+  function convertToDateTime(strDate, strTime) {
+    // Date 정보 파싱
+    const [year, month, day] = strDate.split("-").map(Number);
+
+    // Time 정보 파싱
+    const [hour, minute] = strTime.split(":").map(Number);
+
+    // Date 객체 생성
+    const dateObj = new Date(year, month - 1, day, hour, minute);
+
+    return dateObj;
+  }
 
   const handleDateChange = (date) => {
-    if (date) {
-      if (date < yesterday) {
-        return;
-      } else {
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, "0");
-        const day = String(date.getDate()).padStart(2, "0");
-        const formattedDate = `${year}-${month}-${day}`;
-        setItem((prevItem) => ({ ...prevItem, start_day: formattedDate }));
-        setSelectedDate(date);
-      }
+    if (date < yesterday) {
+      return;
+    } else {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      const formattedDate = `${year}-${month}-${day}`;
+      setItem((prevItem) => ({ ...prevItem, start_day: formattedDate }));
+      setSelectedDate(date);
     }
   };
   const handleTimeChange = (time) => {
-    if (time) {
-      const hours = time.getHours().toString().padStart(2, "0");
-      const minutes = time.getMinutes().toString().padStart(2, "0");
-      const formattedTime = `${hours}:${minutes}`;
-      setSelectedTime(time);
-      setItem((prevItem) => ({ ...prevItem, start_time: formattedTime }));
-    }
-  };
-  const [currentTime, setcurrentTime] = useState({});
-  useEffect(() => {
-    TimeCheck()
-      .then((res) => {
-        if (res) {
-          setcurrentTime(res.data.currentTime);
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
-
-  const getMaxDate = () => {
-    const today = new Date(`${currentTime}`);
-    today.setFullYear(today.getFullYear() + 1); // 1년 이후의 날짜를 얻습니다.
-    return today;
+    const hours = time.getHours().toString().padStart(2, "0");
+    const minutes = time.getMinutes().toString().padStart(2, "0");
+    const formattedTime = `${hours}:${minutes}`;
+    setSelectedTime(time);
+    setItem((prevItem) => ({ ...prevItem, start_time: formattedTime }));
   };
 
   // 숫자를 한글로 변환하는 함수
@@ -229,12 +198,9 @@ const EnrollmentPageComponent = () => {
   };
 
   // 썸네일 관련 함수
-
-  const canvasToBlobPromise = (canvas, type, quality) => {
-    return new Promise((resolve) => {
-      canvas.toBlob((blob) => resolve(blob), type, quality);
-    });
-  };
+  const [Thumbnail, setThumbnail] = useState(
+    upproduct.Item_thumbnail.thumbnail
+  );
 
   const handleThumbnailChange = (event) => {
     const imageFile = event.target.files[0];
@@ -292,10 +258,29 @@ const EnrollmentPageComponent = () => {
     }
   };
 
+  //삭제 관련함수
+  const [delSuccess, setDelSuccess] = useState(false);
+  const DelClose = () => {
+    setDelSuccess(false);
+    UphandleClose();
+  };
+  const DelShow = () => setDelSuccess(true);
+  function DeleteitemBT() {
+    DeleteItem(upproduct.id)
+      .then((response) => {
+        if (response) {
+          setmesseage(response.data.message);
+          DelShow();
+        }
+      })
+      .catch((error) => console.error(error));
+  }
+
   return (
-    <Wrapper width={windowWidth * 0.95}>
-      <SuccessModal
-        show={enrollmentSuccess}
+    <Wrapper>
+      <DeleteModal show={delSuccess} handleClose={DelClose} message={message} />
+      <EditModal
+        show={editSuccess}
         handleClose={SuccessClose}
         message={message}
       />
@@ -304,8 +289,123 @@ const EnrollmentPageComponent = () => {
         handleClose={handleClose}
         message={message}
       />
-      <Title>경매 물품 등록</Title>
+      <Title>경매 물품 수정</Title>
       <Form onSubmit={handleSubmit}>
+        <TimeSection>
+          <Timelabel htmlFor="start_time">경매 시작 시간</Timelabel>
+          <Timecontents>
+            <div>
+              <StyledDatePicker
+                selected={selectedDate}
+                onChange={handleDateChange}
+                dateFormat="yy년 MM월 dd일"
+                minDate={CurrentTime}
+                placeholderText="날짜를 선택하세요"
+              />
+            </div>
+            <div>
+              <StyledDatePicker2
+                selected={selectedTime}
+                onChange={handleTimeChange}
+                showTimeSelect
+                showTimeSelectOnly
+                timeIntervals={15}
+                timeCaption="Time"
+                dateFormat="h:mm aa"
+                placeholderText="시간를 선택하세요"
+              />
+            </div>
+          </Timecontents>
+        </TimeSection>
+        <CategorySection>
+          <Categorylabel htmlFor="category">카테고리</Categorylabel>
+          <Categorycontents>
+            <select
+              id="category"
+              name="category"
+              value={item.category}
+              onChange={handleInputChange}
+              style={{
+                width: "200px",
+                height: "30px",
+                borderRadius: "10px",
+                padding: "0 5px",
+                color: item.category === "" ? "gray" : "inherit",
+              }}
+            >
+              <option value="" disabled hidden>
+                카테고리를 선택하세요
+              </option>
+              {categories.map((category) => (
+                <option
+                  key={category}
+                  value={category}
+                  style={{ color: "black" }}
+                >
+                  {category}
+                </option>
+              ))}
+            </select>
+          </Categorycontents>
+        </CategorySection>
+        <NameSection>
+          <Namelabel htmlFor="item_name">제품이름</Namelabel>
+          <input
+            type="text"
+            id="item_name"
+            name="item_name"
+            value={item.item_name}
+            onChange={handleInputChange}
+            placeholder="제품명을 입력하세요"
+            style={{
+              width: "280px",
+              height: "40px",
+              borderRadius: "10px",
+              borderWidth: "1px",
+              padding: "10px",
+            }}
+          />
+        </NameSection>
+        <PriceSection>
+          <Pricelabel htmlFor="starting_price">경매 시작 금액</Pricelabel>
+          <PriceContents>
+            <div>
+              <Priceinput
+                type="text"
+                id="starting_price"
+                name="starting_price"
+                value={item.starting_price}
+                onChange={handlepriceChange}
+                placeholder=" 숫자만 입력하세요"
+                style={{
+                  width: "160px",
+                  height: "30px",
+                  borderRadius: "10px",
+                  borderWidth: "1px",
+                  padding: "10px",
+                }}
+              />
+              포인트
+            </div>
+            {item.starting_price && (
+              <KoreanCurrency>{koreanCurrency}</KoreanCurrency>
+            )}
+          </PriceContents>
+        </PriceSection>
+        <DescriptionSection>
+          <Descriptionlabel htmlFor="detailed_description">
+            상세설명
+          </Descriptionlabel>
+          <Descriptiontextarea
+            id="detailed_description"
+            name="detailed_description"
+            value={item.detailed_description}
+            placeholder={
+              "내용을 입력해주세요\nex)\n상태: S급\n정품 인증여부: O\n물품에 대한 설명을 해주세요!"
+            }
+            onChange={handleInputChange}
+          />
+        </DescriptionSection>
         <ThumbnailSection>
           <Thumbnaillabel htmlFor="thumbnail">썸네일 사진</Thumbnaillabel>
           <input
@@ -330,145 +430,39 @@ const EnrollmentPageComponent = () => {
             </Thumbnaillabelfor>
           )}
         </ThumbnailSection>
-        <TimeSection>
-          <Timelabel htmlFor="start_time">경매 시작 시간</Timelabel>
-          <Timecontents>
-            <div>
-              <StyledDatePicker
-                selected={selectedDate}
-                onChange={handleDateChange}
-                dateFormat="yy년 MM월 dd일"
-                minDate={CurrentTime}
-                placeholderText="날짜를 선택하세요"
-                maxDate={getMaxDate()}
-                autoComplete="off" // 자동 완성 기능 비활성화 (숫자 입력 방지)
-                onKeyDown={(e) => e.preventDefault()} // 키 입력 막기
-                popperPlacement="auto"
-                showPopperArrow={false} /* 화살표 숨기기 (필요한 경우) */
-              />
-            </div>
-            <div>
-              <StyledDatePicker2
-                selected={selectedTime}
-                onChange={handleTimeChange}
-                showTimeSelect
-                showTimeSelectOnly
-                timeIntervals={15}
-                timeCaption="Time"
-                dateFormat="h:mm aa"
-                placeholderText="시간를 선택하세요"
-                autoComplete="off" // 자동 완성 기능 비활성화 (숫자 입력 방지)
-                onKeyDown={(e) => e.preventDefault()} // 키 입력 막기
-                popperPlacement="auto"
-                showPopperArrow={false} /* 화살표 숨기기 (필요한 경우) */
-              />
-            </div>
-          </Timecontents>
-        </TimeSection>
-        <CategorySection>
-          <Categorylabel htmlFor="category">카테고리</Categorylabel>
-          <Categorycontents>
-            <select
-              id="category"
-              name="category"
-              value={item.category}
-              onChange={handleInputChange}
-              style={{
-                color: item.category === "" ? "gray" : "inherit",
-              }}
-            >
-              <option value="" disabled hidden>
-                카테고리를 선택하세요
-              </option>
-              {categories.map((category) => (
-                <option
-                  key={category}
-                  value={category}
-                  style={{ color: "black" }}
-                >
-                  {category}
-                </option>
-              ))}
-            </select>
-          </Categorycontents>
-        </CategorySection>
-        <PriceSection>
-          <Pricelabel htmlFor="starting_price">경매 시작 금액</Pricelabel>
-          <PriceContents>
-            <div>
-              <Priceinput
-                type="text"
-                id="starting_price"
-                name="starting_price"
-                value={item.starting_price}
-                onChange={handlepriceChange}
-                placeholder="숫자만 입력하세요"
-              />
-              포인트
-            </div>
-            {item.starting_price && (
-              <KoreanCurrency>{koreanCurrency}</KoreanCurrency>
-            )}
-          </PriceContents>
-        </PriceSection>
-        <NameSection>
-          <Namelabel htmlFor="item_name">제품이름</Namelabel>
-          <NameInput
-            type="text"
-            id="item_name"
-            name="item_name"
-            value={item.item_name}
-            onChange={handleInputChange}
-            placeholder="제품명을 입력하세요"
-          />
-        </NameSection>
-        <DescriptionSection>
-          <Descriptionlabel htmlFor="detailed_description">
-            상세설명
-          </Descriptionlabel>
-          <Descriptiontextarea
-            id="detailed_description"
-            name="detailed_description"
-            value={item.detailed_description}
-            placeholder={
-              "내용을 입력해주세요\nex)\nSS급, 진품 여부, 직접 제작\n물품에 대한 설명을 해주세요!"
-            }
-            onChange={handleInputChange}
-          />
-        </DescriptionSection>
-        <SubmitButton onClick={() => validation()}>등록</SubmitButton>
+
+        <DeleteButton variant="dark" onClick={() => DeleteitemBT()}>
+          삭제
+        </DeleteButton>
+        <SubmitButton variant="secondary" onClick={() => validation()}>
+          수정
+        </SubmitButton>
       </Form>
     </Wrapper>
   );
 };
 
-export default EnrollmentPageComponent;
+export default Updatepage;
 
 const Wrapper = styled.div`
-  /* border: 1px solid black; */
+  /* border: 1px solid red; */
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
+  justify-content: center;
   align-items: center;
-  font-weight: bold;
 
-  @media only screen and (max-width: 280px) {
-    width: ${(props) => props.width}px;
-  }
-  @media only screen and (min-width: 280px) {
-    width: ${(props) => props.width}px;
-  }
-  @media only screen and (min-width: 360px) {
+  @media only screen and (max-width: 420px) {
+    width: 90vw;
   }
   @media only screen and (min-width: 420px) {
+    width: 90vw;
   }
   @media only screen and (min-width: 600px) {
-    width: 580px;
+    width: 90vw;
   }
   @media only screen and (min-width: 768px) {
   }
   @media only screen and (min-width: 992px) {
-    width: 700px;
   }
   @media only screen and (min-width: 1200px) {
   }
@@ -477,24 +471,19 @@ const Wrapper = styled.div`
 `;
 
 const Form = styled.form`
-  /* border: 1px solid red; */
-  /* width: 650px; */
-
-  @media only screen and (max-width: 280px) {
-    width: 100%;
-  }
-  @media only screen and (min-width: 280px) {
-    width: 100%;
-  }
-  @media only screen and (min-width: 360px) {
+  @media only screen and (max-width: 420px) {
+    width: 280px;
   }
   @media only screen and (min-width: 420px) {
+    width: 380px;
   }
   @media only screen and (min-width: 600px) {
+    width: 400px;
   }
   @media only screen and (min-width: 768px) {
   }
   @media only screen and (min-width: 992px) {
+    width: 630px;
   }
   @media only screen and (min-width: 1200px) {
   }
@@ -504,31 +493,24 @@ const Form = styled.form`
 //타이틀
 const Title = styled.div`
   font-family: "KBO-Dia-Gothic_bold";
-
+  font-size: 20pt;
   color: darkslateblue;
+  height: 50px;
 
-  @media only screen and (max-width: 280px) {
-    font-size: 20pt;
-    margin: 0 0 10px 0;
-    height: 30px;
-  }
-  @media only screen and (min-width: 280px) {
-    margin: 0 0 10px 0;
-    font-size: 20pt;
-    height: 30px;
-  }
-  @media only screen and (min-width: 360px) {
+  @media only screen and (max-width: 420px) {
+    margin: 0 0 5px 0;
   }
   @media only screen and (min-width: 420px) {
+    margin: 5px;
   }
   @media only screen and (min-width: 600px) {
+    margin: 5px;
   }
   @media only screen and (min-width: 768px) {
-    height: 40px;
-    font-size: 24pt;
-    font-weight: bolder;
+    margin: 5px;
   }
   @media only screen and (min-width: 992px) {
+    margin: 20px;
   }
   @media only screen and (min-width: 1200px) {
   }
@@ -537,31 +519,33 @@ const Title = styled.div`
 `;
 //경매시작시간
 const TimeSection = styled.div`
-  /* border: 1px solid black; */
+  font-size: 12pt;
   font-family: "KBO-Dia-Gothic_medium";
   color: black;
-  margin: 0 0 10px 0;
-  @media only screen and (max-width: 280px) {
-    font-size: 11pt;
+
+  @media only screen and (max-width: 420px) {
     display: flex;
     flex-direction: column;
     align-items: start;
-  }
-  @media only screen and (min-width: 280px) {
-    font-size: 11pt;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-  }
-  @media only screen and (min-width: 360px) {
   }
   @media only screen and (min-width: 420px) {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
   }
   @media only screen and (min-width: 600px) {
+    display: flex;
+    align-items: start;
   }
   @media only screen and (min-width: 768px) {
+    display: flex;
+    align-items: start;
   }
   @media only screen and (min-width: 992px) {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 50px;
   }
   @media only screen and (min-width: 1200px) {
   }
@@ -569,26 +553,24 @@ const TimeSection = styled.div`
   }
 `;
 const Timelabel = styled.label`
-  /* border: 1px solid blue; */
-
-  @media only screen and (max-width: 280px) {
-    width: 150px;
-    margin: 5px 0 0 0;
+  @media only screen and (max-width: 420px) {
+    width: 100px;
+    margin: 5px;
   }
-  @media only screen and (min-width: 280px) {
-    width: 150px;
-    margin: 5px 0 0 0;
-  }
-  @media only screen and (min-width: 360px) {
-  }
-
   @media only screen and (min-width: 420px) {
+    width: 100px;
+    margin: 5px;
   }
   @media only screen and (min-width: 600px) {
+    width: 100px;
+    margin: 5px;
   }
   @media only screen and (min-width: 768px) {
   }
   @media only screen and (min-width: 992px) {
+    width: 100px;
+    padding: 0px;
+    margin: 0 50px;
   }
   @media only screen and (min-width: 1200px) {
   }
@@ -597,107 +579,49 @@ const Timelabel = styled.label`
 `;
 
 const Timecontents = styled.div`
-  /* border: 1px solid blue; */
   display: flex;
 `;
 
 const StyledDatePicker = styled(DatePicker)`
   text-align: center;
-  /* DatePicker 화살표 숨기기 */
+  border-radius: 10px;
 
-  @media only screen and (max-width: 280px) {
-    width: 120px;
-    border-radius: 10px;
-  }
-  @media only screen and (min-width: 280px) {
-    width: 130px;
-    border-radius: 10px;
-  }
-  @media only screen and (min-width: 360px) {
-    width: 170px;
-  }
-  @media only screen and (min-width: 420px) {
-  }
-  @media only screen and (min-width: 600px) {
-  }
-  @media only screen and (min-width: 768px) {
-  }
-  @media only screen and (min-width: 992px) {
-  }
-  @media only screen and (min-width: 1200px) {
-  }
-  @media only screen and (min-width: 1480px) {
-  }
+  width: 140px;
 `;
 const StyledDatePicker2 = styled(DatePicker)`
   margin: 0 5px;
   text-align: center;
-
-  @media only screen and (max-width: 280px) {
-    width: 120px;
-    border-radius: 10px;
-  }
-  @media only screen and (min-width: 280px) {
-    width: 130px;
-    border-radius: 10px;
-  }
-  @media only screen and (min-width: 360px) {
-    width: 170px;
-  }
-  @media only screen and (min-width: 420px) {
-  }
-  @media only screen and (min-width: 600px) {
-  }
-  @media only screen and (min-width: 768px) {
-  }
-  @media only screen and (min-width: 992px) {
-  }
-  @media only screen and (min-width: 1200px) {
-  }
-  @media only screen and (min-width: 1480px) {
-  }
-  .react-datepicker__time-list {
-    list-style: none;
-    margin: 0;
-    height: calc(195px + 1.7rem / 2);
-    overflow-y: scroll;
-    padding-right: 0;
-    padding-left: 0;
-    width: 100%;
-    box-sizing: content-box;
-    &:hover {
-      background: #fd9800;
-    }
-  }
+  border-radius: 10px;
+  width: 140px;
 `;
 //카테고리
 const CategorySection = styled.div`
   /* border: 1px solid black; */
-
+  font-size: 12pt;
   font-family: "KBO-Dia-Gothic_medium";
   color: black;
-  margin: 0 0 10px 0;
-  @media only screen and (max-width: 280px) {
+
+  @media only screen and (max-width: 420px) {
     display: flex;
     flex-direction: column;
     align-items: start;
-    font-size: 11pt;
-  }
-  @media only screen and (min-width: 280px) {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    font-size: 11pt;
-  }
-  @media only screen and (min-width: 360px) {
   }
   @media only screen and (min-width: 420px) {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
   }
   @media only screen and (min-width: 600px) {
+    display: flex;
+    align-items: start;
   }
   @media only screen and (min-width: 768px) {
   }
   @media only screen and (min-width: 992px) {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 50px;
   }
   @media only screen and (min-width: 1200px) {
   }
@@ -705,26 +629,24 @@ const CategorySection = styled.div`
   }
 `;
 const Categorylabel = styled.label`
-  /* border: 1px solid blue; */
-
-  @media only screen and (max-width: 280px) {
-    width: 150px;
-    margin: 5px 0 0 0;
+  @media only screen and (max-width: 420px) {
+    width: 100px;
+    margin: 5px;
   }
-  @media only screen and (min-width: 280px) {
-    width: 150px;
-    margin: 5px 0 0 0;
-  }
-  @media only screen and (min-width: 360px) {
-  }
-
   @media only screen and (min-width: 420px) {
+    width: 100px;
+    margin: 5px;
   }
   @media only screen and (min-width: 600px) {
+    width: 100px;
+    margin: 5px;
   }
   @media only screen and (min-width: 768px) {
   }
   @media only screen and (min-width: 992px) {
+    width: 100px;
+    padding: 0px;
+    margin: 0 50px;
   }
   @media only screen and (min-width: 1200px) {
   }
@@ -732,62 +654,36 @@ const Categorylabel = styled.label`
   }
 `;
 const Categorycontents = styled.div`
-  select {
-    height: 30px;
-    padding: 0 5px;
-    @media only screen and (max-width: 280px) {
-      min-width: 200px;
-      border-radius: 10px;
-    }
-    @media only screen and (min-width: 280px) {
-      min-width: 200px;
-      border-radius: 10px;
-    }
-    @media only screen and (min-width: 360px) {
-    }
-    @media only screen and (min-width: 420px) {
-    }
-    @media only screen and (min-width: 420px) {
-    }
-    @media only screen and (min-width: 600px) {
-    }
-    @media only screen and (min-width: 768px) {
-    }
-    @media only screen and (min-width: 992px) {
-    }
-    @media only screen and (min-width: 1200px) {
-    }
-    @media only screen and (min-width: 1480px) {
-    }
-  }
+  /* border: 1px solid blue; */
 `;
 
 //제품이름
 const NameSection = styled.div`
+  font-size: 12pt;
   font-family: "KBO-Dia-Gothic_medium";
   color: black;
-  margin: 0 0 10px 0;
-  @media only screen and (max-width: 280px) {
+
+  @media only screen and (max-width: 420px) {
     display: flex;
     flex-direction: column;
     align-items: start;
-    font-size: 11pt;
-  }
-  @media only screen and (min-width: 280px) {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    font-size: 11pt;
-  }
-  @media only screen and (min-width: 360px) {
   }
   @media only screen and (min-width: 420px) {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
   }
   @media only screen and (min-width: 600px) {
+    display: flex;
+    align-items: start;
   }
   @media only screen and (min-width: 768px) {
   }
   @media only screen and (min-width: 992px) {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 50px;
   }
   @media only screen and (min-width: 1200px) {
   }
@@ -795,89 +691,58 @@ const NameSection = styled.div`
   }
 `;
 const Namelabel = styled.label`
-  /* border: 1px solid blue; */
-
-  @media only screen and (max-width: 280px) {
-    width: 150px;
-    margin: 5px 0 0 0;
+  @media only screen and (max-width: 420px) {
+    width: 100px;
+    margin: 5px;
   }
-  @media only screen and (min-width: 280px) {
-    width: 150px;
-    margin: 5px 0 0 0;
-  }
-  @media only screen and (min-width: 360px) {
-  }
-
   @media only screen and (min-width: 420px) {
+    width: 100px;
+    margin: 5px;
   }
   @media only screen and (min-width: 600px) {
+    width: 100px;
+    margin: 5px;
   }
   @media only screen and (min-width: 768px) {
   }
   @media only screen and (min-width: 992px) {
+    width: 100px;
+    padding: 0px;
+    margin: 0 50px;
   }
   @media only screen and (min-width: 1200px) {
   }
   @media only screen and (min-width: 1480px) {
   }
 `;
-const NameInput = styled.input`
-  height: 30px;
 
-  border-width: 1.8px;
-  padding: 10px;
-
-  @media only screen and (max-width: 280px) {
-    width: 100%;
-    border-radius: 10px;
-  }
-
-  @media only screen and (min-width: 280px) {
-    width: 100%;
-    border-radius: 10px;
-  }
-  @media only screen and (min-width: 360px) {
-  }
-  @media only screen and (min-width: 420px) {
-  }
-  @media only screen and (min-width: 600px) {
-  }
-  @media only screen and (min-width: 768px) {
-  }
-  @media only screen and (min-width: 992px) {
-  }
-  @media only screen and (min-width: 1200px) {
-  }
-  @media only screen and (min-width: 1480px) {
-  }
-`;
 //시작가격
 const PriceSection = styled.div`
+  font-size: 12pt;
   font-family: "KBO-Dia-Gothic_medium";
   color: black;
-  margin: 0 0 10px 0;
-  @media only screen and (max-width: 280px) {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    font-size: 11pt;
-  }
-  @media only screen and (min-width: 280px) {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    font-size: 11pt;
-  }
-  @media only screen and (min-width: 360px) {
-  }
 
+  @media only screen and (max-width: 420px) {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+  }
   @media only screen and (min-width: 420px) {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
   }
   @media only screen and (min-width: 600px) {
+    display: flex;
+    align-items: start;
   }
   @media only screen and (min-width: 768px) {
   }
   @media only screen and (min-width: 992px) {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 70px;
   }
   @media only screen and (min-width: 1200px) {
   }
@@ -885,27 +750,24 @@ const PriceSection = styled.div`
   }
 `;
 const Pricelabel = styled.label`
-  /* border: 1px solid blue; */
-
-  @media only screen and (max-width: 280px) {
-    width: 150px;
-    margin: 5px 0 0 0;
-  }
-  @media only screen and (min-width: 280px) {
-    width: 150px;
-    margin: 5px 0 0 0;
-  }
-  @media only screen and (min-width: 360px) {
+  @media only screen and (max-width: 420px) {
+    width: 100px;
+    margin: 5px;
   }
   @media only screen and (min-width: 420px) {
-  }
-  @media only screen and (min-width: 420px) {
+    width: 100px;
+    margin: 5px;
   }
   @media only screen and (min-width: 600px) {
+    width: 100px;
+    margin: 5px;
   }
   @media only screen and (min-width: 768px) {
   }
   @media only screen and (min-width: 992px) {
+    width: 100px;
+    padding: 0px;
+    margin: 0 50px;
   }
   @media only screen and (min-width: 1200px) {
   }
@@ -917,64 +779,9 @@ const PriceContents = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-
-  @media only screen and (max-width: 280px) {
-    font-size: 9pt;
-  }
-  @media only screen and (min-width: 280px) {
-    font-size: 9pt;
-  }
-  @media only screen and (min-width: 360px) {
-    font-size: 9pt;
-  }
-  @media only screen and (min-width: 420px) {
-  }
-  @media only screen and (min-width: 420px) {
-  }
-  @media only screen and (min-width: 600px) {
-  }
-  @media only screen and (min-width: 768px) {
-  }
-  @media only screen and (min-width: 992px) {
-  }
-  @media only screen and (min-width: 1200px) {
-  }
-  @media only screen and (min-width: 1480px) {
-  }
 `;
 
-const Priceinput = styled.input`
-  height: 30px;
-  border-width: 1.8px;
-  padding: 10px;
-
-  @media only screen and (max-width: 280px) {
-    min-width: 200px;
-
-    font-size: 11pt;
-    border-radius: 10px;
-  }
-  @media only screen and (min-width: 280px) {
-    min-width: 200px;
-
-    font-size: 11pt;
-    border-radius: 10px;
-  }
-  @media only screen and (min-width: 360px) {
-  }
-  @media only screen and (min-width: 420px) {
-  }
-  @media only screen and (min-width: 600px) {
-  }
-  @media only screen and (min-width: 768px) {
-  }
-  @media only screen and (min-width: 992px) {
-  }
-  @media only screen and (min-width: 1200px) {
-  }
-  @media only screen and (min-width: 1480px) {
-  }
-`;
+const Priceinput = styled.input``;
 
 const KoreanCurrency = styled.div`
   font-family: "Roboto-Regular";
@@ -982,28 +789,14 @@ const KoreanCurrency = styled.div`
 
 // 상세설명
 const DescriptionSection = styled.div`
+  font-size: 12pt;
   font-family: "KBO-Dia-Gothic_medium";
   color: black;
-  margin: 0 0 10px 0;
-  @media only screen and (max-width: 280px) {
+
+  @media only screen and (max-width: 420px) {
     display: flex;
     flex-direction: column;
     align-items: start;
-    font-size: 11pt;
-  }
-  @media only screen and (min-width: 280px) {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    font-size: 11pt;
-  }
-  @media only screen and (min-width: 360px) {
-  }
-  @media only screen and (min-width: 420px) {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    font-size: 12pt;
   }
   @media only screen and (min-width: 420px) {
     display: flex;
@@ -1017,6 +810,10 @@ const DescriptionSection = styled.div`
   @media only screen and (min-width: 768px) {
   }
   @media only screen and (min-width: 992px) {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 120px;
   }
   @media only screen and (min-width: 1200px) {
   }
@@ -1025,26 +822,24 @@ const DescriptionSection = styled.div`
 `;
 
 const Descriptionlabel = styled.label`
-  /* border: 1px solid blue; */
-
-  @media only screen and (max-width: 280px) {
-    width: 150px;
-    margin: 5px 0 0 0;
-  }
-  @media only screen and (min-width: 280px) {
-    width: 150px;
-    margin: 5px 0 0 0;
-  }
-  @media only screen and (min-width: 360px) {
+  @media only screen and (max-width: 420px) {
+    width: 100px;
+    margin: 5px;
   }
   @media only screen and (min-width: 420px) {
+    width: 100px;
+    margin: 5px;
   }
-
   @media only screen and (min-width: 600px) {
+    width: 100px;
+    margin: 5px;
   }
   @media only screen and (min-width: 768px) {
   }
   @media only screen and (min-width: 992px) {
+    width: 100px;
+    padding: 0px;
+    margin: 0 50px;
   }
   @media only screen and (min-width: 1200px) {
   }
@@ -1055,30 +850,26 @@ const Descriptionlabel = styled.label`
 const Descriptiontextarea = styled.textarea`
   font-family: "KBO-Dia-Gothic_light";
   padding: 2px 5px;
-
+  font-size: 11pt;
+  border-radius: 10px;
   resize: none;
-  @media only screen and (max-width: 280px) {
-    width: 100%;
-    height: 100px;
-    font-size: 10pt;
-    border-radius: 10px;
-  }
-  @media only screen and (min-width: 280px) {
-    width: 100%;
-    height: 100px;
-    font-size: 10pt;
-    border-radius: 10px;
-  }
-  @media only screen and (min-width: 360px) {
+  @media only screen and (max-width: 420px) {
+    width: 280px;
+    height: 70px;
   }
   @media only screen and (min-width: 420px) {
+    width: 300px;
+    height: 100px;
   }
   @media only screen and (min-width: 600px) {
+    width: 300px;
+    height: 100px;
   }
   @media only screen and (min-width: 768px) {
   }
   @media only screen and (min-width: 992px) {
-    height: 200px;
+    width: 400px;
+    height: 120px;
   }
   @media only screen and (min-width: 1200px) {
   }
@@ -1088,28 +879,31 @@ const Descriptiontextarea = styled.textarea`
 
 //썸네일
 const ThumbnailSection = styled.div`
+  font-size: 12pt;
   font-family: "KBO-Dia-Gothic_medium";
   color: black;
 
-  @media only screen and (max-width: 280px) {
+  @media only screen and (max-width: 420px) {
     display: flex;
     flex-direction: column;
-    font-size: 11pt;
-  }
-  @media only screen and (min-width: 280px) {
-    display: flex;
-    flex-direction: column;
-    font-size: 11pt;
-  }
-  @media only screen and (min-width: 360px) {
+    align-items: start;
   }
   @media only screen and (min-width: 420px) {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
   }
   @media only screen and (min-width: 600px) {
+    display: flex;
+    align-items: start;
   }
   @media only screen and (min-width: 768px) {
   }
   @media only screen and (min-width: 992px) {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 240px;
   }
   @media only screen and (min-width: 1200px) {
   }
@@ -1118,25 +912,24 @@ const ThumbnailSection = styled.div`
 `;
 
 const Thumbnaillabel = styled.label`
-  /* border: 1px solid blue; */
-
-  @media only screen and (max-width: 280px) {
-    width: 150px;
-    margin: 5px 0 0 0;
-  }
-  @media only screen and (min-width: 280px) {
-    width: 150px;
-    margin: 5px 0 0 0;
-  }
-  @media only screen and (min-width: 360px) {
+  @media only screen and (max-width: 420px) {
+    width: 100px;
+    margin: 5px;
   }
   @media only screen and (min-width: 420px) {
+    width: 100px;
+    margin: 5px;
   }
   @media only screen and (min-width: 600px) {
+    width: 100px;
+    margin: 5px;
   }
   @media only screen and (min-width: 768px) {
   }
   @media only screen and (min-width: 992px) {
+    width: 100px;
+    padding: 0px;
+    margin: 0 50px;
   }
   @media only screen and (min-width: 1200px) {
   }
@@ -1150,41 +943,13 @@ const Thumbnaillabelno = styled.label`
   }
   padding: 36px 40px;
   border: 1px lightgray;
-
+  border-radius: 10px;
   background-color: lightgray;
-
-  @media only screen and (max-width: 280px) {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    font-size: 11pt;
-    border-radius: 10px;
-  }
-  @media only screen and (min-width: 280px) {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    font-size: 11pt;
-    border-radius: 10px;
-  }
-  @media only screen and (min-width: 360px) {
-  }
-  @media only screen and (min-width: 420px) {
-  }
-  @media only screen and (min-width: 600px) {
-  }
-  @media only screen and (min-width: 768px) {
-  }
-  @media only screen and (min-width: 992px) {
-  }
-  @media only screen and (min-width: 1200px) {
-  }
-  @media only screen and (min-width: 1480px) {
-  }
+  font-size: 10pt;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Thumbnaillabelfor = styled.label`
@@ -1195,21 +960,136 @@ const Thumbnaillabelfor = styled.label`
 
 const ThumbnailWrapper = styled.div`
   position: relative;
-  height: 200px;
   overflow: hidden;
   border-radius: 10px;
-  width: 100%;
+  @media only screen and (max-width: 420px) {
+    width: 100px;
+    height: 100px;
+  }
+  @media only screen and (min-width: 420px) {
+    width: 100px;
+    height: 100px;
+  }
+  @media only screen and (min-width: 600px) {
+    width: 100px;
+    height: 100px;
+  }
+  @media only screen and (min-width: 768px) {
+    width: 100px;
+    height: 100px;
+  }
+  @media only screen and (min-width: 992px) {
+    width: 200px;
+    height: 200px;
+  }
+  @media only screen and (min-width: 1200px) {
+  }
+  @media only screen and (min-width: 1480px) {
+  }
 `;
 
 const Thumbnailimg = styled.img`
   width: 100%;
   height: 100%;
-  object-fit: contain; /* 한쪽 축에 맞게 이미지 표시 */
+  object-fit: cover;
   background-repeat: no-repeat;
-  background-size: contain; /* 배경 이미지 사이즈 조정 */
+  background-size: cover;
 `;
+//상세 사진
+// const DetailedImagesSection = styled.div`
+//   display: flex;
+//   font-size: 12pt;
+//   font-family: "KBO-Dia-Gothic_medium";
+//   color: black;
+//   align-items: center;
+//   height: 170px;
+// `;
+
+// const DetailedImageslabel = styled.label`
+//   /* border: 1px solid blue; */
+//   margin: 0 50px;
+//   width: 15%;
+// `;
+
+// const DetailedImageslabelno = styled.label`
+//   :hover {
+//     cursor: pointer;
+//   }
+//   padding: 36px 40px;
+//   border: 1px lightgray;
+//   border-radius: 10px;
+//   background-color: lightgray;
+//   font-size: 10pt;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
+// `;
+
+// const DetailedImageslabelfor = styled.label`
+//   :hover {
+//     cursor: pointer;
+//   }
+//   padding: 34px 20px;
+//   border: 1px lightgray;
+//   border-radius: 10px;
+//   background-color: lightgray;
+//   font-size: 10pt;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
+// `;
+
+// const DetailedImagesContents = styled.div`
+//   display: flex;
+//   flex-direction: row;
+//   /* flex-wrap: wrap; */
+// `;
+
 //등록 버튼
 
 const SubmitButton = styled(Button)`
   float: right;
+  @media only screen and (max-width: 420px) {
+    margin: 10px 0px 10px 10px;
+  }
+  @media only screen and (min-width: 420px) {
+    margin: 10px 0px 10px 10px;
+  }
+  @media only screen and (min-width: 600px) {
+    margin: 10px 0px 10px 10px;
+  }
+  @media only screen and (min-width: 768px) {
+    margin: 10px 0px 10px 10px;
+  }
+  @media only screen and (min-width: 992px) {
+    margin: 10px 25px 10px 10px;
+  }
+  @media only screen and (min-width: 1200px) {
+  }
+  @media only screen and (min-width: 1480px) {
+  }
+`;
+
+const DeleteButton = styled(Button)`
+  float: left;
+  @media only screen and (max-width: 420px) {
+    margin: 10px 0px 10px 0px;
+  }
+  @media only screen and (min-width: 420px) {
+    margin: 10px 0px 10px 0px;
+  }
+  @media only screen and (min-width: 600px) {
+    margin: 10px 0px 10px 10px;
+  }
+  @media only screen and (min-width: 768px) {
+  }
+  @media only screen and (min-width: 992px) {
+    margin: 10px 25px 10px 10px;
+  }
+  @media only screen and (min-width: 1200px) {
+  }
+  @media only screen and (min-width: 1480px) {
+  }
 `;

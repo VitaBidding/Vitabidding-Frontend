@@ -8,12 +8,10 @@ import { FaRegUserCircle } from "react-icons/fa";
 import Dropdown from "react-bootstrap/Dropdown";
 import Widgetpage from "./tab/widget.page";
 import { requestLogout } from "../../lib/request";
-
 import Enrollmentpage from "./tab/enrollment.page";
+import Listpage from "./tab/list.page";
 // import Pointpage from "./tab/point.page";
-// import Listpage from "./Tab/listpage";
-// import Info from "./tab/info.page";
-// import Withdrawalpage from "./tab/withdrawal.page";
+import Info from "./tab/info.page";
 
 function Index(props) {
   const [show, setShow] = useState(false);
@@ -57,10 +55,9 @@ function Index(props) {
           <Route exact path="/" element={<Widgetpage />} />
           <Route path="widget" element={<Widgetpage />} />
           <Route path="enrollment" element={<Enrollmentpage />} />
-          {/* <Route path="list" element={<Listpage />} /> */}
+          <Route path="list" element={<Listpage />} />
           {/* <Route path="point" element={<Pointpage />} /> */}
-          {/* <Route path="info" element={<Info />} /> */}
-          {/* <Route path="withdrawal" element={<Withdrawalpage />} /> */}
+          <Route path="info" element={<Info />} />
         </Routes>
       </Col>
     </Wrapper>
@@ -151,7 +148,6 @@ const Col = styled.div`
   @media only screen and (min-width: 768px) {
   }
   @media only screen and (min-width: 992px) {
-    padding: 0.5vw 5vw;
     width: 90%;
   }
   @media only screen and (min-width: 1200px) {
@@ -174,7 +170,6 @@ const Topbar = styled.div`
   @media only screen and (min-width: 768px) {
   }
   @media only screen and (min-width: 992px) {
-    padding: 0.5vw 5vw;
     width: 90%;
   }
   @media only screen and (min-width: 1200px) {

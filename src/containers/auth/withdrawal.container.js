@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Withdrawal from "../../../components/Creator/info/Withdrawal";
+import Withdrawal from "../../components/auth/withdrawal";
 
 function WithdrawalContainer(props) {
   return (

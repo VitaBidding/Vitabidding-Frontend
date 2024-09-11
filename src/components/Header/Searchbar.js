@@ -17,7 +17,7 @@ function Searchbar(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const onClickSearch = () => {
-    navigate(`/`);
+    navigate(`/list`);
     dispatch(search(searchField));
   };
   const onKeyPress = (e) => {
@@ -37,7 +37,11 @@ function Searchbar(props) {
             onChange={onChangesearchField}
             onKeyPress={onKeyPress}
           />
-          <Button className="button" variant="outline-primary" onClick={() => onClickSearch()}>
+          <Button
+            className="button"
+            variant="outline-primary"
+            onClick={() => onClickSearch()}
+          >
             <BsSearch />
           </Button>
         </InputGroup>
@@ -49,29 +53,27 @@ function Searchbar(props) {
 export default Searchbar;
 
 const SearchbarSection = styled.div`
-flex-wrap: nowrap;
+  flex-wrap: nowrap;
 
-
-    @media only screen and (max-width: 360px) {
-      width: 150px;
-    }
-    @media only screen and (min-width: 360px) {
-      width: 200px;
-    }
-    @media only screen and (min-width: 420px) {
-      width: 200px;
-    }
-    @media only screen and (min-width: 600px) {
-      width: 300px;
-    }
-    @media only screen and (min-width: 768px) {
-      width: 400px;
-    }
-    @media only screen and (min-width: 992px) {
-      width: 400px;
-    }
-    @media only screen and (min-width: 1200px) {
-      width: 500px;
-    }
-
+  @media only screen and (max-width: 360px) {
+    width: 150px;
+  }
+  @media only screen and (min-width: 360px) {
+    width: 200px;
+  }
+  @media only screen and (min-width: 420px) {
+    width: 200px;
+  }
+  @media only screen and (min-width: 600px) {
+    width: 300px;
+  }
+  @media only screen and (min-width: 768px) {
+    width: 400px;
+  }
+  @media only screen and (min-width: 992px) {
+    width: 400px;
+  }
+  @media only screen and (min-width: 1200px) {
+    width: 500px;
+  }
 `;

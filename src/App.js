@@ -9,12 +9,14 @@ import Info from "./pages/infopage/user.input";
 import TermsPageC from "./pages/termspage/terms.page.c";
 import TermsPageV from "./pages/termspage/terms.page.v";
 import Creatorpage from "./pages/creatorpage/index";
+import Withdrawalpage from "./pages/authpage/withdrawal.page";
 
 function App() {
   return (
     <Routes>
-      <Route exact path="/" element={<Mainpage />} />
+      <Route exact path="/*" element={<Mainpage />} />
       <Route path="/oauth" element={<Auth />} />
+      <Route path="/withdrawal" element={<Withdrawalpage />} />
       <Route path="/terms/viewer" element={<TermsagreedV />} />
       <Route path="/terms/creator" element={<TermsagreedC />} />
       <Route path="/terms/detail/viewer/*" element={<TermsPageV />} />

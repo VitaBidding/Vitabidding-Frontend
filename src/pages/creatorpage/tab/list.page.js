@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import ListContainer from "../../../containers/Creator/tab/ListContainer";
+import ListContainer from "../../../containers/creator/list.container";
 function Listpage(props) {
   return (
     <Wrapper>
@@ -16,5 +16,5 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center; /* 수평 중앙 정렬 */
-  height: 100vh;
+  height: 90%;
 `;

@@ -163,7 +163,7 @@ export const EnterPhoneNumber = async (userPhone) => {
 };
 //핸드폰 인증
 export const Certification = async (userPhone, CertificationNumber) => {
-  axios
+  await axios
     .post(
       `${process.env.REACT_APP_VITE_SERVER_URL}/sms/verify`,
       {
@@ -181,9 +181,69 @@ export const Certification = async (userPhone, CertificationNumber) => {
     .catch((error) => console.log(error));
 };
 
-//회원정보 갱신
+//회원정보 edit
+export const EditNickname = async (userNickname) => {
+  await axios
+    .patch(
+      `${process.env.REACT_APP_VITE_SERVER_URL}/edit/nickname`,
+      { nick_name: userNickname },
+      { withCredentials: true }
+    )
+    .catch((err) => {
+      console.error(err);
+    });
+};
+
+export const EditPhoneNumber = async (userPhone) => {
+  await axios
+    .patch(
+      `${process.env.REACT_APP_VITE_SERVER_URL}/edit/phone`,
+      { phone: userPhone },
+      { withCredentials: true }
+    )
+    .catch((err) => {
+      console.error(err);
+    });
+};
+
+export const EditAddress = async (
+  Zonecode,
+  FuAddress,
+  ExAddress,
+  DeAddress
+) => {
+  axios
+    .patch(
+      `${process.env.REACT_APP_VITE_SERVER_URL}/edit/address`,
+      {
+        Zonecode: Zonecode,
+        FuAddress: FuAddress,
+        ExAddress: ExAddress,
+        DeAddress: DeAddress,
+      },
+      { withCredentials: true }
+    )
+    .catch((err) => {
+      console.error(err);
+    });
+};
 
 //회원 탈퇴
+
+export const requestWithdrawal = async () => {
+  await axios
+    .delete(`${process.env.REACT_APP_VITE_SERVER_URL}/auth/delete`, {
+      withCredentials: true,
+    })
+    .then((res) => {
+      if (res.data.message === "회원탈퇴 성공") {
+        window.location.href = process.env.REACT_APP_MAIN_CLIENT_URL;
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+};
 
 //이용약관,개인정보 수집 및 동의 (뷰어)
 export const onclickURLAgreedV = async (checkItems) => {
@@ -269,7 +329,7 @@ export const Loadwidget = async () => {
     return;
   }
 };
-
+//---------------------물건 crud-----------------------------
 //물건등록
 
 export const EnrollmentItem = async (Data) => {
@@ -302,5 +362,71 @@ export const TimeCheck = async () => {
   } catch (error) {
     console.error("시간불러오기 실패", error);
     return false;
+  }
+};
+
+// 물건 조회
+
+export const fetchProducts = async () => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_SERVER_URL}/creator/products`,
+      {
+        withCredentials: true,
+      }
+    ); // 서버의 API 엔드포인트에 맞게 설정
+    return response;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+};
+
+// 물건 수정
+export const EditItem = async (Data) => {
+  try {
+    await axios.get(
+      `${process.env.REACT_APP_VITE_SERVER_URL}/creator/products/edit`,
+      Data,
+      {
+        withCredentials: true,
+      }
+    ); // 서버의 API 엔드포인트에 맞게 설정
+    return true;
+  } catch (error) {
+    console.error("물건 수정 실패", error);
+    return false;
+  }
+};
+
+//물건삭제
+export const DeleteItem = async (id) => {
+  try {
+    await axios.get(
+      `${process.env.REACT_APP_VITE_SERVER_URL}/creator/products/remove`,
+      { item_id: id },
+      { withCredentials: true }
+    ); // 서버의 API 엔드포인트에 맞게 설정
+    return true;
+  } catch (error) {
+    console.error("물건 삭제 실패", error);
+    return false;
+  }
+};
+
+//물건 전체 검색 조회
+
+export const getItemData = async () => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_VITE_SERVER_URL}/products`,
+      {
+        withCredentials: true,
+      }
+    );
+    return response.data.result;
+  } catch (err) {
+    console.error(err);
+    throw err; // 에러를 던져서 상위 함수에서 처리할 수 있게 함
   }
 };

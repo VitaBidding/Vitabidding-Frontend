@@ -4,17 +4,17 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import styled from "styled-components";
-import axios from "axios";
 import { useDaumPostcodePopup } from "react-daum-postcode";
-import {requestUserProfile} from "../../lib/request"
-import { EnterPhoneNumber,Certification } from "../../lib/request";
+import { requestUserProfile } from "../../lib/request";
+import { EnterPhoneNumber, Certification } from "../../lib/request";
 function Userinfo(props) {
   const [userName, setUserName] = useState("");
   const [userNameError, setUserNameError] = useState(false);
   const [userPhone, setUserPhone] = useState("");
   const [userPhoneError, setUserPhoneError] = useState(true);
   const [CertificationNumber, setCertificationNumber] = useState("");
-  const [CertificationNumberError, setCertificationNumberError] = useState(true);
+  const [CertificationNumberError, setCertificationNumberError] =
+    useState(true);
   const [timer, settimer] = useState(false);
   const [CertificationDisabled, setCertificationDisabled] = useState(true);
   const [min, setMin] = useState(3);
@@ -31,7 +31,8 @@ function Userinfo(props) {
   };
   const onChangeUserName = (e) => {
     const userNameRegex = /^[a-zA-Zㄱ-ㅎ|ㅏ-ㅣ|가-힣]{2,16}$/;
-    if (!e.target.value || userNameRegex.test(e.target.value)) setUserNameError(false);
+    if (!e.target.value || userNameRegex.test(e.target.value))
+      setUserNameError(false);
     else setUserNameError(true);
     setUserName(e.target.value);
   };
@@ -45,7 +46,8 @@ function Userinfo(props) {
 
   const onChangeCertification = (e) => {
     const userCertificationRegex = /^[0-9]{6}$/;
-    if (userCertificationRegex.test(e.target.value)) setCertificationNumberError(false);
+    if (userCertificationRegex.test(e.target.value))
+      setCertificationNumberError(false);
     else setCertificationNumberError(true);
     setCertificationNumber(e.target.value);
   };
@@ -55,7 +57,7 @@ function Userinfo(props) {
   const time = useRef(VALIDTIME);
   const timerId = useRef(null);
   const PhoneNumberRequestButton = () => {
-    EnterPhoneNumber(userPhone)
+    EnterPhoneNumber(userPhone);
     settimer(true);
     setCertificationDisabled(false);
     setTimeout(() => setCertificationDisabled(true), 179000);
@@ -84,11 +86,13 @@ function Userinfo(props) {
   }, [sec]);
 
   function CertificationBotton() {
-    const data= Certification(userPhone,CertificationNumber)
-    setCertificationSuccess(data)
+    const data = Certification(userPhone, CertificationNumber);
+    setCertificationSuccess(data);
   }
 
-  const open = useDaumPostcodePopup("//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js");
+  const open = useDaumPostcodePopup(
+    "//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
+  );
 
   const handleComplete = (data) => {
     let fullAddress = data.address;
@@ -99,7 +103,8 @@ function Userinfo(props) {
         extraAddress += data.bname;
       }
       if (data.buildingName !== "") {
-        extraAddress += extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
+        extraAddress +=
+          extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
       }
       fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
     }
@@ -116,19 +121,26 @@ function Userinfo(props) {
     });
   };
 
-
-
   return (
     <Section>
       <Form className="form">
         <Form.Label className="Label">추가정보입력</Form.Label>
         <div>&nbsp;</div>
         <Form.Group className="mb-3" controlId="formBasicName">
-          <Form.Control type="name" placeholder="이름" value={userName} onChange={onChangeUserName} />
+          <Form.Control
+            type="name"
+            placeholder="이름"
+            value={userName}
+            onChange={onChangeUserName}
+          />
           {userNameError && (
-            <Form.Text className="text-muted">한글이나 영어만 사용하여 2~16글자로 입력해주세요.</Form.Text>
+            <Form.Text className="text-muted">
+              한글이나 영어만 사용하여 2~16글자로 입력해주세요.
+            </Form.Text>
           )}
-          {!userNameError && <Form.Text className="text-muted">&nbsp;</Form.Text>}
+          {!userNameError && (
+            <Form.Text className="text-muted">&nbsp;</Form.Text>
+          )}
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicPhone">
           <InputGroup>
@@ -148,8 +160,14 @@ function Userinfo(props) {
               인증 요청
             </Button>
           </InputGroup>
-          {userPhoneError && <Form.Text className="text-muted">총 11자리의 숫자를 입력해주세요.</Form.Text>}
-          {!userPhoneError && <Form.Text className="text-muted">&nbsp;</Form.Text>}
+          {userPhoneError && (
+            <Form.Text className="text-muted">
+              총 11자리의 숫자를 입력해주세요.
+            </Form.Text>
+          )}
+          {!userPhoneError && (
+            <Form.Text className="text-muted">&nbsp;</Form.Text>
+          )}
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicPhone">
           <InputGroup>
@@ -162,16 +180,25 @@ function Userinfo(props) {
             />
             <Button
               variant="outline-info"
-              disabled={userPhoneError || CertificationNumberError || CertificationDisabled || CertificationSuccess}
+              disabled={
+                userPhoneError ||
+                CertificationNumberError ||
+                CertificationDisabled ||
+                CertificationSuccess
+              }
               onClick={() => CertificationBotton()}
             >
               인증 확인
             </Button>
           </InputGroup>
           {CertificationNumberError && (
-            <Form.Text className="text-muted">인증번호 6자리의 숫자를 입력해주세요.</Form.Text>
+            <Form.Text className="text-muted">
+              인증번호 6자리의 숫자를 입력해주세요.
+            </Form.Text>
           )}
-          {!CertificationNumberError && <Form.Text className="text-muted">&nbsp;</Form.Text>}
+          {!CertificationNumberError && (
+            <Form.Text className="text-muted">&nbsp;</Form.Text>
+          )}
           {timer && !CertificationSuccess && (
             <Timer className="timer">
               {min} 분 {sec} 초
@@ -179,21 +206,43 @@ function Userinfo(props) {
           )}
         </Form.Group>
         <Form.Label className="SMSLabel">
-          {CertificationSuccess && <Form.Text className="text-muted">SMS 인증 완료 되었습니다.</Form.Text>}
-          {!CertificationSuccess && <Form.Text className="text-muted">&nbsp;</Form.Text>}
+          {CertificationSuccess && (
+            <Form.Text className="text-muted">
+              SMS 인증 완료 되었습니다.
+            </Form.Text>
+          )}
+          {!CertificationSuccess && (
+            <Form.Text className="text-muted">&nbsp;</Form.Text>
+          )}
         </Form.Label>
         <Form.Group>
           <Row>
             <Col md="4">
-              <Form.Control className="address" type="text" placeholder="우편번호" value={Zonecode} disabled={true} />
+              <Form.Control
+                className="address"
+                type="text"
+                placeholder="우편번호"
+                value={Zonecode}
+                disabled={true}
+              />
             </Col>
             <Col>
-              <Button className="address-button" variant="outline-secondary" onClick={handleClick}>
+              <Button
+                className="address-button"
+                variant="outline-secondary"
+                onClick={handleClick}
+              >
                 주소찾기
               </Button>
             </Col>
           </Row>
-          <Form.Control className="address" type="text" placeholder="주소" value={FuAddress} disabled={true} />
+          <Form.Control
+            className="address"
+            type="text"
+            placeholder="주소"
+            value={FuAddress}
+            disabled={true}
+          />
           <Row>
             <Col>
               <Form.Control
@@ -205,18 +254,32 @@ function Userinfo(props) {
               />
             </Col>
             <Col md="4">
-              <Form.Control className="address" type="text" placeholder="참고항목" value={ExAddress} disabled={true} />
+              <Form.Control
+                className="address"
+                type="text"
+                placeholder="참고항목"
+                value={ExAddress}
+                disabled={true}
+              />
             </Col>
           </Row>
         </Form.Group>
         <Form.Label className="Label">
           <Form.Text className="text-muted">&nbsp;</Form.Text>
         </Form.Label>
-  
       </Form>
       <Nextbutton
         className="next"
-        onClick={() => requestUserProfile(userName, userPhone, Zonecode, FuAddress, ExAddress, DeAddress)}
+        onClick={() =>
+          requestUserProfile(
+            userName,
+            userPhone,
+            Zonecode,
+            FuAddress,
+            ExAddress,
+            DeAddress
+          )
+        }
         state={!userNameError && CertificationSuccess && AddressError}
         disabled={!(!userNameError && CertificationSuccess && AddressError)}
       >
@@ -244,7 +307,7 @@ const Section = styled.div`
     border-bottom: 2px solid lightgray;
     font-family: "NotoSansKR-Bold";
     color: gray;
-    font-weight:bold;
+    font-weight: bold;
     font-size: 20px;
   }
   .timer {
