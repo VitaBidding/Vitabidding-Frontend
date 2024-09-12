@@ -45,14 +45,20 @@ function ListData({ products, handleShow, ThandleShow, setupproduct }) {
               <Asection>
                 <Updatetd>
                   {product.item_status === "경매대기" ? (
-                    <UpButton variant="secondary" onClick={() => updateClick(product)}>
+                    <UpButton
+                      variant="secondary"
+                      onClick={() => updateClick(product)}
+                    >
                       수정
                     </UpButton>
                   ) : (
                     <div></div>
                   )}
                   {product.item_status === "결제완료" ? (
-                    <InButton variant="info" onClick={() => inputTrackingClick()}>
+                    <InButton
+                      variant="info"
+                      onClick={() => inputTrackingClick()}
+                    >
                       입력
                     </InButton>
                   ) : (
@@ -98,7 +104,9 @@ function ListData({ products, handleShow, ThandleShow, setupproduct }) {
                   </BThumbnailtd>
                   <BItemstatustd>{product.item_status}</BItemstatustd>
                   <Waybilltd>
-                    <Deliverycompany>{product.delivery_company}</Deliverycompany>
+                    <Deliverycompany>
+                      {product.delivery_company}
+                    </Deliverycompany>
                     <TrackingNumber>{product.trackingNumber}</TrackingNumber>
                   </Waybilltd>
                   <StartDatetd>{product.start_day}</StartDatetd>
@@ -186,20 +194,15 @@ const LScrollArea = styled.div`
     height: 60vh;
   }
   @media only screen and (min-width: 768px) {
-    height: 60vh;
+    height: 70vh;
     width: 396px;
   }
   @media only screen and (min-width: 992px) {
-    height: 60vh;
     width: 476px;
   }
   @media only screen and (min-width: 1200px) {
-    height: 60vh;
-    width: 476px;
   }
   @media only screen and (min-width: 1480px) {
-    height: 60vh;
-    width: 476px;
   }
 `;
 const RScrollArea = styled.div`
@@ -224,25 +227,18 @@ const RScrollArea = styled.div`
     height: 60vh;
   }
   @media only screen and (min-width: 420px) {
-    width: 1550px;
-    height: 60vh;
   }
   @media only screen and (min-width: 600px) {
-    width: 1550px;
-    height: 60vh;
   }
   @media only screen and (min-width: 768px) {
     width: 2000px;
-    height: 60vh;
+    height: 70vh;
   }
   @media only screen and (min-width: 992px) {
-    height: 60vh;
   }
   @media only screen and (min-width: 1200px) {
-    height: 60vh;
   }
   @media only screen and (min-width: 1480px) {
-    height: 60vh;
   }
 `;
 const Atable = styled.div``;

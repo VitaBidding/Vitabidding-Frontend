@@ -1,10 +1,11 @@
 import React from "react";
+import { Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 import SearchV from "../../containers/header/search.v";
 import LogoContainer from "../../containers/header/logo.container";
 import LoginContainer from "../../containers/header/login.container";
-import { Route, Routes } from "react-router-dom";
 import Listpage from "./list.page";
+import Itemdetailpage from "./item.detail.page";
 import "../../assets/bootstrap/bootstrapUnited.min.css";
 
 export default function Mainpage() {
@@ -19,7 +20,7 @@ export default function Mainpage() {
         <Routes>
           <Route exact path="/" element={<Listpage />} />
           <Route path="/list" element={<Listpage />} />
-          {/* <Route path="detail/:ItemID" element={<Itemdetailpage />} /> */}
+          <Route path="detail/:ItemID" element={<Itemdetailpage />} />
           {/* <Route path="point" element={<Pointpage />} /> */}
           {/* <Route path="bidlist" element={<BidList />} /> */}
           {/* <Route path="info" element={<Info />} /> */}
@@ -30,7 +31,7 @@ export default function Mainpage() {
   );
 }
 const Section = styled.div`
-  border: 1px solid violet;
+  /* border: 1px solid violet; */
   display: flex;
   justify-content: center;
   height: 100%;
@@ -63,6 +64,6 @@ const HeaderSection = styled.div`
 `;
 
 const BodySection = styled.div`
-  border: 1px solid blue;
+  /* border: 1px solid blue; */
   width: 100%;
 `;

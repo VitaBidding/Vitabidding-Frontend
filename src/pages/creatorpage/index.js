@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import { Route, Routes } from "react-router-dom";
+import styled from "styled-components";
 import Sidebar from "../../containers/sidebar/sidebar";
-import Offcanvas from "../../containers/sidebar/offcanvas";
+import Dropdown from "react-bootstrap/Dropdown";
 import { VscThreeBars } from "react-icons/vsc";
 import { FaRegUserCircle } from "react-icons/fa";
-import Dropdown from "react-bootstrap/Dropdown";
-import Widgetpage from "./tab/widget.page";
 import { requestLogout } from "../../lib/request";
+import Offcanvas from "../../containers/sidebar/offcanvas";
+import Dashboard from "../creatorpage/tab/creator.dashboard";
+import Widgetpage from "./tab/widget.page";
 import Enrollmentpage from "./tab/enrollment.page";
 import Listpage from "./tab/list.page";
 // import Pointpage from "./tab/point.page";
@@ -52,12 +53,12 @@ function Index(props) {
           </ThreeBarsButton>
         </Topbar>
         <Routes>
-          <Route exact path="/" element={<Widgetpage />} />
+          <Route exact path="/" element={<Dashboard />} />
           <Route path="widget" element={<Widgetpage />} />
           <Route path="enrollment" element={<Enrollmentpage />} />
           <Route path="list" element={<Listpage />} />
           {/* <Route path="point" element={<Pointpage />} /> */}
-          <Route path="info" element={<Info />} />
+          <Route path="info/*" element={<Info />} />
         </Routes>
       </Col>
     </Wrapper>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
+import Information from "./my.information";
 import MyAccount from "./my.account";
 
 function Info(props) {
@@ -12,14 +13,16 @@ function Info(props) {
         activeKey={key}
         id="fill-tab-example"
         onSelect={(k) => setKey(k)}
-        transition={false}
+        transition={true}
         className="mb-3"
         fill
       >
-        <Tab className="tab" eventKey="account" title="회원 정보">
+        <Tab className="tab1" eventKey="account" title="계좌 정보">
           <MyAccount />
         </Tab>
-        <Tab title="" disabled></Tab>
+        <Tab className="tab2" eventKey="information" title="회원 정보">
+          <Information />
+        </Tab>
         <Tab title="" disabled></Tab>
         <Tab title="" disabled></Tab>
         <Tab title="" disabled></Tab>
@@ -36,7 +39,7 @@ const InfoSection = styled.div`
   .mb-3 {
     font-weight: 800;
   }
-  .tab {
+  .tab2 {
     display: flex;
     justify-content: center;
   }

@@ -9,7 +9,7 @@ function onclickURLLogo() {
 export default function Logo() {
   return (
     <div>
-      <Logoimg src={Logopng} alt="" onClick={onclickURLLogo} />
+      <Logoimg src={Logopng} alt="" onClick={() => onclickURLLogo()} />
     </div>
   );
 }

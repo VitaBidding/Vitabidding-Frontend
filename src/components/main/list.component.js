@@ -110,7 +110,7 @@ function ListComponent(props) {
 
   const navigate = useNavigate();
   const DetailPage = (e) => {
-    navigate(`/viewer/detail/${e.id}`, { state: e });
+    navigate(`/detail/${e.id}`, { state: e });
   };
 
   const handlePageChange = (page) => {

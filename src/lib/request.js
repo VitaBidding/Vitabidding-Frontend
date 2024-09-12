@@ -329,6 +329,21 @@ export const Loadwidget = async () => {
     return;
   }
 };
+
+//통장계좌 받아오기
+export const Account = async () => {
+  try {
+    const res = await axios.get(
+      `${process.env.REACT_APP_VITE_SERVER_URL}/creator/account`,
+      {
+        withCredentials: true,
+      }
+    );
+    return res;
+  } catch {
+    return false;
+  }
+};
 //---------------------물건 crud-----------------------------
 //물건등록
 
