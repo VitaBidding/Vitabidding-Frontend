@@ -214,7 +214,7 @@ const ProductImage = styled.img`
   height: 280px;
   object-fit: cover;
   margin: 0px;
-  :hover {
+  &:hover {
     /* border: 1px solid #000; 보더 스타일 설정 */
     border-radius: 10px;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* 그림자 스타일 설정 */

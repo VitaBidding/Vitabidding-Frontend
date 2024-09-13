@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import Information from "./my.information";
-import MyAccount from "./my.account";
+import MyAccount from "./account.my";
 
 function Info(props) {
   const [key, setKey] = useState("account");

@@ -1,17 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { MdAccountBalanceWallet } from "react-icons/md";
 import { Button } from "react-bootstrap";
+import AccountModal from "./account.modal";
 function NonAccount() {
+  const [modalShow, setmodalShow] = useState(false);
+  const handlemodalClose = () => setmodalShow(false);
+  const handlemodalShow = () => setmodalShow(true);
   return (
     <Wrapper>
+      <AccountModal show={modalShow} handleClose={handlemodalClose} />
       &nbsp;
       <MdAccountBalanceWalletIcon />
       &nbsp;
       <TextSection1>등록된 계좌가 없습니다.</TextSection1>
       <TextSection2>계좌를 등록해 주세요.</TextSection2>
       &nbsp;
-      <AccoutButton>계좌 등록</AccoutButton>
+      <AccoutButton onClick={handlemodalShow}>계좌 등록</AccoutButton>
     </Wrapper>
   );
 }

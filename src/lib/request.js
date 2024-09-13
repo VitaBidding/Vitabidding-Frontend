@@ -331,10 +331,30 @@ export const Loadwidget = async () => {
 };
 
 //통장계좌 받아오기
-export const Account = async () => {
+export const Accountreq = async () => {
   try {
     const res = await axios.get(
-      `${process.env.REACT_APP_VITE_SERVER_URL}/creator/account`,
+      `${process.env.REACT_APP_VITE_SERVER_URL}/account`,
+      {
+        withCredentials: true,
+      }
+    );
+    return res;
+  } catch {
+    return false;
+  }
+};
+
+//통장 계좌 등록하기
+
+export const Accountregistration = async ({
+  selectedBank,
+  userAccountNumber,
+}) => {
+  try {
+    const res = await axios.get(
+      `${process.env.REACT_APP_VITE_SERVER_URL}/Accountregistration`,
+      { selectedBank, userAccountNumber },
       {
         withCredentials: true,
       }

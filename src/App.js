@@ -10,7 +10,7 @@ import TermsPageC from "./pages/termspage/terms.page.c";
 import TermsPageV from "./pages/termspage/terms.page.v";
 import Creatorpage from "./pages/creatorpage/index";
 import Withdrawalpage from "./pages/authpage/withdrawal.page";
-
+import "./assets/font/app.css";
 function App() {
   return (
     <Routes>

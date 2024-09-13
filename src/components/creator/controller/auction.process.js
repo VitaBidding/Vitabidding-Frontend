@@ -1,0 +1,146 @@
+import React from "react";
+import styled from "styled-components";
+import { Button } from "react-bootstrap";
+function AuctionProcess(setRunning, handleChoiceItem, handleplay, handlepuase) {
+  const handleStart = () => {
+    setRunning(true);
+
+    handleplay();
+  };
+
+  const handleStop = () => {
+    setRunning(false);
+
+    handlepuase();
+  };
+  return (
+    <Warpper>
+      <Title>경매 진행 버튼</Title>
+      <div>
+        <SelectButton variant="outline-light" onClick={handleChoiceItem}>
+          선택
+        </SelectButton>
+        <PlayButton variant="outline-info" onClick={handleStart}>
+          진행
+        </PlayButton>
+        <PuaseButton variant="outline-warning" onClick={handleStop}>
+          일시정지
+        </PuaseButton>
+      </div>
+    </Warpper>
+  );
+}
+
+export default AuctionProcess;
+
+const Warpper = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100%;
+  border-radius: 0 0 6px 6px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #242633;
+  @media only screen and (max-width: 280px) {
+  }
+  @media only screen and (min-width: 280px) {
+  }
+  @media only screen and (min-width: 360px) {
+  }
+  @media only screen and (min-width: 420px) {
+  }
+  @media only screen and (min-width: 600px) {
+  }
+  @media only screen and (min-width: 768px) {
+  }
+  @media only screen and (min-width: 992px) {
+  }
+  @media only screen and (min-width: 1200px) {
+  }
+  @media only screen and (min-width: 1480px) {
+  }
+`;
+const Title = styled.div`
+  color: #fff;
+  font-weight: bold;
+  margin: 5px;
+`;
+const SelectButton = styled(Button)`
+  @media only screen and (max-width: 280px) {
+    font-size: 16px;
+    margin: 3px;
+  }
+  @media only screen and (min-width: 280px) {
+    font-size: 16px;
+    margin: 3px;
+  }
+  @media only screen and (min-width: 360px) {
+  }
+  @media only screen and (min-width: 420px) {
+  }
+  @media only screen and (min-width: 600px) {
+    font-size: 20px;
+    margin: 5px;
+  }
+  @media only screen and (min-width: 768px) {
+  }
+  @media only screen and (min-width: 992px) {
+  }
+  @media only screen and (min-width: 1200px) {
+  }
+  @media only screen and (min-width: 1480px) {
+  }
+`;
+const PlayButton = styled(Button)`
+  @media only screen and (max-width: 280px) {
+    font-size: 16px;
+    margin: 3px;
+  }
+  @media only screen and (min-width: 280px) {
+    font-size: 16px;
+    margin: 3px;
+  }
+  @media only screen and (min-width: 360px) {
+  }
+  @media only screen and (min-width: 420px) {
+  }
+  @media only screen and (min-width: 600px) {
+    font-size: 20px;
+    margin: 5px;
+  }
+  @media only screen and (min-width: 768px) {
+  }
+  @media only screen and (min-width: 992px) {
+  }
+  @media only screen and (min-width: 1200px) {
+  }
+  @media only screen and (min-width: 1480px) {
+  }
+`;
+const PuaseButton = styled(Button)`
+  @media only screen and (max-width: 280px) {
+    font-size: 16px;
+    margin: 3px;
+  }
+  @media only screen and (min-width: 280px) {
+    font-size: 16px;
+    margin: 3px;
+  }
+  @media only screen and (min-width: 360px) {
+  }
+  @media only screen and (min-width: 420px) {
+  }
+  @media only screen and (min-width: 600px) {
+    font-size: 20px;
+    margin: 5px;
+  }
+  @media only screen and (min-width: 768px) {
+  }
+  @media only screen and (min-width: 992px) {
+  }
+  @media only screen and (min-width: 1200px) {
+  }
+  @media only screen and (min-width: 1480px) {
+  }
+`;

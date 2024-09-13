@@ -11,8 +11,9 @@ import Dashboard from "../creatorpage/tab/creator.dashboard";
 import Widgetpage from "./tab/widget.page";
 import Enrollmentpage from "./tab/enrollment.page";
 import Listpage from "./tab/list.page";
-// import Pointpage from "./tab/point.page";
+import Pointpage from "./tab/point.page";
 import Info from "./tab/info.page";
+import ControllerPage from "./tab/controller.page";
 
 function Index(props) {
   const [show, setShow] = useState(false);
@@ -57,7 +58,8 @@ function Index(props) {
           <Route path="widget" element={<Widgetpage />} />
           <Route path="enrollment" element={<Enrollmentpage />} />
           <Route path="list" element={<Listpage />} />
-          {/* <Route path="point" element={<Pointpage />} /> */}
+          <Route path="point" element={<Pointpage />} />
+          <Route path="controller" element={<ControllerPage />} />
           <Route path="info/*" element={<Info />} />
         </Routes>
       </Col>
