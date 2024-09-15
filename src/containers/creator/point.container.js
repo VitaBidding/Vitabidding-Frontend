@@ -123,8 +123,7 @@ const Section2 = styled.div`
 `;
 const Section3 = styled.div`
   /* border: 1px solid black; */
-  grid-column: 1 / 3;
-  grid-row: 3 / 7;
+
   border-radius: 10px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   overflow-x: auto;
@@ -142,12 +141,35 @@ const Section3 = styled.div`
   &::-webkit-scrollbar-thumb {
     background: #868e96;
     border-radius: 10px;
+  }
+  @media only screen and (max-width: 280px) {
+    grid-column: 1 / 5;
+    grid-row: 3 / 5;
+  }
+  @media only screen and (min-width: 280px) {
+    grid-column: 1 / 5;
+    grid-row: 3 / 5;
+  }
+  @media only screen and (min-width: 360px) {
+  }
+  @media only screen and (min-width: 420px) {
+  }
+  @media only screen and (min-width: 600px) {
+    grid-column: 1 / 3;
+    grid-row: 3 / 7;
+  }
+  @media only screen and (min-width: 768px) {
+  }
+  @media only screen and (min-width: 992px) {
+  }
+  @media only screen and (min-width: 1200px) {
+  }
+  @media only screen and (min-width: 1480px) {
   }
 `;
 const Section4 = styled.div`
   /* border: 1px solid black; */
-  grid-column: 3 / 5;
-  grid-row: 3 / 7;
+
   border-radius: 10px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   overflow-x: auto;
@@ -165,5 +187,29 @@ const Section4 = styled.div`
   &::-webkit-scrollbar-thumb {
     background: #868e96;
     border-radius: 10px;
+  }
+  @media only screen and (max-width: 280px) {
+    grid-column: 1 / 5;
+    grid-row: 5 / 7;
+  }
+  @media only screen and (min-width: 280px) {
+    grid-column: 1 / 5;
+    grid-row: 5 / 7;
+  }
+  @media only screen and (min-width: 360px) {
+  }
+  @media only screen and (min-width: 420px) {
+  }
+  @media only screen and (min-width: 600px) {
+    grid-column: 3 / 5;
+    grid-row: 3 / 7;
+  }
+  @media only screen and (min-width: 768px) {
+  }
+  @media only screen and (min-width: 992px) {
+  }
+  @media only screen and (min-width: 1200px) {
+  }
+  @media only screen and (min-width: 1480px) {
   }
 `;

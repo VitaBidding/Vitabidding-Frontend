@@ -1,17 +1,22 @@
 import React from "react";
 import styled from "styled-components";
 import { Button } from "react-bootstrap";
-function AuctionProcess(setRunning, handleChoiceItem, handleplay, handlepuase) {
+function AuctionProcess({
+  setRunning,
+  handleChoiceItem,
+  handleplay,
+  handlepuase,
+}) {
   const handleStart = () => {
     setRunning(true);
 
-    handleplay();
+    // handleplay();
   };
 
   const handleStop = () => {
     setRunning(false);
 
-    handlepuase();
+    // handlepuase();
   };
   return (
     <Warpper>
@@ -37,18 +42,28 @@ const Warpper = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
-  border-radius: 0 0 6px 6px;
+  border-radius: 6px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   background-color: #242633;
+`;
+const Title = styled.div`
+  color: #fff;
+  font-weight: bold;
+
+  margin: 2px;
   @media only screen and (max-width: 280px) {
+    font-size: 9pt;
   }
   @media only screen and (min-width: 280px) {
+    font-size: 9pt;
   }
+
   @media only screen and (min-width: 360px) {
   }
   @media only screen and (min-width: 420px) {
+    font-size: 11pt;
   }
   @media only screen and (min-width: 600px) {
   }
@@ -61,33 +76,31 @@ const Warpper = styled.div`
   @media only screen and (min-width: 1480px) {
   }
 `;
-const Title = styled.div`
-  color: #fff;
-  font-weight: bold;
-  margin: 5px;
-`;
 const SelectButton = styled(Button)`
   @media only screen and (max-width: 280px) {
     font-size: 16px;
     margin: 3px;
+    padding: 4px 8px;
   }
   @media only screen and (min-width: 280px) {
     font-size: 16px;
     margin: 3px;
+    padding: 4px 8px;
   }
   @media only screen and (min-width: 360px) {
   }
   @media only screen and (min-width: 420px) {
   }
   @media only screen and (min-width: 600px) {
-    font-size: 20px;
-    margin: 5px;
   }
   @media only screen and (min-width: 768px) {
   }
   @media only screen and (min-width: 992px) {
   }
   @media only screen and (min-width: 1200px) {
+    font-size: 20px;
+    margin: 5px;
+    padding: 6px 12px;
   }
   @media only screen and (min-width: 1480px) {
   }
@@ -96,24 +109,27 @@ const PlayButton = styled(Button)`
   @media only screen and (max-width: 280px) {
     font-size: 16px;
     margin: 3px;
+    padding: 4px 8px;
   }
   @media only screen and (min-width: 280px) {
     font-size: 16px;
     margin: 3px;
+    padding: 4px 8px;
   }
   @media only screen and (min-width: 360px) {
   }
   @media only screen and (min-width: 420px) {
   }
   @media only screen and (min-width: 600px) {
-    font-size: 20px;
-    margin: 5px;
   }
   @media only screen and (min-width: 768px) {
   }
   @media only screen and (min-width: 992px) {
   }
   @media only screen and (min-width: 1200px) {
+    font-size: 20px;
+    margin: 5px;
+    padding: 6px 12px;
   }
   @media only screen and (min-width: 1480px) {
   }
@@ -122,24 +138,27 @@ const PuaseButton = styled(Button)`
   @media only screen and (max-width: 280px) {
     font-size: 16px;
     margin: 3px;
+    padding: 4px 8px;
   }
   @media only screen and (min-width: 280px) {
     font-size: 16px;
     margin: 3px;
+    padding: 4px 8px;
   }
   @media only screen and (min-width: 360px) {
   }
   @media only screen and (min-width: 420px) {
   }
   @media only screen and (min-width: 600px) {
-    font-size: 20px;
-    margin: 5px;
   }
   @media only screen and (min-width: 768px) {
   }
   @media only screen and (min-width: 992px) {
   }
   @media only screen and (min-width: 1200px) {
+    font-size: 20px;
+    margin: 5px;
+    padding: 6px 12px;
   }
   @media only screen and (min-width: 1480px) {
   }

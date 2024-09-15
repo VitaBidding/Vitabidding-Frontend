@@ -125,7 +125,7 @@ function Userinfo(props) {
     <Section>
       <Form className="form">
         <Form.Label className="Label">추가정보입력</Form.Label>
-        <div>&nbsp;</div>
+
         <Form.Group className="mb-3" controlId="formBasicName">
           <Form.Control
             type="name"
@@ -300,25 +300,98 @@ const Section = styled.div`
   flex-direction: column;
   align-items: center;
   .form {
-    width: 600px;
+    @media only screen and (max-width: 280px) {
+      width: 250px;
+    }
+    @media only screen and (min-width: 280px) {
+      width: 250px;
+    }
+    @media only screen and (min-width: 360px) {
+      width: 330px;
+    }
+    @media only screen and (min-width: 420px) {
+      width: 390px;
+    }
+    @media only screen and (min-width: 600px) {
+      width: 570px;
+    }
+    @media only screen and (min-width: 768px) {
+    }
+    @media only screen and (min-width: 992px) {
+    }
+    @media only screen and (min-width: 1200px) {
+    }
+    @media only screen and (min-width: 1480px) {
+    }
   }
   .Label {
-    width: 600px;
     border-bottom: 2px solid lightgray;
     font-family: "NotoSansKR-Bold";
     color: gray;
     font-weight: bold;
-    font-size: 20px;
+
+    @media only screen and (max-width: 280px) {
+      width: 250px;
+      font-size: 11pt;
+    }
+    @media only screen and (min-width: 280px) {
+      width: 250px;
+      font-size: 11pt;
+    }
+    @media only screen and (min-width: 360px) {
+      width: 330px;
+    }
+    @media only screen and (min-width: 420px) {
+      width: 390px;
+    }
+    @media only screen and (min-width: 600px) {
+      font-size: 20px;
+      width: 570px;
+    }
+    @media only screen and (min-width: 768px) {
+    }
+    @media only screen and (min-width: 992px) {
+    }
+    @media only screen and (min-width: 1200px) {
+    }
+    @media only screen and (min-width: 1480px) {
+    }
   }
   .timer {
   }
   .SMSLabel {
     margin: 0 0 20px;
-    width: 600px;
+
     border-bottom: 2px solid lightgray;
     font-family: "NotoSansKR-Bold";
     color: black;
-    font-size: 20px;
+
+    @media only screen and (max-width: 280px) {
+      font-size: 11pt;
+      width: 250px;
+    }
+    @media only screen and (min-width: 280px) {
+      font-size: 11pt;
+      width: 250px;
+    }
+    @media only screen and (min-width: 360px) {
+      width: 330px;
+    }
+    @media only screen and (min-width: 420px) {
+      width: 390px;
+    }
+    @media only screen and (min-width: 600px) {
+      font-size: 20px;
+      width: 570px;
+    }
+    @media only screen and (min-width: 768px) {
+    }
+    @media only screen and (min-width: 992px) {
+    }
+    @media only screen and (min-width: 1200px) {
+    }
+    @media only screen and (min-width: 1480px) {
+    }
   }
   .address {
     margin: 3px;
@@ -331,12 +404,45 @@ const Section = styled.div`
 
 const Nextbutton = styled.button`
   /* border: 2px solid black; */
-  width: 400px;
-  height: 50px;
-  margin: 35px 0 0;
+
   color: ${(props) => (props.state ? "white" : "gray")};
   background: ${(props) => (props.state ? "#fd9800" : "lightgrey")};
   border-radius: 24px;
   font-family: "NotoSansKR-Bold";
   font-size: 25px;
+
+  @media only screen and (max-width: 280px) {
+    width: 200px;
+    height: 30px;
+    font-size: 11pt;
+  }
+  @media only screen and (min-width: 280px) {
+    width: 200px;
+    height: 30px;
+    font-size: 11pt;
+  }
+  @media only screen and (min-width: 360px) {
+    width: 200px;
+    height: 30px;
+    font-size: 11pt;
+  }
+  @media only screen and (min-width: 420px) {
+    width: 200px;
+    height: 30px;
+    font-size: 11pt;
+  }
+  @media only screen and (min-width: 600px) {
+    width: 300px;
+    height: 40px;
+    font-size: 16pt;
+    margin: 35px 0 0;
+  }
+  @media only screen and (min-width: 768px) {
+  }
+  @media only screen and (min-width: 992px) {
+  }
+  @media only screen and (min-width: 1200px) {
+  }
+  @media only screen and (min-width: 1480px) {
+  }
 `;

@@ -229,10 +229,10 @@ const Annotation1 = styled.div`
     font-size: 5px;
   }
   @media only screen and (min-width: 360px) {
-    font-size: 6px;
+    font-size: 5px;
   }
   @media only screen and (min-width: 420px) {
-    font-size: 8px;
+    font-size: 7px;
   }
   @media only screen and (min-width: 600px) {
   }
@@ -251,10 +251,10 @@ const Annotation2 = styled.div`
     font-size: 5px;
   }
   @media only screen and (min-width: 360px) {
-    font-size: 6px;
+    font-size: 5px;
   }
   @media only screen and (min-width: 420px) {
-    font-size: 8px;
+    font-size: 6px;
   }
   @media only screen and (min-width: 600px) {
   }

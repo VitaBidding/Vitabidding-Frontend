@@ -1,42 +1,54 @@
 import React from "react";
 import styled from "styled-components";
-import Card from "react-bootstrap/Card";
+import KakaoImage from "../../../assets/img/KakaoTalk_20221126_235103258.png";
+
 function ItemList({ products, setSelectedproducts }) {
   return (
-    <Warpper>
+    <Wrapper>
       <Title>경매 물품 리스트</Title>
       <CardSection>
         {products.map((item, index) => (
-          <ItmeCard>
-            <Card.Img variant="top" src="holder.js/100px180" />
-            <StyledCardBody>
-              <StyledCardTitle>{index}</StyledCardTitle>
-            </StyledCardBody>
-          </ItmeCard>
+          <ItemCard key={index} onClick={() => setSelectedproducts(item)}>
+            <StyledCardImg variant="top" src={KakaoImage} />
+            <StyledCardBody>{item}</StyledCardBody>
+          </ItemCard>
         ))}
       </CardSection>
-    </Warpper>
+    </Wrapper>
   );
 }
 
 export default ItemList;
-const Warpper = styled.div`
+
+const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100%;
   padding: 3px;
-  border-radius: 0 0 6px 6px;
+  border-radius: 6px;
   background-color: #242633;
+`;
+
+const Title = styled.div`
+  color: #fff;
+  font-weight: bold;
+  background-color: #242633;
+  padding: 2px 5px;
+  flex-shrink: 0;
+  z-index: 1;
   @media only screen and (max-width: 280px) {
+    font-size: 9pt;
   }
   @media only screen and (min-width: 280px) {
+    font-size: 9pt;
   }
   @media only screen and (min-width: 360px) {
   }
   @media only screen and (min-width: 420px) {
   }
   @media only screen and (min-width: 600px) {
+    font-size: 10pt;
   }
   @media only screen and (min-width: 768px) {
   }
@@ -47,32 +59,90 @@ const Warpper = styled.div`
   @media only screen and (min-width: 1480px) {
   }
 `;
-const Title = styled.div`
-  color: #fff;
-  font-weight: bold;
-`;
 
 const CardSection = styled.div`
-  border: 1px solid green;
+  flex: 1; /* Title을 제외한 나머지 공간을 차지 */
   display: flex;
-  flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   width: 100%;
-  overflow: auto;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  flex-wrap: nowrap;
+  background-color: #242633;
+
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #fd9800;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: none;
+  }
+
+  &::-webkit-scrollbar-button {
+    display: none;
+  }
+
+  scrollbar-width: thin;
+  scrollbar-color: #fd9800 transparent;
 `;
 
-const ItmeCard = styled(Card)`
-  width: 110px;
-  height: 110px;
-  margin: 3px;
-`;
-const StyledCardBody = styled(Card.Body)`
-  padding: 0; /* 패딩을 제거합니다 */
-  margin: 0;
+const ItemCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  aspect-ratio: 6/7; /* 정사각형 비율로 카드의 너비와 높이 설정 */
+  height: 100%; /* CardSection의 높이에 맞춰 카드 높이를 설정 */
+  margin: 2px;
+  background-color: white;
+  flex-shrink: 0;
+  justify-content: flex-start;
+
+  &:hover {
+    transform: scale(1.02);
+    cursor: pointer;
+  }
 `;
 
-const StyledCardTitle = styled(Card.Title)`
-  padding: 0; /* 패딩을 제거합니다 */
-  margin: 0;
+const StyledCardImg = styled.img`
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1/1; /* 너비에 맞춘 정사각형 비율 */
+  object-fit: cover; /* 이미지가 왜곡되지 않도록 설정 */
+`;
+
+const StyledCardBody = styled.div`
+  flex-grow: 1; /* 남는 공간을 채우도록 설정 */
+  padding: 2px;
+  color: white;
+  background-color: #242633;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  @media only screen and (max-width: 280px) {
+    font-size: 9pt;
+  }
+  @media only screen and (min-width: 280px) {
+    font-size: 9pt;
+  }
+  @media only screen and (min-width: 360px) {
+  }
+  @media only screen and (min-width: 420px) {
+  }
+  @media only screen and (min-width: 600px) {
+    font-size: 10pt;
+  }
+  @media only screen and (min-width: 768px) {
+  }
+  @media only screen and (min-width: 992px) {
+  }
+  @media only screen and (min-width: 1200px) {
+  }
+  @media only screen and (min-width: 1480px) {
+  }
 `;

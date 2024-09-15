@@ -1,35 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import { AiFillSound } from "react-icons/ai";
-function AuctionSound(props) {
-  const [sliderValue, setSliderValue] = useState(50);
-
-  const handleSliderChange = (event) => {
-    const newValue = event.target.value;
-    setSliderValue(newValue);
-  };
-
+import Timer from "./timer";
+function AuctionTimer({ time, running, setTime, setTimerFinished }) {
   return (
-    <Warpper>
-      <Title>사운드 조절</Title>
-      <Row>
-        <AiFillSound color="#fff" />
-        <RangeInput
-          type="range"
-          min="0"
-          max="100"
-          value={sliderValue}
-          onChange={handleSliderChange}
+    <Wrapper>
+      <Title>경매 남은 시간</Title>
+      <TimerSection>
+        <Timer
+          time={time}
+          setTime={setTime}
+          running={running}
+          setTimerFinished={setTimerFinished}
         />
-        <SliderValue>{sliderValue}</SliderValue>
-      </Row>
-    </Warpper>
+      </TimerSection>
+    </Wrapper>
   );
 }
 
-export default AuctionSound;
-
-const Warpper = styled.div`
+export default AuctionTimer;
+const Wrapper = styled.div`
   /* border: 1px solid blue; */
   display: flex;
   flex-direction: column;
@@ -62,10 +51,10 @@ const Title = styled.div`
 
   margin: 2px;
   @media only screen and (max-width: 280px) {
-    font-size: 9pt;
+    font-size: 8pt;
   }
   @media only screen and (min-width: 280px) {
-    font-size: 9pt;
+    font-size: 8pt;
   }
 
   @media only screen and (min-width: 360px) {
@@ -85,20 +74,31 @@ const Title = styled.div`
   }
 `;
 
-const Row = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-`;
-const RangeInput = styled.input`
-  width: 200px;
-  margin: 3px;
-  accent-color: #fd9800;
-`;
-const SliderValue = styled.div`
+const TimerSection = styled.div`
   color: #fff;
   font-weight: bold;
-  margin: 3px;
-  width: 20px;
+  margin: 2px;
+  @media only screen and (max-width: 280px) {
+    font-size: 9pt;
+  }
+  @media only screen and (min-width: 280px) {
+    font-size: 10pt;
+  }
+
+  @media only screen and (min-width: 360px) {
+  }
+  @media only screen and (min-width: 420px) {
+    font-size: 14pt;
+  }
+  @media only screen and (min-width: 600px) {
+    font-size: 16pt;
+  }
+  @media only screen and (min-width: 768px) {
+  }
+  @media only screen and (min-width: 992px) {
+  }
+  @media only screen and (min-width: 1200px) {
+  }
+  @media only screen and (min-width: 1480px) {
+  }
 `;
