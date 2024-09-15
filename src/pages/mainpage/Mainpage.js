@@ -6,6 +6,9 @@ import LogoContainer from "../../containers/header/logo.container";
 import LoginContainer from "../../containers/header/login.container";
 import Listpage from "./list.page";
 import Itemdetailpage from "./item.detail.page";
+import Pointpage from "../mainpage/ponint.page";
+import BidList from "./bid.list.page";
+import Infomaiton from "./infomaiton.page";
 import "../../assets/bootstrap/bootstrapUnited.min.css";
 
 export default function Mainpage() {
@@ -20,11 +23,10 @@ export default function Mainpage() {
         <Routes>
           <Route exact path="/" element={<Listpage />} />
           <Route path="/list" element={<Listpage />} />
-          <Route path="detail/:ItemID" element={<Itemdetailpage />} />
-          {/* <Route path="point" element={<Pointpage />} /> */}
-          {/* <Route path="bidlist" element={<BidList />} /> */}
-          {/* <Route path="info" element={<Info />} /> */}
-          {/* <Route path="withdrawal" element={<Withdrawalpage />} /> */}
+          <Route path="/detail/:ItemID" element={<Itemdetailpage />} />
+          <Route path="/point" element={<Pointpage />} />
+          <Route path="/bidlist" element={<BidList />} />
+          <Route path="/infomation" element={<Infomaiton />} />
         </Routes>
       </BodySection>
     </Section>
@@ -43,17 +45,29 @@ const HeaderSection = styled.div`
   position: fixed;
   top: 0;
   background-color: white;
-  z-index: 10;
+  z-index: 1000; /* Ensure it stays above other content */
+  padding: 10px; /* Optional: add some padding */
+`;
 
-  @media only screen and (max-width: 360px) {
-    margin: 0;
+const BodySection = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow-y: auto; /* Enable vertical scrolling if content overflows */
+  width: 100%;
+
+  @media only screen and (max-width: 280px) {
+    margin-top: 70px;
+  }
+  @media only screen and (min-width: 280px) {
+    margin-top: 70px;
   }
   @media only screen and (min-width: 360px) {
-    margin: 0;
   }
   @media only screen and (min-width: 420px) {
   }
   @media only screen and (min-width: 600px) {
+    margin-top: 100px;
   }
   @media only screen and (min-width: 768px) {
   }
@@ -61,9 +75,6 @@ const HeaderSection = styled.div`
   }
   @media only screen and (min-width: 1200px) {
   }
-`;
-
-const BodySection = styled.div`
-  /* border: 1px solid blue; */
-  width: 100%;
+  @media only screen and (min-width: 1480px) {
+  }
 `;

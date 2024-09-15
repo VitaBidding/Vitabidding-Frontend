@@ -3,10 +3,9 @@ import styled from "styled-components";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import Information from "./my.information";
-import MyAccount from "./account.my";
 
 function Info(props) {
-  const [key, setKey] = useState("account");
+  const [key, setKey] = useState("information");
   return (
     <InfoSection>
       <Tabs
@@ -17,12 +16,10 @@ function Info(props) {
         className="mb-3"
         fill
       >
-        <Tab className="tab1" eventKey="account" title="계좌 정보">
-          <MyAccount />
-        </Tab>
-        <Tab className="tab2" eventKey="information" title="회원 정보">
+        <Tab className="tab1" eventKey="information" title="회원 정보">
           <Information />
         </Tab>
+        <Tab title="" disabled></Tab>
         <Tab title="" disabled></Tab>
         <Tab title="" disabled></Tab>
         <Tab title="" disabled></Tab>
@@ -37,10 +34,11 @@ const InfoSection = styled.div`
   /* border: 1px solid red; */
   width: 100%;
   height: 70vh;
+
   .mb-3 {
     font-weight: 800;
   }
-  .tab2 {
+  .tab1 {
     display: flex;
     justify-content: center;
   }

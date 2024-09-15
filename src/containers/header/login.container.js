@@ -25,15 +25,13 @@ export default function LoginContainer() {
     <SearchSection>
       {data ? (
         <div>
-          {/* <h1>Data from API:</h1>
-          <pre>{JSON.stringify(data, null, 2)}</pre> */}
-          <div>
-            <LoginVIcon />
-          </div>
+          <NonLogin />
         </div>
       ) : (
         <div>
-          <NonLogin />
+          <div>
+            <LoginVIcon />
+          </div>
         </div>
       )}
     </SearchSection>

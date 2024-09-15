@@ -20,9 +20,13 @@ export default function LoginVIcon() {
         </Dropdown.Toggle>
 
         <Dropdown.Menu>
-          <Dropdown.Item href="/viewer/point">POINT</Dropdown.Item>
-          <Dropdown.Item href="/viewer/bidlist">낙찰물품</Dropdown.Item>
-          <Dropdown.Item href="/viewer/info">내 정보</Dropdown.Item>
+          <Dropdown.Item href="/point">포인트</Dropdown.Item>
+          <Dropdown.Item href="/bidlist">낙찰물품</Dropdown.Item>
+          <Dropdown.Item href="/infomation">내 정보</Dropdown.Item>
+          <li>
+            <hr class="dropdown-divider" />
+          </li>
+          <Dropdown.Item href="/creator">판매자 페이지</Dropdown.Item>
           <li>
             <hr class="dropdown-divider" />
           </li>

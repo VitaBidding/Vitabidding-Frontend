@@ -27,6 +27,13 @@ function ControllerContainer() {
   const [time, setTime] = useState(initialTime * 100);
   const [running, setRunning] = useState(false);
   const [timerFinished, setTimerFinished] = useState(false);
+  const [bid, setbid] = useState([
+    { biduser: "마자용", bidprice: "200,000" },
+    { biduser: "로스트아크모코코미스터피자먹고싶다", bidprice: "220,000" },
+    { biduser: "마자용", bidprice: "240,000" },
+    { biduser: "로스트아크모코코미스터피자먹고싶다", bidprice: "260,000" },
+    { biduser: "마자용", bidprice: "280,000" },
+  ]);
   return (
     <Wrapper>
       <Section1>
@@ -50,7 +57,7 @@ function ControllerContainer() {
         />
       </Section4>
       <Section5>
-        <AuctionBidStatus />
+        <AuctionBidStatus bid={bid} />
       </Section5>
       <Section6>
         <AuctionProcess

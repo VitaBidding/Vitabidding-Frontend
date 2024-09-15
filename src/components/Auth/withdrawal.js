@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import doucument from "../../assets/img/doucument.png";
+import logo from "../../assets/img/vitaBiddingLogoBlack.png";
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { requestWithdrawal } from "../../lib/request";
@@ -21,9 +22,11 @@ function Withdrawal(props) {
   };
   return (
     <Section>
-      <div>비타비딩 회원탈퇴</div>
       <div>
+        <img src={logo} alt="" />
         <img src={doucument} alt="" />
+        <div>비타비딩 회원탈퇴</div>
+        <br></br>
         <div> 탈퇴를 신청하기 전 탈퇴 절차를 꼭 확인해주세요. </div>
       </div>
       <div>
@@ -35,7 +38,7 @@ function Withdrawal(props) {
           경매배송취소 시 사용된 포인트 경우 환원되므로 반드시 경매배송완료된 후
           포인트 환불을 진행해 주세요.
         </div>
-        <CheckButton> 포인트 환불하기 </CheckButton>
+        <CheckButton> 포인트 환불/정산하기 </CheckButton>
       </div>
       <div>
         <div>
