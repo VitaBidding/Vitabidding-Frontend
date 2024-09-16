@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import ThumbnailComponet from "../../components/main/thumbnail.componet";
-import DescriptionComponet from "../../components/main/description.componet";
-import TitleComponet from "../../components/main/title.componet";
+import ThumbnailComponet from "../../components/main/list/thumbnail.componet";
+import DescriptionComponet from "../../components/main/list/description.componet";
+import TitleComponet from "../../components/main/list/title.componet";
 function DetailContainer(props) {
   return (
     <Container>

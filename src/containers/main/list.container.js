@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import ListComponent from "../../components/main/list.component";
+import ListComponent from "../../components/main/list/list.component";
 function ListContainers(props) {
   return (
     <Section>

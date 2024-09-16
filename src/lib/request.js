@@ -99,7 +99,22 @@ export const requestLogout = async () => {
     }
   }
 };
-
+//닉네임 중복 확인
+export const requestNicknameCheck = async (data) => {
+  // data = { nick_name };
+  try {
+    const response = await axios.post(
+      `${process.env.REACT_APP_VITE_SERVER_URL}/user/nicknamecheck`,
+      data
+    );
+    // console.log('이미 존재하는 닉네임입니다. 다른 닉네임을 입력해주세요.', response.data);
+    // console.log('사용가능한 닉네입니다.', response.data);
+    return response.data.message;
+  } catch (error) {
+    console.error("중복확인 실패", error);
+    return "네트워크 에러 중복확인 실패";
+  }
+};
 //회원가입
 export const requestSignup = async (data) => {
   // data = { email, password, passwordConfirm, nick_name };

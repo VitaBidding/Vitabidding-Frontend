@@ -4,8 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { Pagination } from "react-bootstrap";
 import ErrorBoundary from "./error.boundary";
 import { useSelector } from "react-redux";
-import { selectsearch, search } from "../../redux/features/search/search.slice";
-import { getItemData } from "../../lib/request";
+import {
+  selectsearch,
+  search,
+} from "../../../redux/features/search/search.slice";
+import { getItemData } from "../../../lib/request";
 import { useDispatch } from "react-redux";
 
 function ListComponent(props) {

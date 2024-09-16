@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { auction } from "../../redux/features/auction/auction.slice";
+import { auction } from "../../../redux/features/auction/auction.slice";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import { MdOutlineLiveTv } from "react-icons/md";
-import { TimeCheck } from "../../lib/request";
+import { TimeCheck } from "../../../lib/request";
 function DescriptionComponet() {
   const location = useLocation();
   const { state } = location;

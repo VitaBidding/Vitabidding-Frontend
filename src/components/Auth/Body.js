@@ -8,15 +8,27 @@ import {
   requestLogin,
   requestSignup,
 } from "../../lib/request";
-
+import { Button } from "react-bootstrap";
+import { requestNicknameCheck } from "../../lib/request";
 const AuthForm = () => {
   const [mode, setMode] = useState("signin");
   const [email, setEmail] = useState("");
   const [nickname, setnickname] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
+  const [nickNameError, setnickNameError] = useState(
+    "한글,영어,특수문자를 사용하여 2~12글자로 입력해주세요."
+  );
+  const [userNicknameError, setUserNicknameError] = useState(true);
   const isSignup = mode === "signup";
 
+  const onChangeUserNickname = (e) => {
+    const userNicknameRegex =
+      /^[a-zA-Zㄱ-ㅎ|ㅏ-ㅣ|가-힣|~!@#$%^&*()_+-=]{2,12}$/;
+    if (userNicknameRegex.test(e.target.value)) setUserNicknameError(false);
+    else setUserNicknameError(true);
+    setnickname(e.target.value);
+  };
   const handleModeChange = (newMode) => {
     setMode(newMode);
   };
@@ -24,8 +36,14 @@ const AuthForm = () => {
     setMode("signin"); // Reset 클릭 시 mode를 signin으로 설정
     setEmail(""); // email 필드 초기화
     setnickname("");
+    setnickNameError("");
     setPassword(""); // password 필드 초기화
     setRepeatPassword(""); // repeat password 필드 초기화 // 모든 입력 필드 초기화
+  };
+
+  const handleCheck = async () => {
+    const message = await requestNicknameCheck(nickname);
+    setnickNameError(message);
   };
 
   const handleSubmit = (e) => {
@@ -74,14 +92,24 @@ const AuthForm = () => {
           />
         </InputBlock>
         {isSignup && (
-          <InputBlock>
-            <input
-              type="nickname"
-              placeholder="Nickname"
-              value={nickname}
-              onChange={(e) => setnickname(e.target.value)}
-            />
-          </InputBlock>
+          <Col>
+            <InputBlockFlex>
+              <input
+                type="nickname"
+                placeholder="Nickname"
+                value={nickname}
+                onChange={(e) => onChangeUserNickname(e)}
+              />
+              <DuplicateButton
+                variant="outline-primary"
+                onClick={() => handleCheck()}
+                disabled={userNicknameError}
+              >
+                중복확인
+              </DuplicateButton>
+            </InputBlockFlex>
+            <ErrorSeciton props={nickNameError}>{nickNameError}</ErrorSeciton>
+          </Col>
         )}
         <InputBlock>
           <input
@@ -126,9 +154,10 @@ const AuthForm = () => {
 
 export default AuthForm;
 const Container = styled.div`
+  /* border: 1px solid red; */
+
   max-width: 680px;
-  width: 80%;
-  margin: auto;
+  width: 100%;
 `;
 
 const Links = styled.ul`
@@ -185,7 +214,7 @@ const InputBlock = styled.div`
     border-radius: 8px;
     border: none;
     background: rgba(15, 19, 42, 0.1);
-    color: rgba(15, 19, 42, 0.3);
+    color: rgba(15, 19, 42, 1);
     padding-left: 15px;
     font-size: 14px;
     &:focus,
@@ -202,7 +231,77 @@ const InputBlock = styled.div`
     }
   }
 `;
+const Col = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
+const InputBlockFlex = styled.div`
+  margin: 0 auto;
+  display: flex;
+  position: relative;
+  width: 90%;
+  input {
+    /* display: block; */
+    flex-grow: 1; /* input이 남은 공간을 차지하게 함 */
+    height: 50px;
+
+    margin: 0;
+    border-radius: 8px 0 0 8px;
+    border: none;
+    background: rgba(15, 19, 42, 0.1);
+    color: rgba(15, 19, 42, 1);
+    padding-left: 15px;
+    font-size: 14px;
+    &:focus,
+    &:active {
+      outline: none;
+      color: rgba(15, 19, 42, 1);
+    }
+  }
+`;
+
+const DuplicateButton = styled(Button)`
+  /* 버튼의 고정된 너비 설정 */
+  font-weight: bold;
+  border-radius: 0 8px 8px 0;
+  height: 50px;
+  @media only screen and (max-width: 280px) {
+    font-size: 9pt;
+    padding: 4px 8px;
+  }
+  @media only screen and (min-width: 280px) {
+    font-size: 9pt;
+    padding: 2px 8px;
+  }
+  @media only screen and (min-width: 360px) {
+  }
+  @media only screen and (min-width: 420px) {
+    width: 90px;
+    font-size: 14px;
+    padding: 6px 12px;
+  }
+  @media only screen and (min-width: 600px) {
+  }
+  @media only screen and (min-width: 768px) {
+  }
+  @media only screen and (min-width: 992px) {
+  }
+  @media only screen and (min-width: 1200px) {
+  }
+  @media only screen and (min-width: 1480px) {
+  }
+`;
+const ErrorSeciton = styled.div`
+  display: flex;
+  margin: 0 auto;
+  width: 90%;
+  font-size: 9pt;
+  color: ${(props) =>
+    props.props === "이미 존재하는 닉네임입니다. 다른 닉네임을 입력해주세요."
+      ? "red"
+      : "green"};
+`;
 const SigninButton = styled.button`
   background: #fd9800;
   color: white;
