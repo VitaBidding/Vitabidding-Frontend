@@ -10,7 +10,7 @@ function AuctionSound(props) {
   };
 
   return (
-    <Warpper>
+    <Wrapper>
       <Title>사운드 조절</Title>
       <Row>
         <AiFillSound color="#fff" />
@@ -23,13 +23,13 @@ function AuctionSound(props) {
         />
         <SliderValue>{sliderValue}</SliderValue>
       </Row>
-    </Warpper>
+    </Wrapper>
   );
 }
 
 export default AuctionSound;
 
-const Warpper = styled.div`
+const Wrapper = styled.div`
   /* border: 1px solid blue; */
   display: flex;
   flex-direction: column;

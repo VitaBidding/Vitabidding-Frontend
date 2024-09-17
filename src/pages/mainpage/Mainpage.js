@@ -5,7 +5,7 @@ import SearchV from "../../containers/header/search.v";
 import LogoContainer from "../../containers/header/logo.container";
 import LoginContainer from "../../containers/header/login.container";
 import Listpage from "./list.page";
-import Itemdetailpage from "./item.detail.page";
+
 import Pointpage from "../mainpage/ponint.page";
 import BidList from "./bid.list.page";
 import Infomaiton from "./infomaiton.page";
@@ -23,7 +23,6 @@ export default function Mainpage() {
         <Routes>
           <Route exact path="/" element={<Listpage />} />
           <Route path="/list" element={<Listpage />} />
-          <Route path="/detail/:ItemID" element={<Itemdetailpage />} />
           <Route path="/point" element={<Pointpage />} />
           <Route path="/bidlist" element={<BidList />} />
           <Route path="/infomation" element={<Infomaiton />} />

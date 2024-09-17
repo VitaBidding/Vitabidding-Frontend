@@ -47,7 +47,7 @@ const BodySection = styled.div`
   flex: 1;
   overflow-y: auto; /* Enable vertical scrolling if content overflows */
   width: 100%;
-  background-color: #212832;
+  background-color: #242633;
   @media only screen and (max-width: 280px) {
     margin-top: 70px;
   }

@@ -6,15 +6,15 @@ import styled from "styled-components";
 // Bubble 컴포넌트 정의
 const Bubble = ({ biduser, bidprice }) => {
   return (
-    <Warpper>
+    <Wrapper>
       <UserSection>{biduser}</UserSection>
       <BubbleWrapper>{bidprice} 포인트</BubbleWrapper>
-    </Warpper>
+    </Wrapper>
   );
 };
 
 export default Bubble;
-const Warpper = styled.div`
+const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   position: relative; /* 추가: relative position을 사용하여 자식 요소들의 z-index를 활용할 수 있게 합니다. */

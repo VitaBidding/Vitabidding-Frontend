@@ -38,23 +38,20 @@ const Wrapper = styled.div`
 `;
 
 const Title = styled.div`
-  /* font-weight: bold; */
+  font-weight: bold;
   color: #000;
 
   @media only screen and (max-width: 280px) {
     font-size: 8pt;
-    margin: 5px 0;
   }
   @media only screen and (min-width: 280px) {
     font-size: 10pt;
-    margin: 5px 0;
   }
   @media only screen and (min-width: 360px) {
   }
   @media only screen and (min-width: 420px) {
   }
   @media only screen and (min-width: 600px) {
-    margin: 10px;
     font-size: 12pt;
   }
   @media only screen and (min-width: 768px) {

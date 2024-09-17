@@ -24,7 +24,7 @@ const UserSection = styled.div`
   font-weight: bold;
   color: white;
   position: absolute; /* 추가: absolute position을 사용하여 BubbleWrapper 위에 겹치게 합니다. */
-  top: -20px; /* 조정: 위치 조정을 위해 top 속성을 사용합니다. */
+  top: -17px; /* 조정: 위치 조정을 위해 top 속성을 사용합니다. */
   left: 10px; /* 조정: 위치 조정을 위해 left 속성을 사용합니다. */
   z-index: 1; /* 추가: z-index를 사용하여 BubbleWrapper 위에 배치합니다. */
   white-space: nowrap;

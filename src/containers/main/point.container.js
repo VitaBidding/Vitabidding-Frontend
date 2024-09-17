@@ -8,7 +8,7 @@ function PointContainer() {
     window.open(
       `${process.env.REACT_APP_MAIN_CLIENT_URL}/pointadd`,
       "포인트 구매",
-      "width=500, height=500"
+      "width=450, height=800"
     );
   }
   return (
@@ -30,7 +30,6 @@ function PointContainer() {
 export default PointContainer;
 
 const Wrapper = styled.div`
-  /* border: 1px solid red; */
   display: grid;
   height: calc(100vh - 110px);
 
@@ -73,7 +72,7 @@ const Section1 = styled.div`
   justify-content: space-between;
 
   &:hover {
-    transform: scale(1.02);
+    transform: scale(1.01);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
     transition: all 0.5s;
   }
@@ -81,7 +80,6 @@ const Section1 = styled.div`
 
 const Text = styled.div`
   color: #fff;
-
   font-weight: bold;
   transition: color 0.3s ease;
 
@@ -90,20 +88,20 @@ const Text = styled.div`
   }
 
   @media only screen and (max-width: 280px) {
-    padding: 2px;
-    font-size: 11pt;
+    padding: 5px;
+    font-size: 10pt;
   }
   @media only screen and (min-width: 280px) {
-    padding: 2px;
-    font-size: 11pt;
+    padding: 5px;
+    font-size: 10pt;
   }
   @media only screen and (min-width: 360px) {
   }
   @media only screen and (min-width: 420px) {
   }
   @media only screen and (min-width: 600px) {
-    padding: 5px;
-    font-size: 16pt;
+    padding: 10px;
+    font-size: 14pt;
   }
   @media only screen and (min-width: 768px) {
   }
@@ -116,7 +114,7 @@ const Text = styled.div`
 `;
 
 const Section2 = styled.div`
-  background-color: #e9ecef;
+  background-color: #f8f9fa;
   border-radius: 10px;
 
   @media only screen and (max-width: 280px) {
@@ -145,7 +143,7 @@ const Section2 = styled.div`
   }
 `;
 const Section3 = styled.div`
-  background-color: #e9ecef;
+  background-color: #f8f9fa;
   border-radius: 10px;
 
   @media only screen and (max-width: 280px) {

@@ -9,6 +9,7 @@ import AuctionProcess from "../../components/creator/controller/auction.process"
 import AuctionSound from "../../components/creator/controller/auction.sound";
 
 function ControllerContainer() {
+  //선택 물품
   const [products, setProducts] = useState([
     "이름긴거테스트하는중선택진행일시정지",
     2,
@@ -22,11 +23,12 @@ function ControllerContainer() {
     10,
   ]);
   const [selectproducts, setSelectedproducts] = useState(null);
-
+  //타이머
   const initialTime = 600;
   const [time, setTime] = useState(initialTime * 100);
   const [running, setRunning] = useState(false);
   const [timerFinished, setTimerFinished] = useState(false);
+  //biduser/cost
   const [bid, setbid] = useState([
     { biduser: "마자용", bidprice: "200,000" },
     { biduser: "로스트아크모코코미스터피자먹고싶다", bidprice: "220,000" },

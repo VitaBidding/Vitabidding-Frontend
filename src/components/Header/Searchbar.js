@@ -9,7 +9,6 @@ import { useDispatch } from "react-redux";
 import { search } from "../../redux/features/search/search.slice";
 function Searchbar(props) {
   const [searchField, setSearchField] = useState("");
-  // console.log("🚀 ~ file: Searchbar.js:10 ~ Searchbar ~ searchField:", searchField);
 
   const onChangesearchField = (e) => {
     setSearchField(e.target.value);
@@ -54,7 +53,7 @@ export default Searchbar;
 
 const SearchbarSection = styled.div`
   flex-wrap: nowrap;
-
+  font-size: 11pt;
   @media only screen and (max-width: 360px) {
     width: 150px;
   }
