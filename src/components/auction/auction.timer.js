@@ -81,8 +81,7 @@ const TimerSection = styled.div`
   @media only screen and (min-width: 420px) {
   }
   @media only screen and (min-width: 600px) {
-    font-size: 11pt;
-    margin: 10px;
+    font-size: 14pt;
   }
   @media only screen and (min-width: 768px) {
   }

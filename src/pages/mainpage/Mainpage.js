@@ -52,7 +52,7 @@ const BodySection = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
-  overflow-y: auto; /* Enable vertical scrolling if content overflows */
+  /* overflow-y: auto; Enable vertical scrolling if content overflows */
   width: 100%;
 
   @media only screen and (max-width: 280px) {

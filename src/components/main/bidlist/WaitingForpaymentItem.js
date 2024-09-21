@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 import styled from "styled-components";
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
 import { useDaumPostcodePopup } from "react-daum-postcode";
@@ -12,6 +11,7 @@ import {
   selectphone,
   selectreal_name,
 } from "../../../redux/features/user/user.slice";
+import { itempayment } from "../../../lib/request";
 function WaitingForpaymentItem(el) {
   const { item } = el;
   const real_name = useSelector(selectreal_name);
@@ -35,6 +35,9 @@ function WaitingForpaymentItem(el) {
   const [AddressError, setAddressError] = useState(false);
   // console.log("🚀 ~ file: WaitingForpaymentItem.js:36 ~ WaitingForpaymentItem ~ AddressError:", AddressError);
   const [selectedOption, setSelectedOption] = useState("default");
+
+  const [itempaymentpoint, setitempaymentpoint] = useState(item.price * 0.9);
+
   const handleOptionChange = (e) => {
     setSelectedOption(e.target.value);
     if (e.target.value === "default") {
@@ -112,6 +115,12 @@ function WaitingForpaymentItem(el) {
     setcontact(e.target.value);
   };
 
+  function formatNumberWithComma(value) {
+    if (value === null || value === undefined) {
+      return "";
+    }
+    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
   return (
     <Item>
       <Colfirst>
@@ -128,7 +137,7 @@ function WaitingForpaymentItem(el) {
           </ItemCreatorSection>
           <ItemPriceSection>
             <ItemPriceLabel>낙찰포인트</ItemPriceLabel>
-            <ItemPrice>{item.price}</ItemPrice>
+            <ItemPrice>{formatNumberWithComma(item.price)}</ItemPrice>
           </ItemPriceSection>
         </ColRowSectionFirst>
       </Colfirst>
@@ -281,21 +290,36 @@ function WaitingForpaymentItem(el) {
         <FormulaSection>
           <FirstSection>
             <FormulaPriceLabel>낙찰포인트</FormulaPriceLabel>
-            <FormulaPrice>{item.price}</FormulaPrice>
+            <FormulaPrice>{formatNumberWithComma(item.price)}</FormulaPrice>
           </FirstSection>
           <Minus>-</Minus>
           <SecondSection>
             <FormuaBidAmountLabel>입찰금</FormuaBidAmountLabel>
-            <FormuaBidAmount>{Number(item.price) * 0.1}</FormuaBidAmount>
+            <FormuaBidAmount>
+              {formatNumberWithComma(Number(item.price) * 0.1)}
+            </FormuaBidAmount>
           </SecondSection>
         </FormulaSection>
 
         <TotalPointSection>
           <TotalPointName>결제포인트</TotalPointName>
-          <TotalPointamount>{Number(item.price) * 0.9}</TotalPointamount>
+          <TotalPointamount>
+            {formatNumberWithComma(Number(item.price) * 0.9)} p
+          </TotalPointamount>
         </TotalPointSection>
         <PaymentButton
           disabled={AddressError || userNameError || userPhoneError}
+          onClick={() =>
+            itempayment({
+              Recipient,
+              contact,
+              Zonecode,
+              FuAddress,
+              ExAddress,
+              DeAddress,
+              itempaymentpoint,
+            })
+          }
         >
           결제하기
         </PaymentButton>

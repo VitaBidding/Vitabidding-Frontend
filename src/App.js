@@ -12,6 +12,7 @@ import Creatorpage from "./pages/creatorpage/index";
 import Withdrawalpage from "./pages/authpage/withdrawal.page";
 import AuctionPage from "./pages/auctionpage/auctionpage";
 import PointAddPage from "./pages/pointaddpage/point.add.page";
+import ThirdpartyPage from "./pages/thirdparty/thirdparty.page";
 import "./assets/font/app.css";
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
       <Route path="/creator/*" element={<Creatorpage />} />
       <Route path="/auction/:userID" element={<AuctionPage />} />
       <Route path="/pointadd" element={<PointAddPage />} />
+      <Route path="thirdparty/*" element={<ThirdpartyPage />} />
     </Routes>
   );
 }

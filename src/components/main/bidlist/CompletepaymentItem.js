@@ -1,7 +1,7 @@
 import React from "react";
-import axios from "axios";
 import styled from "styled-components";
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
+import { auctioncompleteapi } from "../../../lib/request";
 
 function CompletepaymentItem(el) {
   const { item } = el;
@@ -15,6 +15,13 @@ function CompletepaymentItem(el) {
       .then(() => {})
       .catch(() => {});
   };
+
+  function formatNumberWithComma(value) {
+    if (value === null || value === undefined) {
+      return "";
+    }
+    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
   return (
     <Item>
       <Colfirst>
@@ -31,7 +38,7 @@ function CompletepaymentItem(el) {
           </ItemCreatorSection>
           <ItemPriceSection>
             <ItemPriceLabel>결제포인트</ItemPriceLabel>
-            <ItemPrice>{item.price}</ItemPrice>
+            <ItemPrice>{formatNumberWithComma(item.price)}</ItemPrice>
           </ItemPriceSection>
         </ColRowSectionFirst>
       </Colfirst>
@@ -77,7 +84,10 @@ function CompletepaymentItem(el) {
               <Deliverycompany>{item.delivery_company}</Deliverycompany>
               <TrackingNumber>{item.trackingNumber}</TrackingNumber>
             </ColRowSectionThird>
-            <TrackingNumberButton onClick={handleButtonClick} variant="outline-dark">
+            <TrackingNumberButton
+              onClick={handleButtonClick}
+              variant="outline-dark"
+            >
               운송번호 복사
             </TrackingNumberButton>
           </DisplayRow>
@@ -88,7 +98,9 @@ function CompletepaymentItem(el) {
           <div>경매 물건이 도착하셨다면</div>
           <div>&nbsp;완료버튼을 눌러주세요</div>
         </Comment>
-        <CompleteButton>거래완료</CompleteButton>
+        <CompleteButton onClick={() => auctioncompleteapi(el)}>
+          거래완료
+        </CompleteButton>
       </Colfourth>
     </Item>
   );

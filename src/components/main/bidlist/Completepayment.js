@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import styled from "styled-components";
 import Ex from "../../../assets/img/KakaoTalk_20221126_235103258.png";
 import CompletepaymentItem from "./CompletepaymentItem";
+import { completepaymentitemapi } from "../../../lib/request";
+
 function Completepayment(props) {
   const [items, setItems] = useState([
     {
@@ -14,7 +15,8 @@ function Completepayment(props) {
       creator: "판매자이름1",
       price: "300,000",
       category: "의류",
-      description: "내용을 입력해주세요\nex)\n상태: S급\n정품 인증여부: O\n물품에 대한 설명을 해주세요!",
+      description:
+        "내용을 입력해주세요\nex)\n상태: S급\n정품 인증여부: O\n물품에 대한 설명을 해주세요!",
       Thumbnail: Ex,
       deliveryfee: "3,000",
       trackingNumber: "223456789012345678",
@@ -36,7 +38,8 @@ function Completepayment(props) {
       creator: "판매자이름2",
       price: "300,000",
       category: "의류",
-      description: "내용을 입력해주세요\nex)\n상태: S급\n정품 인증여부: O\n물품에 대한 설명을 해주세요!",
+      description:
+        "내용을 입력해주세요\nex)\n상태: S급\n정품 인증여부: O\n물품에 대한 설명을 해주세요!",
       Thumbnail: Ex,
       deliveryfee: "3,000",
       trackingNumber: "223456789012345678",
@@ -51,7 +54,8 @@ function Completepayment(props) {
       creator: "판매자이름2",
       price: "300,000",
       category: "의류",
-      description: "내용을 입력해주세요\nex)\n상태: S급\n정품 인증여부: O\n물품에 대한 설명을 해주세요!",
+      description:
+        "내용을 입력해주세요\nex)\n상태: S급\n정품 인증여부: O\n물품에 대한 설명을 해주세요!",
       Thumbnail: Ex,
       deliveryfee: "3,000",
       item_status: "결제완료",
@@ -64,7 +68,8 @@ function Completepayment(props) {
       creator: "판매자이름2",
       price: "300,000",
       category: "의류",
-      description: "내용을 입력해주세요\nex)\n상태: S급\n정품 인증여부: O\n물품에 대한 설명을 해주세요!",
+      description:
+        "내용을 입력해주세요\nex)\n상태: S급\n정품 인증여부: O\n물품에 대한 설명을 해주세요!",
       Thumbnail: Ex,
       deliveryfee: "3,000",
     },
@@ -76,7 +81,8 @@ function Completepayment(props) {
       creator: "판매자이름2",
       price: "300,000",
       category: "의류",
-      description: "내용을 입력해주세요\nex)\n상태: S급\n정품 인증여부: O\n물품에 대한 설명을 해주세요!",
+      description:
+        "내용을 입력해주세요\nex)\n상태: S급\n정품 인증여부: O\n물품에 대한 설명을 해주세요!",
       Thumbnail: Ex,
       deliveryfee: "3,000",
     },
@@ -85,7 +91,7 @@ function Completepayment(props) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("/api/items"); // API 엔드포인트에 맞게 수정해주세요.
+        const response = await completepaymentitemapi(); // API 엔드포인트에 맞게 수정해주세요.
         setItems(response.data);
       } catch (error) {
         console.error(error);

@@ -22,7 +22,7 @@ export const requestChekLogin = async () => {
 };
 
 //로그인
-export const requestLogin = async (data) => {
+export const requestLogin = async ({ data }) => {
   // data = { email, password };
   try {
     const response = await axios.post(
@@ -475,8 +475,108 @@ export const getItemData = async () => {
       }
     );
     return response.data.result;
-  } catch (err) {
-    console.error(err);
-    throw err; // 에러를 던져서 상위 함수에서 처리할 수 있게 함
+  } catch (error) {
+    console.error("전체 물건 조회 실패", error);
+    throw error; // 에러를 던져서 상위 함수에서 처리할 수 있게 함
+  }
+};
+
+//낙찰완료 아이템(결제가 필요한 아이템목록) 조회
+export const WaitingForpaymentitemapi = async () => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_VITE_SERVER_URL}/products/WaitingForpaymentitemapi`,
+      {
+        withCredentials: true,
+      }
+    );
+    return response.data.result;
+  } catch (error) {
+    console.error("낙찰된 물건 불러오기 실패", error);
+    throw error; // 에러를 던져서 상위 함수에서 처리할 수 있게 함
+  }
+};
+
+//결제완료 후 배송진행상태의 아이템 조회
+export const completepaymentitemapi = async () => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_VITE_SERVER_URL}/products/completepaymentitemapi`,
+      {
+        withCredentials: true,
+      }
+    );
+    return response.data.result;
+  } catch (error) {
+    console.error("결제완료 아이템 불러오기 실패", error);
+    throw error; // 에러를 던져서 상위 함수에서 처리할 수 있게 함
+  }
+};
+
+//거래완료 아이템 조회
+export const transactioncompleteditemapi = async () => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_VITE_SERVER_URL}/products/transactioncompleteditemapi`,
+      {
+        withCredentials: true,
+      }
+    );
+    return response.data.result;
+  } catch (error) {
+    console.error("거래완료 아이템 불러오기 실패", error);
+    throw error; // 에러를 던져서 상위 함수에서 처리할 수 있게 함
+  }
+};
+
+//낙찰된 물품 결제 및 배송지 주소 보내기
+
+export const itempayment = async ({
+  userName,
+  userPhone,
+  Zonecode,
+  FuAddress,
+  ExAddress,
+  DeAddress,
+  itempaymentpoint,
+}) => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_VITE_SERVER_URL}/products/itempayment`,
+      {
+        userName: userName,
+        userPhone: userPhone,
+        Zonecode: Zonecode,
+        FuAddress: FuAddress,
+        ExAddress: ExAddress,
+        DeAddress: DeAddress,
+        itempaymentpoint: itempaymentpoint,
+      },
+      {
+        withCredentials: true,
+      }
+    );
+    return response.data.result;
+  } catch (error) {
+    console.error("낙찰된 아이템 결제 실패", error);
+    throw error; // 에러를 던져서 상위 함수에서 처리할 수 있게 함
+  }
+};
+
+//경매 완료 버튼 api
+
+export const auctioncompleteapi = async ({ el }) => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_VITE_SERVER_URL}/auctioncompleteapi`,
+      { item: el },
+      {
+        withCredentials: true,
+      }
+    );
+    return response.data.result;
+  } catch (error) {
+    console.error("거래완료 아이템 불러오기 실패", error);
+    throw error; // 에러를 던져서 상위 함수에서 처리할 수 있게 함
   }
 };

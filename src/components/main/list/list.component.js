@@ -16,8 +16,6 @@ function ListComponent(props) {
 
   const [cardData, setcardData] = useState([]);
 
-  //scroll 영역 설정
-  const [contentHeight, setContentHeight] = useState("");
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [cardsPerPage, setcardsPerPage] = useState(8);
@@ -73,7 +71,6 @@ function ListComponent(props) {
     }, 1500);
 
     const calculateHeight = () => {
-      const windowHeight = window.innerHeight;
       const windowWidth = window.innerWidth;
       // console.log("🚀 ~ file: ListComponent.js:175 ~ calculateHeight ~ windowWidth:", windowWidth);
 
@@ -89,19 +86,6 @@ function ListComponent(props) {
         } else {
           setcardsPerPage(6);
         }
-      }
-      if (windowWidth > 1784) {
-        const computedHeight = windowHeight - 100;
-        setContentHeight(computedHeight + "px");
-      } else if (windowWidth > 1450) {
-        const computedHeight = windowHeight - 100;
-        setContentHeight(computedHeight + "px");
-      } else if (windowWidth > 992) {
-        const computedHeight = windowHeight - 100;
-        setContentHeight(computedHeight + "px");
-      } else {
-        const computedHeight = windowHeight - 60;
-        setContentHeight(computedHeight + "px");
       }
     };
     calculateHeight();
@@ -121,7 +105,7 @@ function ListComponent(props) {
   };
 
   return (
-    <Wrapper contentHeight={contentHeight} ref={componentRef}>
+    <Wrapper ref={componentRef}>
       {isLoading ? (
         <SkeletonWrapper>
           {Array.from({ length: cardsPerPage }).map((_, index) => (
@@ -190,7 +174,8 @@ function ListComponent(props) {
 export default ListComponent;
 
 const Wrapper = styled.div`
-  height: ${(props) => props.contentHeight};
+  /* border: 1px solid red; */
+
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -383,7 +368,6 @@ const BPaginationWrapper = styled.div`
 
   width: 100%;
   justify-content: center;
-  margin-top: 5px;
 
   @media only screen and (max-width: 600px) {
     display: flex;

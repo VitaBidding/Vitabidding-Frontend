@@ -35,6 +35,7 @@ const EnrollmentPageComponent = () => {
     "게임",
     "음반",
     "식물",
+    "기타",
   ];
 
   const CurrentTime = new Date();

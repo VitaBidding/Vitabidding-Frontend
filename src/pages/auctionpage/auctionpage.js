@@ -34,7 +34,7 @@ const HeaderSection = styled.div`
   width: 100%;
   position: fixed;
   top: 0;
-  background-color: #212832;
+  background-color: #242633;
   z-index: 1000; /* Ensure it stays above other content */
   padding: 10px; /* Optional: add some padding */
 `;

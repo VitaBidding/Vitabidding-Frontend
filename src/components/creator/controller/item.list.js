@@ -1,16 +1,15 @@
 import React from "react";
 import styled from "styled-components";
-import KakaoImage from "../../../assets/img/KakaoTalk_20221126_235103258.png";
 
-function ItemList({ products, setSelectedproducts }) {
+function ItemList({ products, setSelectedproduct }) {
   return (
     <Wrapper>
       <Title>경매 물품 리스트</Title>
       <CardSection>
         {products.map((item, index) => (
-          <ItemCard key={index} onClick={() => setSelectedproducts(item)}>
-            <StyledCardImg variant="top" src={KakaoImage} />
-            <StyledCardBody>{item}</StyledCardBody>
+          <ItemCard key={index} onClick={() => setSelectedproduct(item)}>
+            <StyledCardImg variant="top" src={item.img} />
+            <StyledCardBody>{item.name}</StyledCardBody>
           </ItemCard>
         ))}
       </CardSection>
@@ -110,9 +109,9 @@ const ItemCard = styled.div`
 
 const StyledCardImg = styled.img`
   width: 100%;
-  height: auto;
+  height: 100%;
   aspect-ratio: 1/1; /* 너비에 맞춘 정사각형 비율 */
-  object-fit: cover; /* 이미지가 왜곡되지 않도록 설정 */
+  object-fit: contain; /* 이미지가 카드 내부에 넘치지 않고 맞게 조정되도록 설정 */
 `;
 
 const StyledCardBody = styled.div`

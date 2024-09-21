@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import KakaoImage from "../../../assets/img/vitaBiddingLogoBlack.png";
-function ItemImage(props) {
+
+function ItemImage({ selectproduct }) {
   return (
     <Wrapper>
-      <SeletImg src={KakaoImage} />
+      <SeletImg src={selectproduct.img} />
     </Wrapper>
   );
 }
@@ -39,7 +39,7 @@ const Wrapper = styled.div`
   }
 `;
 const SeletImg = styled.img`
-  max-width: 100%;
-  max-height: 100%;
+  width: 100%;
+  height: 100%;
   object-fit: contain; /* Maintains aspect ratio and fits the image within the container */
 `;

@@ -1,9 +1,15 @@
 import React from "react";
-import axios from "axios";
 import styled from "styled-components";
 import { Container, Form, Row, Col } from "react-bootstrap";
 function TransactioncompletedItem(el) {
   const { item } = el;
+
+  function formatNumberWithComma(value) {
+    if (value === null || value === undefined) {
+      return "";
+    }
+    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
   return (
     <Item>
       <Colfirst>
@@ -20,7 +26,7 @@ function TransactioncompletedItem(el) {
           </ItemCreatorSection>
           <ItemPriceSection>
             <ItemPriceLabel>결제포인트</ItemPriceLabel>
-            <ItemPrice>{item.price}</ItemPrice>
+            <ItemPrice>{formatNumberWithComma(item.price)}</ItemPrice>
           </ItemPriceSection>
         </ColRowSectionFirst>
       </Colfirst>

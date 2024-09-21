@@ -1,22 +1,14 @@
 import React from "react";
 import styled from "styled-components";
-function ItemInfo() {
+function ItemInfo({ selectproduct }) {
   return (
     <Wrapper>
       <Row>
-        <NameSection>이름긴거테스트하는중선택진행일시정지</NameSection>
-        <CategorySection>가구/인테리어</CategorySection>
+        <NameSection>{selectproduct.name}</NameSection>
+        <CategorySection>{selectproduct.category}</CategorySection>
       </Row>
       <Descriptiontextarea>
-        이름긴거테스트하는중선택진행일시정지
-        <br />
-        이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지
-        이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지
-        <br />
-        이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지
-        테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지
-        <br />
-        이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선
+        {selectproduct.Descriptiontextarea}
       </Descriptiontextarea>
     </Wrapper>
   );
@@ -116,6 +108,7 @@ const Descriptiontextarea = styled.div`
   color: white;
   overflow-y: scroll;
   margin: 2px;
+  white-space: pre-line;
   &::-webkit-scrollbar {
     height: 8px;
   }

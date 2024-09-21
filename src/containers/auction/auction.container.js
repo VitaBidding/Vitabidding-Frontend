@@ -53,7 +53,7 @@ export default AuctionContainer;
 
 const Wrapper = styled.div`
   display: grid;
-  gap: 15px;
+  gap: 2px;
   @media only screen and (max-width: 280px) {
     height: calc(100vh - 70px);
     grid-template-columns: repeat(3, 1fr);
@@ -86,10 +86,12 @@ const Wrapper = styled.div`
   }
   @media only screen and (min-width: 1480px) {
   }
+  background-color: white;
 `;
 
 const Section1 = styled.div`
   box-sizing: border-box;
+
   @media only screen and (max-width: 280px) {
     grid-column: 1 / 4;
     grid-row: 1 /3;
@@ -131,6 +133,7 @@ const Section2 = styled.div`
   @media only screen and (min-width: 600px) {
     grid-column: 1 / 2;
     grid-row: 2 / 6;
+    border-radius: 0 8px 8px 8px;
   }
   @media only screen and (min-width: 768px) {
   }
@@ -162,6 +165,7 @@ const Section3 = styled.div`
   max-width: 100%;
   width: 100%;
   box-sizing: border-box;
+
   @media only screen and (max-width: 280px) {
     grid-column: 1/ 4;
     grid-row: 8 / 11;
@@ -177,6 +181,7 @@ const Section3 = styled.div`
   @media only screen and (min-width: 600px) {
     grid-column: 1 / 2;
     grid-row: 6 / 9;
+    border-radius: 8px 8px 8px 0;
   }
   @media only screen and (min-width: 768px) {
   }
@@ -208,6 +213,7 @@ const Section4 = styled.div`
   @media only screen and (min-width: 600px) {
     grid-column: 2 / 3;
     grid-row: 2 / 3;
+    border-radius: 8px 0 8px 8px;
   }
   @media only screen and (min-width: 768px) {
   }
@@ -253,6 +259,7 @@ const Section5 = styled.div`
   @media only screen and (min-width: 600px) {
     grid-column: 2 / 3;
     grid-row: 3 / 7;
+    border-radius: 8px;
   }
   @media only screen and (min-width: 768px) {
   }
@@ -297,6 +304,7 @@ const Section6 = styled.div`
   @media only screen and (min-width: 600px) {
     grid-column: 2 / 3;
     grid-row: 7 / 9;
+    border-radius: 8px 8px 0 8px;
   }
   @media only screen and (min-width: 768px) {
   }

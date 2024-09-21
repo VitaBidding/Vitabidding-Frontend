@@ -19,15 +19,6 @@ function AuctionBidStatus({ bid }) {
           <BubbleRight biduser="경매시작금액" bidprice="200,000" />
         </Right>
         <ul>
-          <Left>
-            <BubbleLeft biduser="마자용" bidprice="200,000" />
-          </Left>
-          <Left>
-            <BubbleLeft
-              biduser="로스트아크모코코미스터피자먹고싶다"
-              bidprice="220,000"
-            />
-          </Left>
           {bid.map((index) => (
             <li key={index}>
               <Left>

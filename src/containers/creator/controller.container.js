@@ -6,25 +6,40 @@ import ItemInfo from "../../components/creator/controller/item.info";
 import AuctionBidStatus from "../../components/creator/controller/auction.bid.status";
 import AuctionTimer from "../../components/creator/controller/auction.timer";
 import AuctionProcess from "../../components/creator/controller/auction.process";
-import AuctionSound from "../../components/creator/controller/auction.sound";
-
+// import AuctionSound from "../../components/creator/controller/auction.sound";
+import KakaoImage from "../../assets/img/KakaoTalk_20221126_235103258.png";
+import AImge from "../../assets/img/vitaBiddingLogo.png";
+import BImg from "../../assets/img/ticket.png";
+import CImg from "../../assets/img/명품수석.png";
+import DImg from "../../assets/img/vitaBiddingLogoBlack.png";
 function ControllerContainer() {
   //선택 물품
   const [products, setProducts] = useState([
-    "이름긴거테스트하는중선택진행일시정지",
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9,
-    10,
+    {
+      name: "비타비딩 로고",
+      img: AImge,
+      category: "디자인",
+      Descriptiontextarea:
+        " 이름긴거테스트하는중선택진행일시정지        이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지       이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지        이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지       테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지        이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선",
+    },
+
+    {
+      name: "핸드 메이드 잠옷",
+      img: KakaoImage,
+      category: "의류",
+      Descriptiontextarea:
+        "편안함과 스타일을 동시에!\n100% 핸드메이드로 제작된 특별한 잠옷입니다.\n부드럽고 내추럴한 소재로 제작되어 피부에 자극 없이 편안하게 입으실 수 있습니다.\n디테일 하나하나 정성을 담아 제작된 이 잠옷은 하루의 피로를 풀어주고 숙면을 도와줍니다.\n\n특징\n\n프리미엄 소재: 통기성이 우수한 고급 면 소재로 여름철에도 쾌적함을 유지해줍니다.\n편안한 핏: 몸을 편안하게 감싸주는 여유 있는 핏으로 하루 종일 입고 싶어질 편안함을 선사합니다.\n섬세한 핸드메이드: 각 제품이 장인의 손길을 거쳐 정성스럽게 제작되었습니다.",
+    },
+
+    { name: "S석 스탠딩 티켓", img: BImg, category: "티켓/교환권" },
+    ,
+    { name: "감정(인) 명품 수석", img: CImg, category: "기타" },
+    ,
+    { name: "비타비딩 블랙 로고", img: DImg, category: "디자인" },
   ]);
-  const [selectproducts, setSelectedproducts] = useState(null);
+  const [selectproduct, setSelectedproduct] = useState({});
   //타이머
-  const initialTime = 600;
+  const initialTime = 180;
   const [time, setTime] = useState(initialTime * 100);
   const [running, setRunning] = useState(false);
   const [timerFinished, setTimerFinished] = useState(false);
@@ -39,16 +54,13 @@ function ControllerContainer() {
   return (
     <Wrapper>
       <Section1>
-        <ItemList
-          products={products}
-          setSelectedproducts={setSelectedproducts}
-        />
+        <ItemList products={products} setSelectedproduct={setSelectedproduct} />
       </Section1>
       <Section2>
-        <ItemImage />
+        <ItemImage selectproduct={selectproduct} />
       </Section2>
       <Section3>
-        <ItemInfo />
+        <ItemInfo selectproduct={selectproduct} />
       </Section3>
       <Section4>
         <AuctionTimer
@@ -69,9 +81,9 @@ function ControllerContainer() {
           // handlepuase={handlepuase}
         />
       </Section6>
-      <Section7>
+      {/* <Section7>
         <AuctionSound />
-      </Section7>
+      </Section7> */}
     </Wrapper>
   );
 }
@@ -195,11 +207,11 @@ const Section3 = styled.div`
   box-sizing: border-box;
   @media only screen and (max-width: 280px) {
     grid-column: 1/ 4;
-    grid-row: 9 / 11;
+    grid-row: 9 / 12;
   }
   @media only screen and (min-width: 280px) {
     grid-column: 1/ 4;
-    grid-row: 9 / 11;
+    grid-row: 9 / 12;
   }
   @media only screen and (min-width: 360px) {
   }
@@ -228,11 +240,11 @@ const Section4 = styled.div`
 
   @media only screen and (max-width: 280px) {
     grid-column: 1 / 2;
-    grid-row: 11 / 13;
+    grid-row: 12 / 15;
   }
   @media only screen and (min-width: 280px) {
     grid-column: 1 / 2;
-    grid-row: 11 / 13;
+    grid-row: 12 / 15;
   }
   @media only screen and (min-width: 360px) {
   }
@@ -276,11 +288,11 @@ const Section5 = styled.div`
 
   @media only screen and (max-width: 280px) {
     grid-column: 2 / 4;
-    grid-row: 11 / 13;
+    grid-row: 12 / 15;
   }
   @media only screen and (min-width: 280px) {
     grid-column: 2 / 4;
-    grid-row: 11 / 13;
+    grid-row: 12 / 15;
   }
   @media only screen and (min-width: 360px) {
   }
@@ -322,40 +334,6 @@ const Section6 = styled.div`
 
   @media only screen and (max-width: 280px) {
     grid-column: 1 / 4;
-    grid-row: 13 / 15;
-  }
-  @media only screen and (min-width: 280px) {
-    grid-column: 1 / 4;
-    grid-row: 13 / 15;
-  }
-  @media only screen and (min-width: 360px) {
-  }
-  @media only screen and (min-width: 420px) {
-  }
-  @media only screen and (min-width: 600px) {
-    grid-column: 2 / 3;
-    grid-row: 7 / 8;
-  }
-  @media only screen and (min-width: 768px) {
-  }
-  @media only screen and (min-width: 992px) {
-  }
-  @media only screen and (min-width: 1200px) {
-  }
-  @media only screen and (min-width: 1480px) {
-  }
-`;
-
-const Section7 = styled.div`
-  /* border: 1px solid black; */
-
-  overflow-x: auto;
-  max-width: 100%;
-  width: 100%;
-  box-sizing: border-box;
-
-  @media only screen and (max-width: 280px) {
-    grid-column: 1 / 4;
     grid-row: 15 / 17;
   }
   @media only screen and (min-width: 280px) {
@@ -368,7 +346,7 @@ const Section7 = styled.div`
   }
   @media only screen and (min-width: 600px) {
     grid-column: 2 / 3;
-    grid-row: 8 / 9;
+    grid-row: 7 / 9;
   }
   @media only screen and (min-width: 768px) {
   }
@@ -379,3 +357,37 @@ const Section7 = styled.div`
   @media only screen and (min-width: 1480px) {
   }
 `;
+
+// const Section7 = styled.div`
+//   /* border: 1px solid black; */
+
+//   overflow-x: auto;
+//   max-width: 100%;
+//   width: 100%;
+//   box-sizing: border-box;
+
+//   @media only screen and (max-width: 280px) {
+//     grid-column: 1 / 4;
+//     grid-row: 15 / 17;
+//   }
+//   @media only screen and (min-width: 280px) {
+//     grid-column: 1 / 4;
+//     grid-row: 15 / 17;
+//   }
+//   @media only screen and (min-width: 360px) {
+//   }
+//   @media only screen and (min-width: 420px) {
+//   }
+//   @media only screen and (min-width: 600px) {
+//     grid-column: 2 / 3;
+//     grid-row: 8 / 9;
+//   }
+//   @media only screen and (min-width: 768px) {
+//   }
+//   @media only screen and (min-width: 992px) {
+//   }
+//   @media only screen and (min-width: 1200px) {
+//   }
+//   @media only screen and (min-width: 1480px) {
+//   }
+// `;

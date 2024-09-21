@@ -1,12 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Button } from "react-bootstrap";
-function AuctionProcess({
-  setRunning,
-  handleChoiceItem,
-  handleplay,
-  handlepuase,
-}) {
+function AuctionProcess({ setRunning, handleplay, handlepuase }) {
   const handleStart = () => {
     setRunning(true);
 
@@ -22,9 +17,9 @@ function AuctionProcess({
     <Wrapper>
       <Title>경매 진행 버튼</Title>
       <div>
-        <SelectButton variant="outline-light" onClick={handleChoiceItem}>
+        {/* <SelectButton variant="outline-light" onClick={handleChoiceItem}>
           선택
-        </SelectButton>
+        </SelectButton> */}
         <PlayButton variant="outline-info" onClick={handleStart}>
           진행
         </PlayButton>
@@ -52,7 +47,6 @@ const Title = styled.div`
   color: #fff;
   font-weight: bold;
 
-  margin: 2px;
   @media only screen and (max-width: 280px) {
     font-size: 9pt;
   }
@@ -66,6 +60,8 @@ const Title = styled.div`
     font-size: 11pt;
   }
   @media only screen and (min-width: 600px) {
+    margin: 10px;
+    font-size: 16pt;
   }
   @media only screen and (min-width: 768px) {
   }
@@ -92,15 +88,15 @@ const SelectButton = styled(Button)`
   @media only screen and (min-width: 420px) {
   }
   @media only screen and (min-width: 600px) {
+    font-size: 20px;
+    margin: 5px;
+    padding: 6px 12px;
   }
   @media only screen and (min-width: 768px) {
   }
   @media only screen and (min-width: 992px) {
   }
   @media only screen and (min-width: 1200px) {
-    font-size: 20px;
-    margin: 5px;
-    padding: 6px 12px;
   }
   @media only screen and (min-width: 1480px) {
   }
@@ -117,19 +113,22 @@ const PlayButton = styled(Button)`
     padding: 4px 8px;
   }
   @media only screen and (min-width: 360px) {
+    font-size: 20px;
+    margin: 5px;
+    padding: 8px 12px;
   }
   @media only screen and (min-width: 420px) {
   }
   @media only screen and (min-width: 600px) {
+    font-size: 24px;
+    margin: 5px;
+    padding: 8px 20px;
   }
   @media only screen and (min-width: 768px) {
   }
   @media only screen and (min-width: 992px) {
   }
   @media only screen and (min-width: 1200px) {
-    font-size: 20px;
-    margin: 5px;
-    padding: 6px 12px;
   }
   @media only screen and (min-width: 1480px) {
   }
@@ -146,19 +145,22 @@ const PuaseButton = styled(Button)`
     padding: 4px 8px;
   }
   @media only screen and (min-width: 360px) {
+    font-size: 20px;
+    margin: 5px;
+    padding: 8px 12px;
   }
   @media only screen and (min-width: 420px) {
   }
   @media only screen and (min-width: 600px) {
+    font-size: 24px;
+    margin: 5px;
+    padding: 8px 20px;
   }
   @media only screen and (min-width: 768px) {
   }
   @media only screen and (min-width: 992px) {
   }
   @media only screen and (min-width: 1200px) {
-    font-size: 20px;
-    margin: 5px;
-    padding: 6px 12px;
   }
   @media only screen and (min-width: 1480px) {
   }
