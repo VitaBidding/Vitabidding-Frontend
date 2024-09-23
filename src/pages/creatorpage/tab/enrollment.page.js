@@ -14,9 +14,9 @@ export default Enrollmentpage;
 
 const Wrapper = styled.div`
   /* border: 1px solid black; */
+  /* background: linear-gradient(45deg, #f8f9fa 60%, #e9ecef); */
+  border-radius: 10px;
   display: flex;
+  justify-content: center;
   align-items: center;
-  justify-content: center; /* 수평 중앙 정렬 */
-  height: 90%;
-  margin: 30px 0;
 `;
