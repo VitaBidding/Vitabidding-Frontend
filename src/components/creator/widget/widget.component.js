@@ -80,7 +80,9 @@ function WidgetComponet(props) {
           </ContentAnnotation>
         </Contenthead>
         <ContentURLSection>
-          <ContentURL blurOn={blurOn}>{widgeturl}</ContentURL>
+          <ContentURL blurOn={blurOn} width={windowWidth - 140}>
+            {widgeturl}
+          </ContentURL>
           <ButtonSection>
             <BlindButton variant="light" onClick={handleBlurToggle}>
               {blurOn && <AiFillEye></AiFillEye>}{" "}
@@ -100,7 +102,7 @@ function WidgetComponet(props) {
           </ContentAnnotation>
         </Contenthead>
         <ContentURLSection>
-          <ContentURL>{auctionurl}</ContentURL>
+          <ContentURL width={windowWidth - 140}>{auctionurl}</ContentURL>
           <CopyButton2 onClick={() => handleButtonClick(auctionurl)}>
             <HiOutlineDocumentDuplicate></HiOutlineDocumentDuplicate>
           </CopyButton2>
@@ -114,7 +116,7 @@ function WidgetComponet(props) {
           </ContentAnnotation>
         </Contenthead>
         <ContentURLSection>
-          <ContentURL>{channelurl}</ContentURL>
+          <ContentURL width={windowWidth - 140}>{channelurl}</ContentURL>
           <CopyButton3 onClick={() => handleShow()}>등록하기</CopyButton3>
         </ContentURLSection>
       </ContentSection>
@@ -125,12 +127,12 @@ function WidgetComponet(props) {
 export default WidgetComponet;
 
 const Wrapper = styled.div`
+  /* border: 1px solid gray; */
   display: flex;
   flex-direction: column;
 `;
 
 const Contenthead = styled.div`
-  /* border: 1px solid gray; */
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
@@ -147,23 +149,20 @@ const ContentSection = styled.div`
     margin: 10px 0;
   }
   @media only screen and (min-width: 420px) {
-    width: 380px;
-    margin: 20px;
   }
   @media only screen and (min-width: 600px) {
-    width: 540px;
   }
   @media only screen and (min-width: 768px) {
     width: 700px;
   }
   @media only screen and (min-width: 992px) {
-    width: 700px;
+    width: 750px;
   }
   @media only screen and (min-width: 1200px) {
-    width: 700px;
+    width: 800px;
   }
   @media only screen and (min-width: 1480px) {
-    width: 700px;
+    width: 900px;
   }
 `;
 const ContentName = styled.div`
@@ -274,11 +273,35 @@ const ContentURLSection = styled.div`
   justify-content: space-between;
   align-items: center;
   background-color: #f1fcfc;
-  padding: 10px;
+
   border-radius: 5px;
   /* border: 1px solid #000; 보더 스타일 설정 */
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* 그림자 스타일 설정 */
-  height: 80px;
+
+  @media only screen and (max-width: 280px) {
+  }
+  @media only screen and (min-width: 280px) {
+    padding: 3px;
+    height: 50px;
+  }
+  @media only screen and (min-width: 360px) {
+  }
+  @media only screen and (min-width: 420px) {
+  }
+  @media only screen and (min-width: 600px) {
+    padding: 5px;
+    height: 50px;
+  }
+  @media only screen and (min-width: 768px) {
+    padding: 10px;
+    height: 80px;
+  }
+  @media only screen and (min-width: 992px) {
+  }
+  @media only screen and (min-width: 1200px) {
+  }
+  @media only screen and (min-width: 1480px) {
+  }
 `;
 const ContentURL = styled.div`
   word-wrap: break-word;
@@ -287,18 +310,16 @@ const ContentURL = styled.div`
   font-weight: 500;
   filter: ${({ blurOn }) => (blurOn ? "blur(5px)" : "none")};
   @media only screen and (max-width: 360px) {
-    width: 160px;
-    font-size: 12px;
+    width: ${(props) => props.width}px;
+    font-size: 9px;
   }
   @media only screen and (min-width: 360px) {
-    width: 210px;
-    font-size: 12px;
+    width: ${(props) => props.width}px;
+    font-size: 9px;
   }
   @media only screen and (min-width: 420px) {
-    width: 260px;
   }
   @media only screen and (min-width: 600px) {
-    width: 400px;
   }
   @media only screen and (min-width: 768px) {
     width: 550px;

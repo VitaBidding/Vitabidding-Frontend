@@ -105,6 +105,7 @@ const ThumbnailSection = styled.div`
 const Thumbnaillabel = styled.label`
   font-weight: bold;
   width: 100%;
+  height: 10%;
   display: flex;
   justify-content: flex-start;
 
@@ -140,7 +141,7 @@ const Thumbnailcontents = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100%;
+  height: 88%;
 
   @media only screen and (max-width: 280px) {
     padding: 0;
@@ -188,6 +189,8 @@ const Thumbnaillabelno = styled.label`
 `;
 
 const Thumbnaillabelfor = styled.label`
+  height: 100%;
+  width: 100%;
   &:hover {
     cursor: pointer;
   }
@@ -195,10 +198,10 @@ const Thumbnaillabelfor = styled.label`
 
 const ThumbnailWrapper = styled.div`
   position: relative;
-  height: 200px;
+  height: 100%;
+  width: 100%;
   overflow: hidden;
   border-radius: 10px;
-  width: 100%;
 `;
 
 const Thumbnailimg = styled.img`

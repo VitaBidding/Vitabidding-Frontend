@@ -1,10 +1,24 @@
 import React from "react";
 import styled from "styled-components";
 import { Button } from "react-bootstrap";
+import { IoMdAdd } from "react-icons/io";
 function AuctionBidding() {
+  function onClickaddpoint() {
+    window.open(
+      `${process.env.REACT_APP_MAIN_CLIENT_URL}/pointadd`,
+      "포인트 구매",
+      "width=450, height=800"
+    );
+  }
   return (
     <Wrapper>
-      <Title>보유 포인트 : 1,200,000 p</Title>
+      <Title>
+        <Pointinfo>보유 포인트 : 1,200,000 p</Pointinfo>
+        <Pointadd onClick={() => onClickaddpoint()}>
+          <IoMdAdd />
+          포인트 구매하기
+        </Pointadd>
+      </Title>
       <ButtonSection>
         <BiddingButton>1,000,000p 입찰하기</BiddingButton>
       </ButtonSection>
@@ -26,13 +40,16 @@ const Wrapper = styled.div`
 
 const Title = styled.div`
   display: flex;
-  flex-direction: row-reverse;
+  justify-content: space-between;
   color: #fff;
-  font-weight: bold;
+
   background-color: #242633;
   padding: 2px 5px;
   flex-shrink: 0;
   z-index: 1;
+`;
+const Pointinfo = styled.div`
+  font-weight: bold;
   @media only screen and (max-width: 280px) {
     font-size: 8pt;
   }
@@ -40,7 +57,6 @@ const Title = styled.div`
     font-size: 8pt;
   }
   @media only screen and (min-width: 360px) {
-    font-size: 9pt;
   }
   @media only screen and (min-width: 420px) {
   }
@@ -56,7 +72,37 @@ const Title = styled.div`
   @media only screen and (min-width: 1480px) {
   }
 `;
+const Pointadd = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @media only screen and (max-width: 280px) {
+    font-size: 6pt;
+  }
+  @media only screen and (min-width: 280px) {
+    font-size: 6pt;
+  }
 
+  @media only screen and (min-width: 360px) {
+  }
+  @media only screen and (min-width: 420px) {
+  }
+  @media only screen and (min-width: 600px) {
+    font-size: 11pt;
+  }
+  @media only screen and (min-width: 768px) {
+  }
+  @media only screen and (min-width: 992px) {
+  }
+  @media only screen and (min-width: 1200px) {
+  }
+  @media only screen and (min-width: 1480px) {
+  }
+  &:hover {
+    cursor: pointer;
+    font-weight: bold;
+  }
+`;
 const ButtonSection = styled.div`
   /* border: 1px solid blue; */
   display: flex;

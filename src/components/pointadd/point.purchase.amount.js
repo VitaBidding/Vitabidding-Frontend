@@ -47,15 +47,15 @@ function PointPurchaseAmount({ purchasePoint, setpurchasePoint }) {
         </UnitSection>
       </InputBox>
       <AddSection>
-        <AddOneThousand onClick={() => AddOneThousandPoint()}>
+        <AddButton onClick={() => AddOneThousandPoint()}>
           <Plus>+</Plus> 1,000
-        </AddOneThousand>
-        <AddTenThousand onClick={() => AddTenThousandPoint()}>
+        </AddButton>
+        <AddButton onClick={() => AddTenThousandPoint()}>
           <Plus>+</Plus> 10,000
-        </AddTenThousand>
-        <AddFiftyThousand onClick={() => AddFiftyThousandPoint()}>
+        </AddButton>
+        <AddButton onClick={() => AddFiftyThousandPoint()}>
           <Plus>+</Plus> 50,000
-        </AddFiftyThousand>
+        </AddButton>
       </AddSection>
       <Comment>※ 구매 금액은 1,000 포인트 단위로만 결제 가능합니다.</Comment>
     </Wrapper>
@@ -105,6 +105,12 @@ const Inputcontents = styled.input`
   padding: 0;
   margin: 0;
   outline: none;
+  @media only screen and (max-width: 450px) {
+    width: 150px;
+  }
+  @media only screen and (min-width: 450px) {
+    width: 250px;
+  }
 `;
 const UnitSection = styled.div`
   display: flex;
@@ -119,7 +125,6 @@ const IconSection = styled.div`
   align-items: center;
   padding: 5px;
   background-color: #e9ecef;
-
   &:hover {
     cursor: pointer;
   }
@@ -147,54 +152,30 @@ const AddSection = styled.div`
   font-family: "TheJamsil5Bold";
   color: #495057;
 `;
-const AddOneThousand = styled.div`
+const AddButton = styled.div`
   border: 1px solid lightgray;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   border-radius: 8px;
-  width: 120px;
-  height: 50px;
+
   background-color: #f8f9fa;
   &:hover {
     cursor: pointer;
     background-color: #e9ecef;
     color: #000;
   }
-`;
-const AddTenThousand = styled.div`
-  border: 1px solid lightgray;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  border-radius: 8px;
-  width: 120px;
-  height: 50px;
-  background-color: #f8f9fa;
-  &:hover {
-    cursor: pointer;
-    background-color: #e9ecef;
-    color: #000;
+  @media only screen and (max-width: 450px) {
+    width: 100px;
+    height: 40px;
+  }
+  @media only screen and (min-width: 450px) {
+    width: 120px;
+    height: 50px;
   }
 `;
-const AddFiftyThousand = styled.div`
-  border: 1px solid lightgray;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  border-radius: 8px;
-  width: 120px;
-  height: 50px;
-  background-color: #f8f9fa;
-  &:hover {
-    cursor: pointer;
-    background-color: #e9ecef;
-    color: #000;
-  }
-`;
+
 const Plus = styled.div`
   color: #fd9800;
   margin: 0 5px 0 0;

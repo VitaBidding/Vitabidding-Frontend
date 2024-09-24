@@ -13,11 +13,11 @@ export default function LoginVIcon() {
   return (
     <Section>
       <Dropdown>
-        <Dropdown.Toggle
+        <CustomDropdownToggle
           style={{ border: "none", backgroundColor: "transparent", padding: 0 }}
         >
           <UserIcon size={30} />
-        </Dropdown.Toggle>
+        </CustomDropdownToggle>
 
         <Dropdown.Menu>
           <Dropdown.Item href="/point">포인트</Dropdown.Item>
@@ -70,6 +70,11 @@ const Section = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+`;
+const CustomDropdownToggle = styled(Dropdown.Toggle)`
+  &::after {
+    display: none !important; // 화살표 아이콘을 숨김
   }
 `;
 

@@ -48,7 +48,7 @@ const CategorySection = styled.div`
   width: 100%;
   height: 100%;
   font-family: "KBO-Dia-Gothic_medium";
-  color: black;
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -57,6 +57,8 @@ const CategorySection = styled.div`
 
 //카테고리 라벨
 const Categorylabel = styled.label`
+  color: black;
+  text-shadow: 1px 1px lightgray;
   font-weight: bold;
   width: 100%;
   display: flex;

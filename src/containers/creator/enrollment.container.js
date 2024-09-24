@@ -21,7 +21,7 @@ function EnrollmentContainer(props) {
     start_day: null,
     start_time: null, // 현재 시간 기준으로 설정
   });
-  console.log("🚀 ~ EnrollmentContainer ~ item:", item);
+  // console.log("🚀 ~ EnrollmentContainer ~ item:", item);
 
   // 유효성검사
   const [show, setShow] = useState(false);
@@ -158,12 +158,10 @@ const Wrapper = styled.div`
   @media only screen and (max-width: 280px) {
     grid-template-rows: repeat(20, 1fr);
     width: calc(100vw - 10px);
-    gap: 2px;
   }
   @media only screen and (min-width: 280px) {
     grid-template-rows: repeat(20, 1fr);
     width: calc(100vw - 10px);
-    gap: 2px;
   }
   @media only screen and (min-width: 360px) {
   }
@@ -172,15 +170,15 @@ const Wrapper = styled.div`
   @media only screen and (min-width: 600px) {
   }
   @media only screen and (min-width: 768px) {
+    width: 750px;
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: repeat(10, 1fr);
   }
   @media only screen and (min-width: 992px) {
-    width: calc(100vw - 220px);
+    width: calc(100vw - 250px);
   }
   @media only screen and (min-width: 1200px) {
-    width: calc(100vw - 300px);
-    gap: 3px;
+    width: calc(100vw - 400px);
   }
   @media only screen and (min-width: 1480px) {
   }
@@ -188,6 +186,9 @@ const Wrapper = styled.div`
 
 const Section1 = styled.div`
   /* border: 1px solid blue; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
   box-sizing: border-box;
   @media only screen and (max-width: 280px) {
     grid-row: 1 / 2;
@@ -371,6 +372,9 @@ const Section7 = styled.div`
 `;
 const Section8 = styled.div`
   /* border: 1px solid blue; */
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
   box-sizing: border-box;
   @media only screen and (max-width: 280px) {
     grid-row: 20 / 21;
@@ -398,7 +402,6 @@ const Section8 = styled.div`
 
 const SubmitButton = styled(Button)`
   font-weight: bold;
-  float: right;
   @media only screen and (max-width: 280px) {
     font-size: 9pt;
     padding: 6px 10px;
@@ -410,8 +413,8 @@ const SubmitButton = styled(Button)`
     margin: 0;
   }
   @media only screen and (min-width: 360px) {
-    padding: 8px 12px;
-    font-size: 11pt;
+    font-size: 10pt;
+    padding: 6px 10px;
   }
   @media only screen and (min-width: 420px) {
   }

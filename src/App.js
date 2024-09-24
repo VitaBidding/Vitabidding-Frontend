@@ -1,5 +1,4 @@
 import React from "react";
-import "./assets/bootstrap/bootstrapUnited.min.css";
 import { Route, Routes } from "react-router-dom";
 import Mainpage from "./pages/mainpage/mainpage";
 import Auth from "./pages/authpage/auth";
@@ -13,6 +12,8 @@ import Withdrawalpage from "./pages/authpage/withdrawal.page";
 import AuctionPage from "./pages/auctionpage/auctionpage";
 import PointAddPage from "./pages/pointaddpage/point.add.page";
 import ThirdpartyPage from "./pages/thirdparty/thirdparty.page";
+import AdminPage from "./pages/adminpage/admin.page";
+import "./assets/bootstrap/bootstrapUnited.min.css";
 import "./assets/font/app.css";
 function App() {
   return (
@@ -31,7 +32,8 @@ function App() {
       <Route path="/creator/*" element={<Creatorpage />} />
       <Route path="/auction/:userID" element={<AuctionPage />} />
       <Route path="/pointadd" element={<PointAddPage />} />
-      <Route path="thirdparty/*" element={<ThirdpartyPage />} />
+      <Route path="/thirdparty/*" element={<ThirdpartyPage />} />
+      <Route path="/admin/*" element={<AdminPage />} />
     </Routes>
   );
 }

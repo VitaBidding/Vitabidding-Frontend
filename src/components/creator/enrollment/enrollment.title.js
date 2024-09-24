@@ -8,30 +8,31 @@ export default EnrollmentTitle;
 
 const Title = styled.div`
   width: 100%;
-  height: 100%;
+  height: 80%;
   display: flex;
-  justify-content: center;
+
+  font-weight: bolder;
   align-items: center;
   font-family: "KBO-Dia-Gothic_bold";
-  color: #fd9800;
-
+  color: white;
+  background-color: #868e96;
   @media only screen and (max-width: 280px) {
-    font-size: 16pt;
-    font-weight: bolder;
+    font-size: 7pt;
   }
   @media only screen and (min-width: 280px) {
-    font-size: 16pt;
-    font-weight: bolder;
+    font-size: 7pt;
   }
   @media only screen and (min-width: 360px) {
+    font-size: 10pt;
   }
   @media only screen and (min-width: 420px) {
+    font-size: 11pt;
   }
   @media only screen and (min-width: 600px) {
   }
   @media only screen and (min-width: 768px) {
+    padding: 10px;
     font-size: 20pt;
-    font-weight: bolder;
   }
   @media only screen and (min-width: 992px) {
   }

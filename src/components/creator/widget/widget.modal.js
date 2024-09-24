@@ -62,6 +62,8 @@ function WidgetModal({ show, handleClose, effect, seteffect }) {
 export default WidgetModal;
 
 const Display = styled.div`
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
 `;

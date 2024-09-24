@@ -97,7 +97,6 @@ const TimeSection = styled.div`
   width: 100%;
   height: 100%;
   font-family: "KBO-Dia-Gothic_medium";
-  color: black;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -105,6 +104,8 @@ const TimeSection = styled.div`
 `;
 const Timelabel = styled.label`
   /* border: 1px solid blue; */
+  color: black;
+  text-shadow: 1px 1px lightgray;
   font-weight: bold;
   width: 100%;
   display: flex;
@@ -198,7 +199,6 @@ const StyledDatePicker = styled(DatePicker)`
   }
 
   @media only screen and (min-width: 768px) {
-    margin: 0 0 0 10px;
     padding: 10px 0;
     font-size: 12pt;
   }
