@@ -1,5 +1,6 @@
 import React from "react";
-import Thirdparty from "../../containers/thirdpary/thirdparty";
+
+import Thirdparty from "../../containers/thirdparty/thirdparty.container";
 function ThirdpartyPage() {
   return (
     <div>

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Button } from "react-bootstrap";
-function AuctionProcess({ setRunning, handleplay, handlepuase }) {
+function AuctionProcess({ setRunning, setTime, handleplay, handlepuase }) {
   const handleStart = () => {
     setRunning(true);
 
@@ -13,11 +13,18 @@ function AuctionProcess({ setRunning, handleplay, handlepuase }) {
 
     // handlepuase();
   };
+  // const handlereset = () => {
+  //   setRunning(false);
+  //   setTime(10000);
+  //   setRunning(true);
+
+  //   // handlepuase();
+  // };
   return (
     <Wrapper>
       <Title>경매 진행 버튼</Title>
       <div>
-        {/* <SelectButton variant="outline-light" onClick={handleChoiceItem}>
+        {/* <SelectButton variant="outline-light" onClick={handlereset}>
           선택
         </SelectButton> */}
         <PlayButton variant="outline-info" onClick={handleStart}>

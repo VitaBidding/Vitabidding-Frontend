@@ -31,7 +31,7 @@ function App() {
       />
       <Route path="/creator/*" element={<Creatorpage />} />
       <Route path="/auction/:userID" element={<AuctionPage />} />
-      <Route path="/pointadd" element={<PointAddPage />} />
+      <Route path="/pointadd/*" element={<PointAddPage />} />
       <Route path="/thirdparty/*" element={<ThirdpartyPage />} />
       <Route path="/admin/*" element={<AdminPage />} />
     </Routes>

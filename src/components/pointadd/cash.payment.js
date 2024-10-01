@@ -1,7 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import { Button } from "react-bootstrap";
-function CashPayment({ cashPayment }) {
+
+function CashPayment({ cashPayment, depositorName, view_fk_phone }) {
+  function onclickPaymentButton() {
+    setTimeout(() => {
+      window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}/pointadd/acconttransfer`;
+    }, 2000);
+  }
   const formattedValue =
     cashPayment !== null && cashPayment !== undefined //0일경우 생략
       ? cashPayment.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") // 세 자리마다 쉼표 추가
@@ -14,7 +20,12 @@ function CashPayment({ cashPayment }) {
       </CashPaymentSection>
       <CommetSection>*결제 금액에는 세금이 포함되어 있습니다.</CommetSection>
       <ButtonSection>
-        <PaymentButton disabled={true}>구매하기</PaymentButton>
+        <PaymentButton
+          disabled={!cashPayment || !depositorName || !view_fk_phone}
+          onClick={() => onclickPaymentButton()}
+        >
+          구매하기
+        </PaymentButton>
       </ButtonSection>
     </Wrapper>
   );

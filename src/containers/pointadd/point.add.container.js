@@ -4,9 +4,12 @@ import PointaddTitle from "../../components/pointadd/pointadd.title";
 import PointPurchaseAmount from "../../components/pointadd/point.purchase.amount";
 import MethodOfPayment from "../../components/pointadd/method.of.payment";
 import CashPayment from "../../components/pointadd/cash.payment";
+
 function PointAddContainer() {
   const [purchasePoint, setpurchasePoint] = useState(5000);
   const [cashPayment, setcashPayment] = useState(0);
+  const [depositorName, setdepositorName] = useState("");
+  const [view_fk_phone, setview_fk_phone] = useState("");
 
   useEffect(() => {
     // 구매 포인트가 변경될 때마다 결제 금액을 계산하고 소수점 없이 반올림
@@ -25,10 +28,19 @@ function PointAddContainer() {
         />
       </Section2>
       <Section3>
-        <MethodOfPayment />
+        <MethodOfPayment
+          depositorName={depositorName}
+          setdepositorName={setdepositorName}
+          view_fk_phone={view_fk_phone}
+          setview_fk_phone={setview_fk_phone}
+        />
       </Section3>
       <Section4>
-        <CashPayment cashPayment={cashPayment} />
+        <CashPayment
+          cashPayment={cashPayment}
+          depositorName={depositorName}
+          view_fk_phone={view_fk_phone}
+        />
       </Section4>
     </Wrapper>
   );

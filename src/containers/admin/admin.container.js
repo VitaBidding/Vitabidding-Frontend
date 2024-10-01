@@ -1,5 +1,5 @@
-import React from "react";
-import { Route, Routes, Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Route, Routes, Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import BuyerManagement from "../../components/admin/buyer.management";
 import SellerManagement from "../../components/admin/seller.management";
@@ -9,6 +9,14 @@ import ServerMonitoring from "../../components/admin/server.monitoring";
 import SalesAndTraffic from "../../components/admin/sales.and.traffic";
 import { Navbar, Nav } from "react-bootstrap";
 function AdminContainer() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const token = localStorage.getItem("authToken"); // 또는 sessionStorage
+    if (!token) {
+      navigate("/admin/login"); // 토큰이 없으면 로그인 페이지로 리디렉션
+    }
+  }, [navigate]);
+
   return (
     <div>
       <Navbar bg="dark" variant="dark" expand="lg">

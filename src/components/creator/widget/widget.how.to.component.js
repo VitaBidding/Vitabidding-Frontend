@@ -25,7 +25,7 @@ function WidgetHowToComponent() {
           videoId={`${process.env.REACT_APP_YOUTUBE}`}
           opts={{
             playerVars: {
-              autoplay: 1, //자동재생 O
+              autoplay: 0, // 자동재생 끔
               rel: 0, //관련 동영상 표시하지 않음
               modestbranding: 1, // 컨트롤 바에 youtube 로고를 표시하지 않음
             },

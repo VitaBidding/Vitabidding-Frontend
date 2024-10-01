@@ -1,19 +1,22 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-
+import { login } from "../../lib/admin.request";
 const LoginComponent = () => {
   // 상태 관리 (사용자 입력값 및 오류 메시지)
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate(); // useNavigate 훅 사용
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     // 간단한 유효성 검사
     if (username === "admin" && password === "password") {
+      login({ username, password });
       alert("로그인 성공!");
-      // 이후 로그인 성공 시 필요한 작업 진행 (예: 리디렉션)
+      navigate("/admin"); // 로그인 성공 시 /admin 페이지로 리디렉션
     } else {
       setErrorMessage("아이디 또는 비밀번호가 잘못되었습니다.");
     }
