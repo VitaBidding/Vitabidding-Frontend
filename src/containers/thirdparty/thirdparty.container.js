@@ -5,12 +5,14 @@ import Statusboard from "../../components/thirdparty/statusboard";
 import Bidbox from "../../components/thirdparty/bidbox";
 import BidSound from "./sound/bidsound.mp3"; // 입찰 효과음 파일
 import EndBox from "../../components/thirdparty/endbox";
+import EndSound from "./sound/endsound.mp3";
 function ThirdpartyContainer({ roomName }) {
   // 타이머와 오디오 관련 ref 설정
   const timerRef = useRef(null);
   const audioRef = useRef(new Audio(BidSound));
   const audioTimeoutRef = useRef(null);
-
+  const audioRef1 = useRef(new Audio(EndSound));
+  const audioTimeoutRef1 = useRef(null);
   // 상태 관리
   const [showStatusboard, setShowStatusboard] = useState(true);
   const [showBid, setShowBid] = useState(false);
@@ -48,6 +50,25 @@ function ThirdpartyContainer({ roomName }) {
     }, 1000);
   };
 
+  const playEndSound = () => {
+    const audio1 = audioRef1.current;
+    audio1.currentTime = 0;
+    audio1
+      .play()
+      .catch((error) => console.error("엔드 오디오 재생 실패:", error));
+
+    // 기존 오디오 타임아웃 제거
+    if (audioTimeoutRef1.current) {
+      clearTimeout(audioTimeoutRef1.current);
+    }
+
+    // 2.5초 후 오디오 정지를 위한 새 타임아웃 설정
+    audioTimeoutRef1.current = setTimeout(() => {
+      audio1.pause();
+      audio1.currentTime = 0;
+    }, 2500);
+  };
+
   // 컴포넌트 언마운트 시 정리 작업
   useEffect(() => {
     return () => {
@@ -57,6 +78,9 @@ function ThirdpartyContainer({ roomName }) {
       if (audioTimeoutRef.current) {
         clearTimeout(audioTimeoutRef.current);
       }
+      if (audioTimeoutRef1.current) {
+        clearTimeout(audioTimeoutRef1.current);
+      }
     };
   }, []);
 
@@ -64,9 +88,13 @@ function ThirdpartyContainer({ roomName }) {
   useEffect(() => {
     const audio = audioRef.current;
     audio.preload = "auto"; // 오디오 미리 로드
+    const audio1 = audioRef1.current;
+    audio1.preload = "auto"; // 오디오 미리 로드
     return () => {
       audio.pause();
       audio.currentTime = 0;
+      audio1.pause();
+      audio1.currentTime = 0;
     };
   }, []);
 
@@ -74,6 +102,7 @@ function ThirdpartyContainer({ roomName }) {
     if (timerFinished) {
       setShowStatusboard(false);
       setShowEndComponent(true);
+      playEndSound();
       // 여기에 최종 낙찰자와 낙찰가를 설정하는 로직을 추가할 수 있습니다.
       setEndComment(true);
       timerRef.current = setTimeout(() => {
@@ -148,12 +177,18 @@ function ThirdpartyContainer({ roomName }) {
     if (audioTimeoutRef.current) {
       clearTimeout(audioTimeoutRef.current);
     }
+    if (audioTimeoutRef1.current) {
+      clearTimeout(audioTimeoutRef1.current);
+    }
 
     // 오디오 초기화
     const audio = audioRef.current;
     audio.pause();
     audio.currentTime = 0;
 
+    const audio1 = audioRef1.current;
+    audio1.pause();
+    audio1.currentTime = 0;
     // 상태 초기화
     setShowStatusboard(true);
     setShowBid(false);
@@ -189,8 +224,8 @@ function ThirdpartyContainer({ roomName }) {
         </BlinkDiv>
       )}
       {showEndComponent && <EndBox biduser={biduser} bidpoint={bidpoint} />}
-      <button onClick={handlebid}>입찰 데이터 수신</button>
-      <button onClick={handleselcet}>물건 선택 데이터 수신</button>
+      {/* <button onClick={handlebid}>입찰 데이터 수신</button>
+      <button onClick={handleselcet}>물건 선택 데이터 수신</button> */}
     </Container>
   );
 }
