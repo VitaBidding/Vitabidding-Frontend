@@ -20,10 +20,10 @@ function WidgetComponet(props) {
     };
   }, []);
   const [widgeturl, setwidgeturl] = useState(
-    "https://example.com/url/blind/abcdfadhguiahguiahjibvliah"
+    "https://example.com/thirdparty/blind/abcdfadhguiahguiahjibvliah"
   );
   const [auctionurl, setauctionurl] = useState(
-    "https://vitabiding.com/auction/abcdef"
+    "https://vitabiding.shop/abcdef"
   );
   const [channelurl, setchannelurl] = useState(
     "ex) https://www.youtube.com/watch?v=vitabiding"
@@ -167,9 +167,9 @@ const ContentSection = styled.div`
 `;
 const ContentName = styled.div`
   /* border: 1px solid blue; */
-  color: #010b13;
+  color: #000;
   font-weight: bolder;
-  background-color: #f1f2f3;
+  background-color: #fff;
   border-radius: 5px;
   padding: 5px 10px;
   box-shadow: 2px -1px 1px rgba(0, 0, 0, 0.3);
@@ -272,7 +272,7 @@ const ContentURLSection = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #f1fcfc;
+  background-color: #e9ecef;
 
   border-radius: 5px;
   /* border: 1px solid #000; 보더 스타일 설정 */
@@ -306,8 +306,8 @@ const ContentURLSection = styled.div`
 const ContentURL = styled.div`
   word-wrap: break-word;
   margin-left: 10px;
-  color: darkslategray;
-  font-weight: 500;
+  color: black;
+  font-weight: 600;
   filter: ${({ blurOn }) => (blurOn ? "blur(5px)" : "none")};
   @media only screen and (max-width: 360px) {
     width: ${(props) => props.width}px;

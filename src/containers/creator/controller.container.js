@@ -19,6 +19,7 @@ function ControllerContainer() {
       name: "비타비딩 로고",
       img: AImge,
       category: "디자인",
+      item_status:"경매대기",
       Descriptiontextarea:
         " 이름긴거테스트하는중선택진행일시정지        이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지       이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지        이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지       테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지        이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선",
     },
@@ -39,7 +40,7 @@ function ControllerContainer() {
   ]);
   const [selectproduct, setSelectedproduct] = useState({});
   //타이머
-  const initialTime = 180;
+  const initialTime = 0;
   const [time, setTime] = useState(initialTime * 100);
   const [running, setRunning] = useState(false);
   const [timerFinished, setTimerFinished] = useState(false);
@@ -48,8 +49,8 @@ function ControllerContainer() {
     { biduser: "마자용", bidprice: "200,000" },
     { biduser: "로스트아크모코코미스터피자먹고싶다", bidprice: "220,000" },
     { biduser: "마자용", bidprice: "240,000" },
-    { biduser: "로스트아크모코코미스터피자먹고싶다", bidprice: "260,000" },
-    { biduser: "마자용", bidprice: "280,000" },
+    { biduser: "잔망루피", bidprice: "260,000" },
+    // { biduser: "마자용", bidprice: "280,000" },
   ]);
   return (
     <Wrapper>

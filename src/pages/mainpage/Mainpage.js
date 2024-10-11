@@ -45,14 +45,38 @@ const HeaderSection = styled.div`
   top: 0;
   background-color: white;
   z-index: 1000; /* Ensure it stays above other content */
-  padding: 10px; /* Optional: add some padding */
+
+  @media only screen and (max-width: 280px) {
+    padding: 10px; /* Optional: add some padding */
+  }
+  @media only screen and (min-width: 280px) {
+    padding: 10px; /* Optional: add some padding */
+  }
+  @media only screen and (min-width: 360px) {
+  }
+  @media only screen and (min-width: 420px) {
+  }
+  @media only screen and (min-width: 600px) {
+   
+  }
+  @media only screen and (min-width: 768px) {
+    padding: 10px 40px; /* Optional: add some padding */
+  }
+  @media only screen and (min-width: 992px) {
+    padding: 10px 50px; /* Optional: add some padding */
+  }
+  @media only screen and (min-width: 1200px) {
+    padding: 10px 70px; /* Optional: add some padding */
+  }
+  @media only screen and (min-width: 1480px) {
+  }
 `;
 
 const BodySection = styled.div`
+
   display: flex;
   flex-direction: column;
   flex: 1;
-  /* overflow-y: auto; Enable vertical scrolling if content overflows */
   width: 100%;
 
   @media only screen and (max-width: 280px) {

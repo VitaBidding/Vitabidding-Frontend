@@ -74,30 +74,8 @@ const VideoliveurlSection = styled.div`
   font-size: 12pt;
   font-family: "KBO-Dia-Gothicmedium";
   color: black;
+  width: 100%;
   /* align-items: flex-start; */
-  @media only screen and (max-width: 280px) {
-    width: 200px;
-  }
-  @media only screen and (min-width: 280px) {
-    width: 200px;
-  }
-  @media only screen and (min-width: 360px) {
-    width: 300px;
-  }
-  @media only screen and (min-width: 420px) {
-    width: 300px;
-  }
-  @media only screen and (min-width: 600px) {
-    width: 400px;
-  }
-  @media only screen and (min-width: 768px) {
-    width: 400px;
-  }
-  @media only screen and (min-width: 992px) {
-    width: 500px;
-  }
-  @media only screen and (min-width: 1200px) {
-  }
 `;
 
 const Videoliveurlinput = styled(Form.Control)`

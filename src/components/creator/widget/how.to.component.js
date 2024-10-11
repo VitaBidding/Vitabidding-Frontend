@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import YouTube from "react-youtube";
 
-function WidgetHowToComponent() {
+function HowToComponent() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   useEffect(() => {
     const handleResize = () => {
@@ -18,7 +18,7 @@ function WidgetHowToComponent() {
   }, []);
   return (
     <Wrapper width={windowWidth - 30}>
-      <Title>위젯 등록 방법</Title>
+      <Title>경매 세팅 방법</Title>
 
       <VideoWrapper>
         <YouTube
@@ -39,7 +39,7 @@ function WidgetHowToComponent() {
   );
 }
 
-export default WidgetHowToComponent;
+export default HowToComponent;
 
 const Wrapper = styled.div`
   /* border: 1px solid red; */
@@ -71,9 +71,9 @@ const Wrapper = styled.div`
 
 const Title = styled.div`
   /* border: 1px solid blue; */
-  color: #010b13;
+  color: #000;
   font-weight: bolder;
-  background-color: #f1f2f3;
+  background-color: #fff;
   border-radius: 5px;
   padding: 5px 10px;
   box-shadow: 2px -1px 1px rgba(0, 0, 0, 0.3);

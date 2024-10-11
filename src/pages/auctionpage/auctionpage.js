@@ -36,7 +36,30 @@ const HeaderSection = styled.div`
   top: 0;
   background-color: #242633;
   z-index: 1000; /* Ensure it stays above other content */
-  padding: 10px; /* Optional: add some padding */
+  @media only screen and (max-width: 280px) {
+    padding: 10px; /* Optional: add some padding */
+  }
+  @media only screen and (min-width: 280px) {
+    padding: 10px; /* Optional: add some padding */
+  }
+  @media only screen and (min-width: 360px) {
+  }
+  @media only screen and (min-width: 420px) {
+  }
+  @media only screen and (min-width: 600px) {
+   
+  }
+  @media only screen and (min-width: 768px) {
+    padding: 10px 40px; /* Optional: add some padding */
+  }
+  @media only screen and (min-width: 992px) {
+    padding: 10px 50px; /* Optional: add some padding */
+  }
+  @media only screen and (min-width: 1200px) {
+    padding: 10px 70px; /* Optional: add some padding */
+  }
+  @media only screen and (min-width: 1480px) {
+  }
 `;
 
 const BodySection = styled.div`
@@ -59,7 +82,7 @@ const BodySection = styled.div`
   @media only screen and (min-width: 420px) {
   }
   @media only screen and (min-width: 600px) {
-    margin-top: 100px;
+    margin-top: 95px;
   }
   @media only screen and (min-width: 768px) {
   }

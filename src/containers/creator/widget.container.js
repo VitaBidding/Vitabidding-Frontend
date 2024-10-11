@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import WidgetComponent from "../../components/creator/widget/widget.component";
-import WidgetHowToComponent from "../../components/creator/widget/widget.how.to.component";
+import HowToComponent from "../../components/creator/widget/how.to.component";
 function WidgetContainer(props) {
   return (
     <Wrapper>
@@ -9,7 +9,7 @@ function WidgetContainer(props) {
         <WidgetComponent />
       </Section1>
       <Section2>
-        <WidgetHowToComponent />
+        <HowToComponent />
       </Section2>
     </Wrapper>
   );

@@ -53,6 +53,17 @@ export const fetchProducts = async () => {
   }
 };
 
+export const fetchPoint = async () => {
+  try {
+    const response = await apiClient.get("/point");
+    return response.data;
+  } catch (error) {
+    console.error("포인트 정보를 가져오는 중 오류가 발생했습니다:", error);
+    throw error;
+  }
+};
+
+
 // 에러 로그 가져오기
 export const fetchErrorLogs = async () => {
   try {

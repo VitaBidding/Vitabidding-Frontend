@@ -14,9 +14,9 @@ function ThirdpartyContainer({ roomName }) {
   const audioRef1 = useRef(new Audio(EndSound));
   const audioTimeoutRef1 = useRef(null);
   // 상태 관리
-  const [showStatusboard, setShowStatusboard] = useState(true);
+  const [showStatusboard, setShowStatusboard] = useState(false);
   const [showBid, setShowBid] = useState(false);
-  const [showEndComponent, setShowEndComponent] = useState(false);
+  const [showEndComponent, setShowEndComponent] = useState(true);
   const [EndComment, setEndComment] = useState(false);
   const [socket, setSocket] = useState(null);
 
@@ -28,8 +28,8 @@ function ThirdpartyContainer({ roomName }) {
 
   // 입찰 관련 상태
   const [selectdate, setselectdate] = useState({});
-  const [biduser, setbiduser] = useState("");
-  const [bidpoint, setbidpoint] = useState("");
+  const [biduser, setbiduser] = useState("비타비딩");
+  const [bidpoint, setbidpoint] = useState("23000000");
   const [blinkKey, setBlinkKey] = useState(0);
 
   // 입찰 효과음 재생 함수

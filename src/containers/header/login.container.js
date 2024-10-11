@@ -25,13 +25,11 @@ export default function LoginContainer() {
     <SearchSection>
       {data ? (
         <div>
-          <NonLogin />
+          <LoginVIcon />
         </div>
       ) : (
         <div>
-          <div>
-            <LoginVIcon />
-          </div>
+          <NonLogin />
         </div>
       )}
     </SearchSection>

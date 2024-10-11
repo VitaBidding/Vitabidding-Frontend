@@ -72,7 +72,7 @@ const Wrapper = styled.div`
     width: calc(100vw - 30px);
   }
   @media only screen and (min-width: 600px) {
-    height: calc(100vh - 100px);
+    height: calc(100vh - 95px);
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(8, 1fr);
   }

@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import BubbleLeft from "./speech.bubble.left";
 import BubbleRight from "./speech.bubble.right";
+import BubbleEnd from "./speech.bubble.end";
 function AuctionBidStatus({ bid }) {
   const messagesEndRef = useRef(null);
   useEffect(() => {
@@ -27,6 +28,10 @@ function AuctionBidStatus({ bid }) {
             </li>
           ))}
         </ul>
+        <Right>
+          <BubbleEnd biduser="잔망루피" bidprice="260,000" />
+  
+        </Right>
         <div ref={messagesEndRef} />
       </StatusSection>
     </Wrapper>

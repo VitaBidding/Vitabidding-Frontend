@@ -20,12 +20,14 @@ const Logoimg=styled.img`
         height: auto;
         max-width: 200px;
         max-height: 200px;
+        padding: 10px;
     }
     @media only screen and (min-width: 600px) {
         width: auto;
         height: auto;
         max-width: 200px;
         max-height: 200px;
+        padding: 10px;
     }
     @media only screen and (min-width: 768px) {
         width: auto;
