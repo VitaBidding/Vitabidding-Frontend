@@ -26,7 +26,7 @@ function App() {
       <Route path="/terms/detail/viewer/*" element={<TermsPageV />} />
       <Route path="/terms/detail/creator/*" element={<TermsPageC />} />
       <Route
-        path="/additionalinformation"
+        path="/join/*"
         element={<Additionalinformation />}
       />
       <Route path="/creator/*" element={<Creatorpage />} />

@@ -15,7 +15,7 @@ export default function NonLogin() {
 
         <Dropdown.Menu>
           <Dropdown.Item href="/oauth">로그인</Dropdown.Item>
-          <Dropdown.Item href="/oauth">회원가입</Dropdown.Item>
+          <Dropdown.Item href="/terms/viewer">회원가입</Dropdown.Item>
           <li>
             <hr class="dropdown-divider" />
           </li>

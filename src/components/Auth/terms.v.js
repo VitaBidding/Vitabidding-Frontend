@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { BiChevronRight } from "react-icons/bi";
-import { onclickURLAgreedV } from "../../lib/request";
+import { requestLoginGoogle,requestLoginNaver } from "../../lib/request";
+import { GrGoogle } from "react-icons/gr";
+import { SiNaver } from "react-icons/si";
 function TermsV(props) {
   function onclickURLTermsV1() {
     window.open(
@@ -15,32 +17,6 @@ function TermsV(props) {
     );
   }
 
-  // function onclickURLAgreedV(checkItems) {
-  //   //컬럼값 확인
-  //   const usage_policy = checkItems.includes("usage_policy");
-  //   const personal_information = checkItems.includes("personal_information");
-
-  //     .post(
-  //       `${process.env.REACT_APP_SERVER_URL}/viewer/agreement`,
-  //       {
-  //         usage_policy: usage_policy,
-  //         personal_information: personal_information,
-  //       },
-  //       { withCredentials: true }
-  //     )
-  //     .then((req) => {
-  //       // console.log("🚀 ~ file: onclickURLAgreedC.js:17 ~ .then ~ req", req);
-  //       if (req.data.code === 1005) {
-  //         window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}/info/viewer`;
-  //       } else if (req.data.code === 3005) {
-  //         window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}`;
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       // console.log("🚀 ~ file: onclickURLAgreedC.js:22 ~ onclickURLAgreedC ~ err", err);
-  //       window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}`;
-  //     });
-  // }
   const data = [
     {
       id: 0,
@@ -96,6 +72,10 @@ function TermsV(props) {
     }
   }, [checkItems]);
 
+  const handleSubmit = () => {
+    window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}/join`;
+
+  };
   return (
     <>
       <StyledTable>
@@ -136,13 +116,27 @@ function TermsV(props) {
           ))}
         </tbody>
       </StyledTable>
-      <Nextbutton
-        onClick={() => onclickURLAgreedV(checkItems)}
-        state={buttonColor}
-        disabled={!buttonColor}
-      >
-        약관 동의
-      </Nextbutton>
+    
+      <NextButton onClick={()=>handleSubmit() }        state={buttonColor}
+        disabled={!buttonColor}>
+          다음
+        </NextButton>
+      <Separator>
+        <p>OR</p>
+      </Separator>
+
+      <GoogleButton onClick={() => requestLoginGoogle()}        state={buttonColor}
+        disabled={!buttonColor}>
+        {" "}
+        <GrGoogle className="icon" size={35} />
+        Sign in with Google
+      </GoogleButton>
+      <NaverButton onClick={() => requestLoginNaver()}        state={buttonColor}
+        disabled={!buttonColor}>
+        {" "}
+        <SiNaver className="icon" size={30} />
+        Sign in with Naver
+      </NaverButton>
     </>
   );
 }
@@ -248,44 +242,117 @@ const StyledTable = styled.table`
   }
 `;
 
-const Nextbutton = styled.button`
-  /* border: 2px solid white; */
-
+const NextButton = styled.button`
   color: ${(props) => (props.state ? "white" : "gray")};
-  background: ${(props) => (props.state ? "#e95420" : "lightgrey")};
-  border-radius: 24px;
-  font-family: "NotoSansKR-Bold";
+  background: ${(props) => (props.state ? "#fd9800" : "lightgrey")};
+  display: block;
+  width: 100%;
+  max-width: 680px;
+  height: 50px;
+  border-radius: 8px;
+  margin: 20px auto;
+  border: none;
+  font-weight: bold;
+  font-size: 14px;
+  box-shadow: ${(props) => (props.state ? "0 15px 20px rgba(253, 152, 0, 0.15)" : "0px")};
+ transition: background-color 0.3s ease;
+  &:hover {
+    background: ${(props) => (props.state ? "#e68a00" : "lightgrey")};
+  }
+`;
+
+const Separator = styled.div`
+  text-align: center;
+  height: 40px;
+  position: relative;
+  color: rgba(15, 19, 42, 0.4);
+  font-size: 13px;
+  width: 100%;
+  &:before,
+  &:after {
+    content: "";
+    position: absolute;
+    top: 8px;
+    background: rgba(15, 19, 42, 0.2);
+    height: 1px;
+    width: 45%;
+  }
+  &:before {
+    left: 0;
+  }
+  &:after {
+    right: 0;
+  }
+`;
+
+const GoogleButton = styled.button`
+  color: ${(props) => (props.state ? "white" : "gray")};
+  background: ${(props) => (props.state ? "#3f85f4" : "lightgrey")};
+
+  display: block;
+  width: 100%;
+  max-width: 680px;
+  height: 50px;
+  margin: 20px auto;
+  border-radius: 8px;
+  border: none;
+  font-size: 14px;
+
+  box-shadow:  ${(props) => (props.state ? " 0 15px 20px rgba(91, 144, 240, 0.25)" : "0px")};
+  transition: background-color 0.3s ease;
+  .icon {
+    margin-right: 8px;
+    /* border-right: 1px solid #0f66f1; */
+    padding-right: 8px;
+    position: relative;
+
+    &:after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      /* border-right: 1px solid #6fa4f7; */
+    }
+  }
 
   &:hover {
+    background: ${(props) => (props.state ? "#2776f3" : "lightgrey")};
   }
-  @media only screen and (max-width: 600px) {
-    width: 200px;
-    height: 40px;
-    margin: 20px 0;
-    font-size: 18px;
+`;
+
+const NaverButton = styled.button`
+
+  color: ${(props) => (props.state ? "white" : "gray")};
+  background: ${(props) => (props.state ? "#2ebd59" : "lightgrey")};
+  display: block;
+  width: 100%;
+  max-width: 680px;
+  height: 50px;
+  margin: 20px auto;
+  border-radius: 8px;
+  border: none;
+
+  font-size: 14px;
+  
+  box-shadow: ${(props) => (props.state ? " 0 15px 20px rgba(41, 168, 79, 0.25)" : "0px")};
+  .icon {
+    margin-right: 8px;
+    /* border-right: 1px solid #249446; */
+    padding-right: 8px;
+    position: relative;
+
+    &:after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      border-right: 1px solid #4bd374;
+    }
   }
-  @media only screen and (min-width: 600px) {
-    width: 200px;
-    height: 40px;
-    margin: 20px 0;
-    font-size: 18px;
-  }
-  @media only screen and (min-width: 768px) {
-    width: 300px;
-    height: 45px;
-    margin: 30px 0;
-    font-size: 20px;
-  }
-  @media only screen and (min-width: 992px) {
-    width: 400px;
-    height: 50px;
-    margin: 35px 0;
-    font-size: 25px;
-  }
-  @media only screen and (min-width: 1200px) {
-    width: 400px;
-    height: 50px;
-    margin: 35px 0;
-    font-size: 25px;
+
+  &:hover {
+    background: ${(props) => (props.state ? "#29a84f" : "lightgrey")};
   }
 `;

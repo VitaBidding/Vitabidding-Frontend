@@ -6,7 +6,11 @@ import InputGroup from "react-bootstrap/InputGroup";
 import styled from "styled-components";
 import { useDaumPostcodePopup } from "react-daum-postcode";
 import { requestUserProfile } from "../../lib/request";
-import { EnterPhoneNumber, Certification } from "../../lib/request";
+import {
+  EnterPhoneNumber,
+  Certification,
+  requestNicknameCheck,
+} from "../../lib/request";
 function Userinfo(props) {
   const [userName, setUserName] = useState("");
   const [userNameError, setUserNameError] = useState(false);
@@ -124,8 +128,8 @@ function Userinfo(props) {
   return (
     <Section>
       <Form className="form">
-        <Form.Label className="Label">추가정보입력</Form.Label>
-
+        <TitleSection>추가정보 입력</TitleSection>
+        <Form.Label className="Label" />
         <Form.Group className="mb-3" controlId="formBasicName">
           <Form.Control
             type="name"
@@ -134,12 +138,12 @@ function Userinfo(props) {
             onChange={onChangeUserName}
           />
           {userNameError && (
-            <Form.Text className="text-muted">
+            <TextSection className="text-muted">
               한글이나 영어만 사용하여 2~16글자로 입력해주세요.
-            </Form.Text>
+            </TextSection>
           )}
           {!userNameError && (
-            <Form.Text className="text-muted">&nbsp;</Form.Text>
+            <TextSection className="text-muted">&nbsp;</TextSection>
           )}
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicPhone">
@@ -161,12 +165,12 @@ function Userinfo(props) {
             </Button>
           </InputGroup>
           {userPhoneError && (
-            <Form.Text className="text-muted">
+            <TextSection className="text-muted">
               총 11자리의 숫자를 입력해주세요.
-            </Form.Text>
+            </TextSection>
           )}
           {!userPhoneError && (
-            <Form.Text className="text-muted">&nbsp;</Form.Text>
+            <TextSection className="text-muted">&nbsp;</TextSection>
           )}
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicPhone">
@@ -192,12 +196,12 @@ function Userinfo(props) {
             </Button>
           </InputGroup>
           {CertificationNumberError && (
-            <Form.Text className="text-muted">
+            <TextSection className="text-muted">
               인증번호 6자리의 숫자를 입력해주세요.
-            </Form.Text>
+            </TextSection>
           )}
           {!CertificationNumberError && (
-            <Form.Text className="text-muted">&nbsp;</Form.Text>
+            <TextSection className="text-muted">&nbsp;</TextSection>
           )}
           {timer && !CertificationSuccess && (
             <Timer className="timer">
@@ -207,12 +211,12 @@ function Userinfo(props) {
         </Form.Group>
         <Form.Label className="SMSLabel">
           {CertificationSuccess && (
-            <Form.Text className="text-muted">
+            <TextSection className="text-muted">
               SMS 인증 완료 되었습니다.
-            </Form.Text>
+            </TextSection>
           )}
           {!CertificationSuccess && (
-            <Form.Text className="text-muted">&nbsp;</Form.Text>
+            <TextSection className="text-muted">&nbsp;</TextSection>
           )}
         </Form.Label>
         <Form.Group>
@@ -265,33 +269,41 @@ function Userinfo(props) {
           </Row>
         </Form.Group>
         <Form.Label className="Label">
-          <Form.Text className="text-muted">&nbsp;</Form.Text>
+          <TextSection className="text-muted">&nbsp;</TextSection>
         </Form.Label>
+        <SigninButton
+          className="next"
+          onClick={() =>
+            requestUserProfile(
+              userName,
+              userPhone,
+              Zonecode,
+              FuAddress,
+              ExAddress,
+              DeAddress
+            )
+          }
+          state={!userNameError && CertificationSuccess && AddressError}
+          disabled={!(!userNameError && CertificationSuccess && AddressError)}
+        >
+          회원 가입
+        </SigninButton>
       </Form>
-      <Nextbutton
-        className="next"
-        onClick={() =>
-          requestUserProfile(
-            userName,
-            userPhone,
-            Zonecode,
-            FuAddress,
-            ExAddress,
-            DeAddress
-          )
-        }
-        state={!userNameError && CertificationSuccess && AddressError}
-        disabled={!(!userNameError && CertificationSuccess && AddressError)}
-      >
-        회원 가입
-      </Nextbutton>
     </Section>
   );
 }
 
 export default Userinfo;
+
+const TitleSection = styled.div`
+  font-size: 12pt;
+  font-weight: bold;
+`;
 const Timer = styled.div`
   float: right;
+`;
+const TextSection = styled.div`
+  font-size: 9pt;
 `;
 const Section = styled.div`
   width: 100%;
@@ -402,47 +414,22 @@ const Section = styled.div`
   }
 `;
 
-const Nextbutton = styled.button`
-  /* border: 2px solid black; */
-
+const SigninButton = styled.button`
   color: ${(props) => (props.state ? "white" : "gray")};
   background: ${(props) => (props.state ? "#fd9800" : "lightgrey")};
-  border-radius: 24px;
-  font-family: "NotoSansKR-Bold";
-  font-size: 25px;
-
-  @media only screen and (max-width: 280px) {
-    width: 200px;
-    height: 30px;
-    font-size: 11pt;
-  }
-  @media only screen and (min-width: 280px) {
-    width: 200px;
-    height: 30px;
-    font-size: 11pt;
-  }
-  @media only screen and (min-width: 360px) {
-    width: 200px;
-    height: 30px;
-    font-size: 11pt;
-  }
-  @media only screen and (min-width: 420px) {
-    width: 200px;
-    height: 30px;
-    font-size: 11pt;
-  }
-  @media only screen and (min-width: 600px) {
-    width: 300px;
-    height: 40px;
-    font-size: 16pt;
-    margin: 35px 0 0;
-  }
-  @media only screen and (min-width: 768px) {
-  }
-  @media only screen and (min-width: 992px) {
-  }
-  @media only screen and (min-width: 1200px) {
-  }
-  @media only screen and (min-width: 1480px) {
+  display: block;
+  width: 100%;
+  max-width: 680px;
+  height: 50px;
+  border-radius: 8px;
+  margin: 20px auto;
+  border: none;
+  font-weight: bold;
+  font-size: 14px;
+  box-shadow: ${(props) =>
+    props.state ? "0 15px 20px rgba(253, 152, 0, 0.15)" : "0px"};
+  transition: background-color 0.3s ease;
+  &:hover {
+    background: ${(props) => (props.state ? "#e68a00" : "lightgrey")};
   }
 `;
