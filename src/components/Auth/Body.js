@@ -21,7 +21,6 @@ const AuthForm = () => {
   );
   const [userNicknameError, setUserNicknameError] = useState(true);
   const isSignup = mode === "signup";
-
   const onChangeUserNickname = (e) => {
     const userNicknameRegex =
       /^[a-zA-Zㄱ-ㅎ|ㅏ-ㅣ|가-힣|~!@#$%^&*()_+-=]{2,12}$/;
@@ -108,7 +107,7 @@ const AuthForm = () => {
                 중복확인
               </DuplicateButton>
             </InputBlockFlex>
-            <ErrorSeciton props={nickNameError}>{nickNameError}</ErrorSeciton>
+            <ErrorSection props={nickNameError}>{nickNameError}</ErrorSection>
           </Col>
         )}
         <InputBlock>
@@ -155,7 +154,6 @@ const AuthForm = () => {
 export default AuthForm;
 const Container = styled.div`
   /* border: 1px solid red; */
-
   max-width: 680px;
   width: 100%;
 `;
@@ -175,25 +173,20 @@ const Links = styled.ul`
     cursor: pointer;
     transition: 0.2s linear;
     color: ${({ active }) => (active ? "#0f132a" : "rgba(15, 19, 42, 0.6)")};
-
     &:hover {
       opacity: 1;
     }
-
     &:first-child {
       opacity: ${({ mode }) => (mode === "signin" ? "1" : "0.6")};
     }
-
     &:nth-child(2) {
       opacity: ${({ mode }) => (mode === "signup" ? "1" : "0.6")};
     }
-
     /* &:nth-child(3) {
       opacity: 0.6;
     } */
   }
 `;
-
 const Form = styled.form`
   width: 100%;
   max-width: 680px;
@@ -204,7 +197,6 @@ const InputBlock = styled.div`
   margin: 20px auto;
   display: block;
   position: relative;
-
   input {
     display: block;
     width: 90%;
@@ -213,7 +205,7 @@ const InputBlock = styled.div`
     margin: 0 auto;
     border-radius: 8px;
     border: none;
-    background: rgba(15, 19, 42, 0.1);
+    background: #f8f9fa;
     color: rgba(15, 19, 42, 1);
     padding-left: 15px;
     font-size: 14px;
@@ -223,7 +215,6 @@ const InputBlock = styled.div`
       color: rgba(15, 19, 42, 1);
     }
   }
-
   &.signup {
     input.repeat__password {
       opacity: 1;
@@ -245,11 +236,10 @@ const InputBlockFlex = styled.div`
     /* display: block; */
     flex-grow: 1; /* input이 남은 공간을 차지하게 함 */
     height: 50px;
-
     margin: 0;
     border-radius: 8px 0 0 8px;
     border: none;
-    background: rgba(15, 19, 42, 0.1);
+    background: #f8f9fa;
     color: rgba(15, 19, 42, 1);
     padding-left: 15px;
     font-size: 14px;
@@ -260,7 +250,6 @@ const InputBlockFlex = styled.div`
     }
   }
 `;
-
 const DuplicateButton = styled(Button)`
   /* 버튼의 고정된 너비 설정 */
   font-weight: bold;
@@ -292,7 +281,7 @@ const DuplicateButton = styled(Button)`
   @media only screen and (min-width: 1480px) {
   }
 `;
-const ErrorSeciton = styled.div`
+const ErrorSection = styled.div`
   display: flex;
   margin: 0 auto;
   width: 90%;
@@ -367,7 +356,6 @@ const GoogleButton = styled.button`
     /* border-right: 1px solid #0f66f1; */
     padding-right: 8px;
     position: relative;
-
     &:after {
       content: "";
       position: absolute;
@@ -377,7 +365,6 @@ const GoogleButton = styled.button`
       /* border-right: 1px solid #6fa4f7; */
     }
   }
-
   &:hover {
     background-color: #2776f3;
   }
@@ -394,7 +381,6 @@ const NaverButton = styled.button`
   border-radius: 8px;
   border: none;
   cursor: pointer;
-
   font-size: 14px;
   box-shadow: 0 15px 20px rgba(41, 168, 79, 0.25);
   .icon {
@@ -402,7 +388,6 @@ const NaverButton = styled.button`
     /* border-right: 1px solid #249446; */
     padding-right: 8px;
     position: relative;
-
     &:after {
       content: "";
       position: absolute;
@@ -412,7 +397,6 @@ const NaverButton = styled.button`
       border-right: 1px solid #4bd374;
     }
   }
-
   &:hover {
     background-color: #29a84f;
   }

@@ -4,7 +4,6 @@ import Mainpage from "./pages/mainpage/mainpage";
 import Auth from "./pages/authpage/auth";
 import TermsagreedC from "./pages/termspage/terms.agreed.c";
 import TermsagreedInfo from "./pages/termspage/terms.agreed.info";
-import Additionalinformation from "./pages/additionalinformationpage/user.input";
 import TermsPageC from "./pages/termspage/terms.page.c";
 import TermsPageV from "./pages/termspage/terms.page.v";
 import Creatorpage from "./pages/creatorpage/index";
