@@ -99,9 +99,42 @@ export const requestLogout = async () => {
     }
   }
 };
+//이메일 인증코드 보내기
+export const requestEmailVerification = async (data) => {
+  // data = { email };
+  try {
+    const response = await axios.post(
+      `${process.env.REACT_APP_VITE_SERVER_URL}/user/requestemailverification`,
+      data
+    );
+    // console.log('이미 존재하는 닉네임입니다. 다른 닉네임을 입력해주세요.', response.data);
+    // console.log('사용가능한 닉네입니다.', response.data);
+    return response.data.message;
+  } catch (error) {
+    console.error("이메일 코드보내기 실패", error);
+    return "네트워크 에러 이메일 코드 보내기 실패";
+  }
+};
+//이메일 인증코드 보내기
+export const verifyEmailCode = async (data) => {
+  // data = { email, verificationCode };
+  try {
+    const response = await axios.post(
+      `${process.env.REACT_APP_VITE_SERVER_URL}/user/verifyemailcode`,
+      data
+    );
+    // console.log('이미 존재하는 닉네임입니다. 다른 닉네임을 입력해주세요.', response.data);
+    // console.log('사용가능한 닉네입니다.', response.data);
+    return response.data.message;
+  } catch (error) {
+    console.error("이메일 코드확인 실패", error);
+    return "네트워크 에러 이메일 코드 확인 실패";
+  }
+};
+
 //닉네임 중복 확인
 export const requestNicknameCheck = async (data) => {
-  // data = { nick_name };
+  // data = { nickname };
   try {
     const response = await axios.post(
       `${process.env.REACT_APP_VITE_SERVER_URL}/user/nicknamecheck`,
@@ -117,7 +150,7 @@ export const requestNicknameCheck = async (data) => {
 };
 //회원가입
 export const requestSignup = async (data) => {
-  // data = { email, password, passwordConfirm, nick_name };
+  //{ email, nickname, password, repeatPassword }
   try {
     const response = await axios.post(
       `${process.env.REACT_APP_VITE_SERVER_URL}/user`,
