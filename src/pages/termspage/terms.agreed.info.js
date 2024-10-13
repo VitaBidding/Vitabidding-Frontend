@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import TermContainer from "../../containers/auth/term.container.v";
+import TermInfoContainer from "../../containers/auth/term.Info.container";
 import LogoContainer from "../../containers/auth/logo.container";
 import "../../assets/bootstrap/bootstrapUnited.min.css";
 function TermsAgreedV(props) {
   return (
     <Section>
       <LogoContainer />
-      <TermContainer />
+      <TermInfoContainer />
     </Section>
   );
 }

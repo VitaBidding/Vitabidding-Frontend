@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import styled from "styled-components";
+import { BiChevronRight } from "react-icons/bi";
 import { useDaumPostcodePopup } from "react-daum-postcode";
 import { requestUserProfile } from "../../lib/request";
 import { EnterPhoneNumber, Certification } from "../../lib/request";
@@ -25,6 +26,9 @@ function Userinfo(props) {
   const [ExAddress, setExAddress] = useState("");
   const [DeAddress, setDeAddress] = useState("");
   const [AddressError, setAddressError] = useState(false);
+
+  const [checkItems, setCheckItems] = useState([]);
+  const [buttonColor, setButtonColor] = useState(false);
 
   const onChangeDeAddres = (e) => {
     setDeAddress(e.target.value);
@@ -121,12 +125,76 @@ function Userinfo(props) {
     });
   };
 
+  function onclickURLTermsV1() {
+    window.open(
+      `${process.env.REACT_APP_MAIN_CLIENT_URL}/terms/detail/viewer/usegepolicy`
+    );
+  }
+
+  function onclickURLTermsV2() {
+    window.open(
+      `${process.env.REACT_APP_MAIN_CLIENT_URL}/terms/detail/viewer/personalInformation`
+    );
+  }
+
+  const data = [
+    {
+      id: 0,
+      column: "usage_policy",
+      click: onclickURLTermsV1,
+      title: "이용약관 동의 (필수)",
+    },
+    {
+      id: 1,
+      column: "personal_information",
+      click: onclickURLTermsV2,
+      title: "개인정보 수집 및 이용 동의 (필수)",
+    },
+    // {id: 2, title: '개인정보 제3자 제공 동의(필수)',body:''},
+    // {id: 3, title: '개인정보 개인정보 처리 위탁 동의(필수)',body:''},
+    // {id: 4, title: '개인정보 수집 및 이용 동의(선택)',body:''},
+  ];
+
+  const handleSingleCheck = (checked, column) => {
+    if (checked) {
+      // 단일 선택 시 체크된 아이템을 배열에 추가
+      setCheckItems((prev) => [...prev, column]);
+    } else {
+      // 단일 선택 해제 시 체크된 아이템을 제외한 배열 (필터)
+      setCheckItems(checkItems.filter((el) => el !== column));
+    }
+  };
+
+  const handleAllCheck = (checked) => {
+    if (checked) {
+      // 전체 선택 클릭 시 데이터의 모든 아이템(id)를 담은 배열로 checkItems 상태 업데이트
+      const columnArray = [];
+      data.forEach((el) => columnArray.push(el.column));
+      setCheckItems(columnArray);
+    } else {
+      // 전체 선택 해제 시 checkItems 를 빈 배열로 상태 업데이트
+      setCheckItems([]);
+    }
+  };
+
+  useEffect(() => {
+    if (
+      checkItems.includes("usage_policy") &&
+      checkItems.includes("personal_information")
+      //  && checkItems.includes(2)
+      //  && checkItems.includes(3)
+    ) {
+      setButtonColor(true);
+    } else {
+      setButtonColor(false);
+    }
+  }, [checkItems]);
   return (
     <Section>
       <Form className="form">
         <Form.Label className="Label">추가정보입력</Form.Label>
 
-        <Form.Group className="mb-3" controlId="formBasicName">
+        <Form.Group className="mb-2" controlId="formBasicName">
           <Form.Control
             type="name"
             placeholder="이름"
@@ -134,15 +202,13 @@ function Userinfo(props) {
             onChange={onChangeUserName}
           />
           {userNameError && (
-            <Form.Text className="text-muted">
+            <TextSection>
               한글이나 영어만 사용하여 2~16글자로 입력해주세요.
-            </Form.Text>
+            </TextSection>
           )}
-          {!userNameError && (
-            <Form.Text className="text-muted">&nbsp;</Form.Text>
-          )}
+          {!userNameError && <TextSection>&nbsp;</TextSection>}
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicPhone">
+        <Form.Group className="mb-2" controlId="formBasicPhone">
           <InputGroup>
             <Form.Control
               type="text"
@@ -161,15 +227,11 @@ function Userinfo(props) {
             </Button>
           </InputGroup>
           {userPhoneError && (
-            <Form.Text className="text-muted">
-              총 11자리의 숫자를 입력해주세요.
-            </Form.Text>
+            <TextSection>총 11자리의 숫자를 입력해주세요.</TextSection>
           )}
-          {!userPhoneError && (
-            <Form.Text className="text-muted">&nbsp;</Form.Text>
-          )}
+          {!userPhoneError && <TextSection>&nbsp;</TextSection>}
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicPhone">
+        <Form.Group className="mb-2" controlId="formBasicPhone">
           <InputGroup>
             <Form.Control
               type="text"
@@ -192,13 +254,9 @@ function Userinfo(props) {
             </Button>
           </InputGroup>
           {CertificationNumberError && (
-            <Form.Text className="text-muted">
-              인증번호 6자리의 숫자를 입력해주세요.
-            </Form.Text>
+            <TextSection>인증번호 6자리의 숫자를 입력해주세요.</TextSection>
           )}
-          {!CertificationNumberError && (
-            <Form.Text className="text-muted">&nbsp;</Form.Text>
-          )}
+          {!CertificationNumberError && <TextSection>&nbsp;</TextSection>}
           {timer && !CertificationSuccess && (
             <Timer className="timer">
               {min} 분 {sec} 초
@@ -207,13 +265,9 @@ function Userinfo(props) {
         </Form.Group>
         <Form.Label className="SMSLabel">
           {CertificationSuccess && (
-            <Form.Text className="text-muted">
-              SMS 인증 완료 되었습니다.
-            </Form.Text>
+            <TextSection>SMS 인증 완료 되었습니다.</TextSection>
           )}
-          {!CertificationSuccess && (
-            <Form.Text className="text-muted">&nbsp;</Form.Text>
-          )}
+          {!CertificationSuccess && <TextSection>&nbsp;</TextSection>}
         </Form.Label>
         <Form.Group>
           <Row>
@@ -265,8 +319,52 @@ function Userinfo(props) {
           </Row>
         </Form.Group>
         <Form.Label className="Label">
-          <Form.Text className="text-muted">&nbsp;</Form.Text>
+          <TextSection>&nbsp;</TextSection>
         </Form.Label>
+        <Form.Group>
+          <Row>
+            <StyledTable>
+              <thead>
+                <tr>
+                  <th className="second-row">
+                    <input
+                      type="checkbox"
+                      className="select"
+                      onChange={(e) => handleAllCheck(e.target.checked)}
+                      // 데이터 개수와 체크된 아이템의 개수가 다를 경우 선택 해제 (하나라도 해제 시 선택 해제)
+                      checked={checkItems.length === data.length ? true : false}
+                    />
+                    이용약관 전체동의
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {data?.map((data, key) => (
+                  <tr key={key}>
+                    <td>
+                      <input
+                        type="checkbox"
+                        className={`select`}
+                        onChange={(e) =>
+                          handleSingleCheck(e.target.checked, data.column)
+                        }
+                        // 체크된 아이템 배열에 해당 아이템이 있을 경우 선택 활성화, 아닐 시 해제
+                        checked={
+                          checkItems.includes(data.column) ? true : false
+                        }
+                      />
+                      {data.title}
+                      <button onClick={data.click}>
+                        약관보기
+                        <BiChevronRight />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </StyledTable>
+          </Row>
+        </Form.Group>
       </Form>
       <Nextbutton
         className="next"
@@ -280,8 +378,17 @@ function Userinfo(props) {
             DeAddress
           )
         }
-        state={!userNameError && CertificationSuccess && AddressError}
-        disabled={!(!userNameError && CertificationSuccess && AddressError)}
+        state={
+          !userNameError && CertificationSuccess && AddressError && buttonColor
+        }
+        disabled={
+          !(
+            !userNameError &&
+            CertificationSuccess &&
+            AddressError &&
+            !buttonColor
+          )
+        }
       >
         회원 가입
       </Nextbutton>
@@ -402,47 +509,82 @@ const Section = styled.div`
   }
 `;
 
+const TextSection = styled.div`
+  font-size: 9pt;
+`;
+
+const StyledTable = styled.table`
+  /* border: 1px solid red; */
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  font-size: 1rem;
+  input[type="checkbox"] {
+    transform: scale(1.5);
+  }
+  thead {
+    tr {
+      /* border: 2px solid red; */
+      padding: 10px 0 10px;
+
+      th {
+        padding: 10px 15px;
+        background-color: #888;
+        color: #ffffff;
+        width: 600px;
+      }
+    }
+  }
+  tbody {
+    padding: 10px 0 10px;
+
+    tr {
+      /* border: 1px solid red; */
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      td {
+        width: 600px;
+        /* border: 1px solid red; */
+        padding: 7px 15px;
+        border-bottom: 1px solid #eee;
+      }
+    }
+  }
+  .select {
+    margin: 0 15px 0 0;
+  }
+  .second-row {
+  }
+  .third-row {
+  }
+  button {
+    float: right;
+    background-color: white;
+    margin: 0;
+    border: 0px solid black;
+    color: gray;
+  }
+`;
+
 const Nextbutton = styled.button`
   /* border: 2px solid black; */
 
   color: ${(props) => (props.state ? "white" : "gray")};
   background: ${(props) => (props.state ? "#fd9800" : "lightgrey")};
-  border-radius: 24px;
-  font-family: "NotoSansKR-Bold";
-  font-size: 25px;
-
-  @media only screen and (max-width: 280px) {
-    width: 200px;
-    height: 30px;
-    font-size: 11pt;
-  }
-  @media only screen and (min-width: 280px) {
-    width: 200px;
-    height: 30px;
-    font-size: 11pt;
-  }
-  @media only screen and (min-width: 360px) {
-    width: 200px;
-    height: 30px;
-    font-size: 11pt;
-  }
-  @media only screen and (min-width: 420px) {
-    width: 200px;
-    height: 30px;
-    font-size: 11pt;
-  }
-  @media only screen and (min-width: 600px) {
-    width: 300px;
-    height: 40px;
-    font-size: 16pt;
-    margin: 35px 0 0;
-  }
-  @media only screen and (min-width: 768px) {
-  }
-  @media only screen and (min-width: 992px) {
-  }
-  @media only screen and (min-width: 1200px) {
-  }
-  @media only screen and (min-width: 1480px) {
+  display: block;
+  width: 100%;
+  max-width: 680px;
+  height: 50px;
+  border-radius: 8px;
+  margin: 0 auto;
+  border: none;
+  font-weight: bold;
+  font-size: 14px;
+  box-shadow: ${(props) =>
+    props.state ? "0 15px 20px rgba(253, 152, 0, 0.15)" : "0px"};
+  transition: background-color 0.3s ease;
+  &:hover {
+    background: ${(props) => (props.state ? "#e68a00" : "lightgrey")};
   }
 `;

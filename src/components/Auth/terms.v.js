@@ -15,32 +15,6 @@ function TermsV(props) {
     );
   }
 
-  // function onclickURLAgreedV(checkItems) {
-  //   //컬럼값 확인
-  //   const usage_policy = checkItems.includes("usage_policy");
-  //   const personal_information = checkItems.includes("personal_information");
-
-  //     .post(
-  //       `${process.env.REACT_APP_SERVER_URL}/viewer/agreement`,
-  //       {
-  //         usage_policy: usage_policy,
-  //         personal_information: personal_information,
-  //       },
-  //       { withCredentials: true }
-  //     )
-  //     .then((req) => {
-  //       // console.log("🚀 ~ file: onclickURLAgreedC.js:17 ~ .then ~ req", req);
-  //       if (req.data.code === 1005) {
-  //         window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}/info/viewer`;
-  //       } else if (req.data.code === 3005) {
-  //         window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}`;
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       // console.log("🚀 ~ file: onclickURLAgreedC.js:22 ~ onclickURLAgreedC ~ err", err);
-  //       window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}`;
-  //     });
-  // }
   const data = [
     {
       id: 0,

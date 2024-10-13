@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import TermsV from "../../components/auth/terms.v";
+import TermsInfo from "../../components/auth/terms.and.user.info";
 function TermContainerV(props) {
   return (
     <BodySection>
-      <TermsV />
+      <TermsInfo />
     </BodySection>
   );
 }
