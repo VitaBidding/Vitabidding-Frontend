@@ -20,6 +20,36 @@ export default function NonLogin() {
             <hr class="dropdown-divider" />
           </li>
           <Dropdown.Item href="/oauth">판매자 페이지</Dropdown.Item>
+          <li>
+            <hr class="dropdown-divider" />
+          </li>
+
+          <Dropdown.Item href="/additionalinformation">
+            추가정보입력
+          </Dropdown.Item>
+          <Dropdown.Item href="/terms/creator">
+            크리에이터 약관동의
+          </Dropdown.Item>
+          <Dropdown.Item href="/withdrawal">회원탈퇴</Dropdown.Item>
+          <Dropdown.Item href="/infomation">개인정보확인페이지</Dropdown.Item>
+          <Dropdown.Item href="/point">포인트확인페이지</Dropdown.Item>
+          <Dropdown.Item href="/pointadd">포인트추가페이지</Dropdown.Item>
+          <Dropdown.Item href="/bidlist">낙찰물건확인페이지</Dropdown.Item>
+          <Dropdown.Item href="/creator">판매자페이지</Dropdown.Item>
+          <Dropdown.Item href="/creator/widget">판매자위젯+영상</Dropdown.Item>
+          <Dropdown.Item href="/creator/enrollment">물건등록</Dropdown.Item>
+          <Dropdown.Item href="/creator/list">
+            물건상태조회 및 수정
+          </Dropdown.Item>
+          <Dropdown.Item href="/creator/controller">컨트롤러</Dropdown.Item>
+          <Dropdown.Item href="/creator/point">포인트내역</Dropdown.Item>
+          <Dropdown.Item href="/creator/controller">컨트롤러</Dropdown.Item>
+          <Dropdown.Item href="/thirdparty">서드파티</Dropdown.Item>
+          <Dropdown.Item href="/admin/info">
+            계좌 및 크리에이터정보
+          </Dropdown.Item>
+          <Dropdown.Item href="/admin/login">어드민로그인페이지</Dropdown.Item>
+          <Dropdown.Item href="/admin">어드민페이지</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
     </Section>

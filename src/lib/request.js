@@ -134,7 +134,7 @@ export const verifyEmailCode = async (data) => {
 
 //닉네임 중복 확인
 export const requestNicknameCheck = async (data) => {
-  // data = { nickname };
+  // data = { nickName };
   try {
     const response = await axios.post(
       `${process.env.REACT_APP_VITE_SERVER_URL}/user/nicknamecheck`,
@@ -150,7 +150,7 @@ export const requestNicknameCheck = async (data) => {
 };
 //회원가입
 export const requestSignup = async (data) => {
-  //{ email, nickname, password, repeatPassword }
+  //{ email, nickName, password, repeatPassword }
   try {
     const response = await axios.post(
       `${process.env.REACT_APP_VITE_SERVER_URL}/user`,

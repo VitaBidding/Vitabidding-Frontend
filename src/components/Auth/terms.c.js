@@ -195,6 +195,7 @@ const StyledTable = styled.table`
     margin: 0 15px 0 0;
   }
   .second-row {
+    border-radius: 8px;
   }
   .third-row {
   }

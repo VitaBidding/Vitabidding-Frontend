@@ -75,7 +75,7 @@ function Withdrawal(props) {
         </div>
       </div>
       <div>
-        <Button disabled={!check} onClick={requestWithdrawal}>
+        <Button variant="danger" disabled={!check} onClick={requestWithdrawal}>
           회원탈퇴신청
         </Button>
         &nbsp;

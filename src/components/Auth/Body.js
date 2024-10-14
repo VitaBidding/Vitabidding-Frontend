@@ -27,7 +27,7 @@ const AuthForm = () => {
   const [isEmailEditable, setIsEmailEditable] = useState(true);
   const [isVerificationComplete, setIsVerificationComplete] = useState(false);
 
-  const [nickname, setNickname] = useState("");
+  const [nickName, setNickname] = useState("");
   const [nickNameError, setNickNameError] = useState("");
   const [isNicknameValid, setIsNicknameValid] = useState(false);
 
@@ -130,13 +130,13 @@ const AuthForm = () => {
   };
 
   const handleNicknameCheck = async () => {
-    if (!validateNickname(nickname)) {
+    if (!validateNickname(nickName)) {
       setNickNameError("닉네임 형식이 올바르지 않습니다.");
       return;
     }
 
     try {
-      const message = await requestNicknameCheck(nickname);
+      const message = await requestNicknameCheck(nickName);
       if (message === "사용 가능한 닉네임입니다.") {
         setIsNicknameValid(true);
       } else {
@@ -193,7 +193,7 @@ const AuthForm = () => {
       requestLogin({ email, password });
     } else if (mode === "signup") {
       if (isSignupFormValid()) {
-        requestSignup({ email, nickname, password, repeatPassword });
+        requestSignup({ email, nickName, password, repeatPassword });
       } else {
         // 에러 메시지 표시 또는 다른 처리
         console.log("회원가입 폼이 유효하지 않습니다.");
@@ -315,21 +315,21 @@ const AuthForm = () => {
                 <input
                   type="text"
                   placeholder="닉네임"
-                  value={nickname}
+                  value={nickName}
                   onChange={handleNicknameChange}
                 />
                 <DuplicateButton
                   variant="outline-warning"
                   onClick={handleNicknameCheck}
-                  disabled={!validateNickname(nickname)}
+                  disabled={!validateNickname(nickName)}
                 >
                   중복 확인
                 </DuplicateButton>
               </InputBlockFlex1>
               <ErrorSection isError={!!nickNameError}>
                 {nickNameError ||
-                  (nickname &&
-                    !validateNickname(nickname) &&
+                  (nickName &&
+                    !validateNickname(nickName) &&
                     "닉네임은 1~12자의 영문, 숫자, 한글만 사용 가능합니다.")}
               </ErrorSection>
             </Col>
