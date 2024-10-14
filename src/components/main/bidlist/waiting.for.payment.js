@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Ex from "../../../assets/img/KakaoTalk_20221126_235103258.png";
-import TransactioncompletedItem from "./TransactioncompletedItem";
-import { transactioncompleteditemapi } from "../../../lib/request";
-function Transactioncompleted(props) {
+import WaitingForpaymentItem from "./waiting.for.payment.item";
+import { WaitingForpaymentitemapi } from "../../../lib/request";
+function WaitingForpayment(props) {
   const [items, setItems] = useState([
     {
       id: 1,
@@ -12,22 +12,12 @@ function Transactioncompleted(props) {
       startDate: "2023-07-10",
       startTime: "14:18",
       creator: "판매자이름1",
-      price: "300,000",
+      price: "300000",
       category: "의류",
       description:
         "내용을 입력해주세요\nex)\n상태: S급\n정품 인증여부: O\n물품에 대한 설명을 해주세요!",
       Thumbnail: Ex,
       deliveryfee: "3,000",
-      trackingNumber: "223456789012345678",
-      delivery_company: "cj대한통운",
-      item_status: "배송진행",
-      Recipient: "이동규",
-      street_address1:
-        "2부산광역시 수영구 연수로 285 3층 2부산광역시 수영구 연수로 285 3층 2부산광역시 수영구 연수로 285 3층 2부산광역시 수영구 연수로 285 3층",
-      street_address2: "214동 704호",
-      contact: "02080080544",
-      zip_code: "292922",
-      state: "망미1동",
     },
     {
       id: 2,
@@ -35,15 +25,12 @@ function Transactioncompleted(props) {
       startDate: "2023-09-27",
       startTime: "11:00",
       creator: "판매자이름2",
-      price: "300,000",
+      price: "300000",
       category: "의류",
       description:
         "내용을 입력해주세요\nex)\n상태: S급\n정품 인증여부: O\n물품에 대한 설명을 해주세요!",
       Thumbnail: Ex,
       deliveryfee: "3,000",
-      trackingNumber: "223456789012345678",
-      delivery_company: "cj대한통운",
-      item_status: "배송진행",
     },
     {
       id: 3,
@@ -77,7 +64,7 @@ function Transactioncompleted(props) {
       startDate: "2023-09-27",
       startTime: "11:00",
       creator: "판매자이름2",
-      price: "300,000",
+      price: "300000",
       category: "의류",
       description:
         "내용을 입력해주세요\nex)\n상태: S급\n정품 인증여부: O\n물품에 대한 설명을 해주세요!",
@@ -89,7 +76,7 @@ function Transactioncompleted(props) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await transactioncompleteditemapi(); // API 엔드포인트에 맞게 수정해주세요.
+        const response = await WaitingForpaymentitemapi(); // API 엔드포인트에 맞게 수정해주세요.
         setItems(response.data);
       } catch (error) {
         console.error(error);
@@ -98,20 +85,19 @@ function Transactioncompleted(props) {
 
     fetchData();
   }, []);
-
   return (
     <ItemList>
-      <ItemCount>총 {items.length}개의 거래완료 건이 있습니다.</ItemCount>
+      <ItemCount>총 {items.length}개의 결제대기 있습니다.</ItemCount>
       <ItemSection>
         {items.map((item) => (
-          <TransactioncompletedItem key={item.id} item={item} />
+          <WaitingForpaymentItem key={item.id} item={item} />
         ))}
       </ItemSection>
     </ItemList>
   );
 }
 
-export default Transactioncompleted;
+export default WaitingForpayment;
 
 const ItemList = styled.div`
   /* border: 1px solid blue; */
@@ -120,6 +106,7 @@ const ItemList = styled.div`
   align-items: center;
 `;
 const ItemCount = styled.div`
+  /* border: 1px solid blue; */
   @media only screen and (max-width: 360px) {
     width: 260px;
   }

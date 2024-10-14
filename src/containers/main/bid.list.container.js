@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
-import WaitingForpayment from "../../components/main/bidlist/WaitingForpayment";
-import Completepayment from "../../components/main/bidlist/Completepayment";
-import Transactioncompleted from "../../components/main/bidlist/Transactioncompleted";
+import WaitingForpayment from "../../components/main/bidlist/waiting.for.payment";
+import Completepayment from "../../components/main/bidlist/complete.payment";
+import Transactioncompleted from "../../components/main/bidlist/transaction.completed";
 function BidlistContainer(props) {
   const [key, setKey] = useState("Waiting for payment");
   return (

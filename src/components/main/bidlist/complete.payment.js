@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Ex from "../../../assets/img/KakaoTalk_20221126_235103258.png";
-import CompletepaymentItem from "./CompletepaymentItem";
+import CompletepaymentItem from "./complete.payment.item";
 import { completepaymentitemapi } from "../../../lib/request";
 
 function Completepayment(props) {
