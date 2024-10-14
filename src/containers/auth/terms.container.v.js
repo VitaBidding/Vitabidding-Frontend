@@ -25,7 +25,7 @@ function TermsContainerV(props) {
       </Nav.Item>
       <Nav.Item>
         <Nav.Link eventKey="disabled" disabled>
-          뷰어전용
+          구매자전용
         </Nav.Link>
       </Nav.Item>
     </Nav>

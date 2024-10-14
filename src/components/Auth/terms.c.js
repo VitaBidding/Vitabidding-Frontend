@@ -4,16 +4,30 @@ import { BiChevronRight } from "react-icons/bi";
 import { onclickURLAgreedC } from "../../lib/request";
 function TermsC(props) {
   function onclickURLTermsC1() {
-    window.open(`${process.env.REACT_APP_MAIN_CLIENT_URL}/terms/detail/creator/usegepolicy`);
+    window.open(
+      `${process.env.REACT_APP_MAIN_CLIENT_URL}/terms/detail/creator/usegepolicy`
+    );
   }
-  
+
   function onclickURLTermsC2() {
-    window.open(`${process.env.REACT_APP_MAIN_CLIENT_URL}/terms/detail/creator/personalInformation`);
+    window.open(
+      `${process.env.REACT_APP_MAIN_CLIENT_URL}/terms/detail/creator/personalInformation`
+    );
   }
 
   const data = [
-    { id: 0, column: "usage_policy", click: onclickURLTermsC1, title: "이용약관 동의 (필수)" },
-    { id: 1, column: "personal_information", click: onclickURLTermsC2, title: "개인정보 수집 및 이용 동의 (필수)" },
+    {
+      id: 0,
+      column: "usage_policy",
+      click: onclickURLTermsC1,
+      title: "이용약관 동의 (필수)",
+    },
+    {
+      id: 1,
+      column: "personal_information",
+      click: onclickURLTermsC2,
+      title: "개인정보 수집 및 이용 동의 (필수)",
+    },
     // {id: 2, title: '개인정보 제3자 제공 동의(필수)',body:''},
     // {id: 3, title: '개인정보 개인정보 처리 위탁 동의(필수)',body:''},
     // {id: 4, title: '개인정보 수집 및 이용 동의(선택)',body:''},
@@ -69,7 +83,7 @@ function TermsC(props) {
                 // 데이터 개수와 체크된 아이템의 개수가 다를 경우 선택 해제 (하나라도 해제 시 선택 해제)
                 checked={checkItems.length === data.length ? true : false}
               />
-              이용약관 전체동의
+              이용약관 전체동의 (판매자)
             </th>
           </tr>
         </thead>
@@ -80,7 +94,9 @@ function TermsC(props) {
                 <input
                   type="checkbox"
                   className={`select`}
-                  onChange={(e) => handleSingleCheck(e.target.checked, data.column)}
+                  onChange={(e) =>
+                    handleSingleCheck(e.target.checked, data.column)
+                  }
                   // 체크된 아이템 배열에 해당 아이템이 있을 경우 선택 활성화, 아닐 시 해제
                   checked={checkItems.includes(data.column) ? true : false}
                 />
@@ -94,8 +110,12 @@ function TermsC(props) {
           ))}
         </tbody>
       </StyledTable>
-      <Nextbutton onClick={() => onclickURLAgreedC(checkItems)} state={buttonColor} disabled={!buttonColor}>
-        약관 동의
+      <Nextbutton
+        onClick={() => onclickURLAgreedC(checkItems)}
+        state={buttonColor}
+        disabled={!buttonColor}
+      >
+        판매자 약관 동의
       </Nextbutton>
     </>
   );
@@ -206,40 +226,20 @@ const Nextbutton = styled.button`
   /* border: 2px solid white; */
 
   color: ${(props) => (props.state ? "white" : "gray")};
-  background: ${(props) => (props.state ? "#e95420" : "lightgrey")};
-  border-radius: 24px;
-  font-family: "NotoSansKR-Bold";
-
+  background: ${(props) => (props.state ? "#fd9800" : "lightgrey")};
+  display: block;
+  width: 100%;
+  max-width: 680px;
+  height: 50px;
+  border-radius: 8px;
+  margin: 0 auto;
+  border: none;
+  font-weight: bold;
+  font-size: 14px;
+  box-shadow: ${(props) =>
+    props.state ? "0 15px 20px rgba(253, 152, 0, 0.15)" : "0px"};
+  transition: background-color 0.3s ease;
   &:hover {
-  }
-  @media only screen and (max-width: 600px) {
-    width: 200px;
-    height: 40px;
-    margin: 20px 0;
-    font-size: 18px;
-  }
-  @media only screen and (min-width: 600px) {
-    width: 200px;
-    height: 40px;
-    margin: 20px 0;
-    font-size: 18px;
-  }
-  @media only screen and (min-width: 768px) {
-    width: 300px;
-    height: 45px;
-    margin: 30px 0;
-    font-size: 20px;
-  }
-  @media only screen and (min-width: 992px) {
-    width: 400px;
-    height: 50px;
-    margin: 35px 0;
-    font-size: 25px;
-  }
-  @media only screen and (min-width: 1200px) {
-    width: 400px;
-    height: 50px;
-    margin: 35px 0;
-    font-size: 25px;
+    background: ${(props) => (props.state ? "#e68a00" : "lightgrey")};
   }
 `;

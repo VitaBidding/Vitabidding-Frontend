@@ -263,7 +263,7 @@ function Userinfo(props) {
             </Timer>
           )}
         </Form.Group>
-        <Form.Label className="SMSLabel">
+        <Form.Label className="Label">
           {CertificationSuccess && (
             <TextSection>SMS 인증 완료 되었습니다.</TextSection>
           )}
@@ -334,7 +334,7 @@ function Userinfo(props) {
                       // 데이터 개수와 체크된 아이템의 개수가 다를 경우 선택 해제 (하나라도 해제 시 선택 해제)
                       checked={checkItems.length === data.length ? true : false}
                     />
-                    이용약관 전체동의
+                    이용약관 전체동의 (구매자)
                   </th>
                 </tr>
               </thead>
@@ -390,7 +390,7 @@ function Userinfo(props) {
           )
         }
       >
-        회원 가입
+        회원가입
       </Nextbutton>
     </Section>
   );
@@ -436,14 +436,13 @@ const Section = styled.div`
     font-family: "NotoSansKR-Bold";
     color: gray;
     font-weight: bold;
+    font-size: 1rem;
 
     @media only screen and (max-width: 280px) {
       width: 250px;
-      font-size: 11pt;
     }
     @media only screen and (min-width: 280px) {
       width: 250px;
-      font-size: 11pt;
     }
     @media only screen and (min-width: 360px) {
       width: 330px;
@@ -452,7 +451,6 @@ const Section = styled.div`
       width: 390px;
     }
     @media only screen and (min-width: 600px) {
-      font-size: 20px;
       width: 570px;
     }
     @media only screen and (min-width: 768px) {
@@ -465,40 +463,6 @@ const Section = styled.div`
     }
   }
   .timer {
-  }
-  .SMSLabel {
-    margin: 0 0 20px;
-
-    border-bottom: 2px solid lightgray;
-    font-family: "NotoSansKR-Bold";
-    color: black;
-
-    @media only screen and (max-width: 280px) {
-      font-size: 11pt;
-      width: 250px;
-    }
-    @media only screen and (min-width: 280px) {
-      font-size: 11pt;
-      width: 250px;
-    }
-    @media only screen and (min-width: 360px) {
-      width: 330px;
-    }
-    @media only screen and (min-width: 420px) {
-      width: 390px;
-    }
-    @media only screen and (min-width: 600px) {
-      font-size: 20px;
-      width: 570px;
-    }
-    @media only screen and (min-width: 768px) {
-    }
-    @media only screen and (min-width: 992px) {
-    }
-    @media only screen and (min-width: 1200px) {
-    }
-    @media only screen and (min-width: 1480px) {
-    }
   }
   .address {
     margin: 3px;
@@ -555,6 +519,8 @@ const StyledTable = styled.table`
     margin: 0 15px 0 0;
   }
   .second-row {
+    border-radius: 8px;
+    background-color: #868e96;
   }
   .third-row {
   }
@@ -571,7 +537,7 @@ const Nextbutton = styled.button`
   /* border: 2px solid black; */
 
   color: ${(props) => (props.state ? "white" : "gray")};
-  background: ${(props) => (props.state ? "#fd9800" : "lightgrey")};
+  background: ${(props) => (props.state ? "#fd9800" : "#dee2e6")};
   display: block;
   width: 100%;
   max-width: 680px;
@@ -585,6 +551,6 @@ const Nextbutton = styled.button`
     props.state ? "0 15px 20px rgba(253, 152, 0, 0.15)" : "0px"};
   transition: background-color 0.3s ease;
   &:hover {
-    background: ${(props) => (props.state ? "#e68a00" : "lightgrey")};
+    background: ${(props) => (props.state ? "#e68a00" : "#dee2e6")};
   }
 `;

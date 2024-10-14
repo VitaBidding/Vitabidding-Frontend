@@ -19,11 +19,11 @@ function App() {
     <Routes>
       <Route exact path="/*" element={<Mainpage />} />
       <Route path="/oauth" element={<Auth />} />
-      <Route path="/withdrawal" element={<Withdrawalpage />} />
       <Route path="/additionalinformation" element={<TermsagreedInfo />} />
-      <Route path="/terms/creator" element={<TermsagreedC />} />
       <Route path="/terms/detail/viewer/*" element={<TermsPageV />} />
+      <Route path="/terms/creator" element={<TermsagreedC />} />
       <Route path="/terms/detail/creator/*" element={<TermsPageC />} />
+      <Route path="/withdrawal" element={<Withdrawalpage />} />
       <Route path="/creator/*" element={<Creatorpage />} />
       <Route path="/auction/:userID" element={<AuctionPage />} />
       <Route path="/pointadd/*" element={<PointAddPage />} />
