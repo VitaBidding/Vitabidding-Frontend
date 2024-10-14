@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import BidImage from "../../assets/img/Banny animation2.gif";
+import BidImage from "../../assets/img/banny_animation2.gif";
 function Bidbox({ bidpoint, biduser }) {
   const addCommas = (value) => {
     const parts = (value || "").split(" ");
