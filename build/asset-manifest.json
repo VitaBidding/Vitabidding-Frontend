@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/static/css/main.508421a9.css",
-    "main.js": "/static/js/main.085c114c.js",
-    "static/js/206.24bb18f6.chunk.js": "/static/js/206.24bb18f6.chunk.js",
+    "main.css": "/static/css/main.f8d7a85b.css",
+    "main.js": "/static/js/main.22970f38.js",
+    "static/js/453.adff94ad.chunk.js": "/static/js/453.adff94ad.chunk.js",
     "static/media/bannyanimation.gif": "/static/media/bannyanimation.3eb874a1b45802fc1a13.gif",
     "static/media/도장14초.gif": "/static/media/도장14초.a5d27e97ee8b9594076f.gif",
     "static/media/endsound.mp3": "/static/media/endsound.2c93d2f8807800a83c22.mp3",
@@ -10,10 +10,13 @@
     "static/media/vitaBiddingLogo.png": "/static/media/vitaBiddingLogo.f64d958f38bce8a96358.png",
     "static/media/vitaBiddingLogoWhite.png": "/static/media/vitaBiddingLogoWhite.3bf96597b0968ea0e7ff.png",
     "static/media/vitaBiddingLogoBlack.png": "/static/media/vitaBiddingLogoBlack.6de53c0c699fcf4e27d6.png",
-    "index.html": "/index.html"
+    "index.html": "/index.html",
+    "main.f8d7a85b.css.map": "/static/css/main.f8d7a85b.css.map",
+    "main.22970f38.js.map": "/static/js/main.22970f38.js.map",
+    "453.adff94ad.chunk.js.map": "/static/js/453.adff94ad.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.508421a9.css",
-    "static/js/main.085c114c.js"
+    "static/css/main.f8d7a85b.css",
+    "static/js/main.22970f38.js"
   ]
 }
