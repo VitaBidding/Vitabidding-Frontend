@@ -234,6 +234,7 @@ export default ThirdpartyContainer;
 
 // 스타일드 컴포넌트
 const Container = styled.div`
+  background-color: blue;
   width: 100%;
   height: calc(100vw * 0.75); /* 800:600 비율 적용 */
   display: flex;

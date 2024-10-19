@@ -1,9 +1,13 @@
 import React from "react";
 import styled from "styled-components";
+import { Helmet } from "react-helmet";
 import BidlistContainer from "../../containers/main/bid.list.container";
 function BidListpage(props) {
   return (
     <Wrapper>
+      <Helmet>
+        <meta name="robots" content="noindex" />
+      </Helmet>
       <BidlistContainer />
     </Wrapper>
   );
