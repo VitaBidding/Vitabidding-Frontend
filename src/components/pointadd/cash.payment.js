@@ -1,17 +1,16 @@
 import React from "react";
 import styled from "styled-components";
-import { Button } from "react-bootstrap";
 
 function CashPayment({ cashPayment, depositorName, view_fk_phone }) {
-  function onclickPaymentButton() {
-    setTimeout(() => {
-      window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}/pointadd/acconttransfer`;
-    }, 2000);
-  }
+  const paymentUrl = `${process.env.REACT_APP_MAIN_CLIENT_URL}/pointadd/acconttransfer`;
+
   const formattedValue =
-    cashPayment !== null && cashPayment !== undefined //0일경우 생략
-      ? cashPayment.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") // 세 자리마다 쉼표 추가
+    cashPayment !== null && cashPayment !== undefined
+      ? cashPayment.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
       : "";
+
+  const isDisabled = !cashPayment || !depositorName || !view_fk_phone;
+
   return (
     <Wrapper>
       <CashPaymentSection>
@@ -20,12 +19,17 @@ function CashPayment({ cashPayment, depositorName, view_fk_phone }) {
       </CashPaymentSection>
       <CommetSection>*결제 금액에는 세금이 포함되어 있습니다.</CommetSection>
       <ButtonSection>
-        <PaymentButton
-          disabled={!cashPayment || !depositorName || !view_fk_phone}
-          onClick={() => onclickPaymentButton()}
+        <PaymentLink
+          href={isDisabled ? "#" : paymentUrl}
+          disabled={isDisabled}
+          onClick={(e) => {
+            if (isDisabled) {
+              e.preventDefault();
+            }
+          }}
         >
           구매하기
-        </PaymentButton>
+        </PaymentLink>
       </ButtonSection>
     </Wrapper>
   );
@@ -73,7 +77,33 @@ const ButtonSection = styled.div`
   justify-content: center;
 `;
 
-const PaymentButton = styled(Button)`
+const PaymentLink = styled.a`
+  display: inline-block;
   width: 100%;
   height: 50px;
+  line-height: 50px;
+  text-align: center;
+  color: #fff;
+  background-color: ${(props) => (props.disabled ? "#6c757d" : "#fd9800")};
+  border-color: ${(props) => (props.disabled ? "#6c757d" : "#fd9800")};
+  font-weight: 400;
+  user-select: none;
+  border: 1px solid transparent;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  text-decoration: none;
+  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
+
+  &:hover {
+    background-color: ${(props) => (props.disabled ? "#6c757d" : "#c6471b")};
+    border-color: ${(props) => (props.disabled ? "#6c757d" : "#ba431a")};
+    text-decoration: none;
+    color: #fff;
+  }
+
+  &:focus {
+    outline: 0;
+  }
 `;

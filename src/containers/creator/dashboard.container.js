@@ -1,46 +1,34 @@
-import React, { useNavigate } from "react";
+import React from "react";
 import styled from "styled-components";
 import { FaArrowRight } from "react-icons/fa";
 import { IoSettingsSharp } from "react-icons/io5";
 
 function Dashboardcontainer(props) {
-  function onclickEnrollment() {
-    window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}/creator/enrollment`;
-  }
-  function onclickWidget() {
-    window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}/creator/widget`;
-  }
-  function onclickITemStaus() {
-    window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}/creator/list`;
-  }
-  function onclickContoller() {
-    window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}/creator/controller`;
-  }
-  function onclickPoint() {
-    window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}/creator/info`;
-  }
+  const baseUrl = process.env.REACT_APP_MAIN_CLIENT_URL;
+
   return (
     <Wrapper>
-      <Enrollment onClick={() => onclickEnrollment()}>
+      <Enrollment as="a" href={`${baseUrl}/creator/enrollment`}>
         물건 등록 &nbsp;
         <div>
           바로가기
           <FaArrowRight />
         </div>
       </Enrollment>
-      <Widget onClick={() => onclickWidget()}>
+      <Widget as="a" href={`${baseUrl}/creator/widget`}>
         <IoSettingsSharp />
         위젯 <div>설정하기</div>
       </Widget>
-
-      <ITemStaus onClick={() => onclickITemStaus()}>
+      <ITemStaus as="a" href={`${baseUrl}/creator/list`}>
         판매관리
         <div>판매 중인 아이템 확인</div>
       </ITemStaus>
-      <Contoller onClick={() => onclickContoller()}>
+      <Contoller as="a" href={`${baseUrl}/creator/controller`}>
         경매진행 <div>컨트롤러</div>
       </Contoller>
-      <Point onClick={() => onclickPoint()}>포인트 환급 계좌 등록 하기</Point>
+      <Point as="a" href={`${baseUrl}/creator/info`}>
+        포인트 환급 계좌 등록 하기
+      </Point>
     </Wrapper>
   );
 }
@@ -79,8 +67,16 @@ const Wrapper = styled.div`
   @media only screen and (min-width: 1480px) {
   }
 `;
+
+const LinkStyle = `
+  text-decoration: none;
+  cursor: pointer;
+
+`;
+
 const Enrollment = styled.div`
   /* border: 1px solid black; */
+  ${LinkStyle}
   grid-column: 1 / 3;
   grid-row: 1 / 2;
   background-color: #fd9800;
@@ -116,6 +112,7 @@ const Enrollment = styled.div`
 `;
 
 const Widget = styled.div`
+  ${LinkStyle}
   background-color: white;
   color: #212832;
   font-weight: bold;
@@ -158,6 +155,7 @@ const Widget = styled.div`
 `;
 const ITemStaus = styled.div`
   /* border: 1px solid black; */
+  ${LinkStyle}
   grid-column: 1 / 3;
   grid-row: 2 / 5;
   background-color: white;
@@ -188,6 +186,7 @@ const ITemStaus = styled.div`
   }
 `;
 const Contoller = styled.div`
+  ${LinkStyle}
   grid-column: 3 / 4;
   grid-row: 2 / 5;
   background-color: #fd9800;
@@ -239,6 +238,7 @@ const Contoller = styled.div`
 `;
 const Point = styled.div`
   /* border: 1px solid black; */
+  ${LinkStyle}
   grid-column: 1 / 4;
   grid-row: 5 / 6;
 

@@ -2,14 +2,14 @@ import React from "react";
 import Logopng from "../../assets/img/vitaBiddingLogo.png";
 import styled from "styled-components";
 
-function onclickURLLogo() {
-  window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}`;
-}
-
 export default function Logo() {
+  const mainUrl = process.env.REACT_APP_MAIN_CLIENT_URL;
+
   return (
     <div>
-      <Logoimg src={Logopng} alt="" onClick={() => onclickURLLogo()} />
+      <a href={mainUrl} title="메인 페이지로 이동">
+        <Logoimg src={Logopng} alt="로고" />
+      </a>
     </div>
   );
 }

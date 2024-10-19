@@ -20,16 +20,20 @@ export default function LoginVIcon() {
         </CustomDropdownToggle>
 
         <Dropdown.Menu>
-          <Dropdown.Item href="/point">포인트</Dropdown.Item>
-          <Dropdown.Item href="/bidlist">낙찰물품</Dropdown.Item>
-          <Dropdown.Item href="/infomation">내 정보</Dropdown.Item>
-          <li>
-            <hr class="dropdown-divider" />
-          </li>
-          <Dropdown.Item href="/creator">판매자 페이지</Dropdown.Item>
-          <li>
-            <hr class="dropdown-divider" />
-          </li>
+          <Dropdown.Item as="a" href="/point">
+            포인트
+          </Dropdown.Item>
+          <Dropdown.Item as="a" href="/bidlist">
+            낙찰물품
+          </Dropdown.Item>
+          <Dropdown.Item as="a" href="/infomation">
+            내 정보
+          </Dropdown.Item>
+          <Dropdown.Divider />
+          <Dropdown.Item as="a" href="/creator">
+            판매자 페이지
+          </Dropdown.Item>
+          <Dropdown.Divider />
           <Dropdown.Item onClick={() => LogOut()}>로그아웃</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>

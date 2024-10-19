@@ -6,15 +6,14 @@ import Settlementpoint from "../../components/creator/point/settlement.point";
 import Paymentpoint from "../../components/creator/point/payment.point";
 
 function PointContainer() {
-  function onClickSection2() {
-    window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}/creator/info`;
-  }
+  const infoUrl = `${process.env.REACT_APP_MAIN_CLIENT_URL}/creator/info`;
+
   return (
     <Wrapper>
       <Section1>
         <SettlementApplication />
       </Section1>
-      <Section2 onClick={() => onClickSection2()}>
+      <Section2 as="a" href={infoUrl}>
         <SettlementAccount />
       </Section2>
       <Section3>
@@ -92,6 +91,9 @@ const Section2 = styled.div`
   /* border: 1px solid black; */
   grid-column: 3 / 5;
   grid-row: 1 / 3;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
   background-color: #e9ecef;
   border-radius: 10px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
