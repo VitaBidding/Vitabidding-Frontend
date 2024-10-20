@@ -4,7 +4,7 @@ import KakaoImage from "../../assets/img/vitaBiddingLogoBlack.png";
 function ItemImage(props) {
   return (
     <Wrapper>
-      <SeletImg src={KakaoImage} />
+      <SeletImg src={KakaoImage} alt="선택이미지" />
     </Wrapper>
   );
 }

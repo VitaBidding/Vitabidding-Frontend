@@ -67,7 +67,7 @@ function ListData({ products, handleShow, ThandleShow, setupproduct }) {
                 </Updatetd>
                 <Nametd>{product.item_name}</Nametd>
                 <AThumbnailtd>
-                  <ImageA src={product.thumbnail} />
+                  <ImageA src={product.thumbnail} alt="썸네일" />
                 </AThumbnailtd>
                 <AItemstatustd>{product.item_status}</AItemstatustd>
               </Asection>
@@ -100,7 +100,7 @@ function ListData({ products, handleShow, ThandleShow, setupproduct }) {
               <BDatatr key={product.id}>
                 <BsectionData>
                   <BThumbnailtd>
-                    <ImageB src={product.thumbnail} />
+                    <ImageB src={product.thumbnail} alt="썸네일" />
                   </BThumbnailtd>
                   <BItemstatustd>{product.item_status}</BItemstatustd>
                   <Waybilltd>

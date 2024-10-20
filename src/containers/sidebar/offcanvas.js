@@ -21,7 +21,7 @@ function OffcanvasC({ show, setShow }) {
           navbarScroll={true}
         >
           <Nav.Item>
-            <Logoimg src={whiteLogo} alt="" onClick={onclickURLLogo} />
+            <Logoimg src={whiteLogo} alt="로고" onClick={onclickURLLogo} />
           </Nav.Item>
           <Nav.Item>
             <Nav.Link

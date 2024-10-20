@@ -8,7 +8,7 @@ function ItemList({ products, setSelectedproduct }) {
       <CardSection>
         {products.map((item, index) => (
           <ItemCard key={index} onClick={() => setSelectedproduct(item)}>
-            <StyledCardImg variant="top" src={item.img} />
+            <StyledCardImg variant="top" src={item.img} alt="경매 물품" />
             <StyledCardBody>{item.name}</StyledCardBody>
           </ItemCard>
         ))}

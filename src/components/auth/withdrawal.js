@@ -23,8 +23,8 @@ function Withdrawal(props) {
   return (
     <Section>
       <div>
-        <img src={logo} alt="" />
-        <img src={doucument} alt="" />
+        <img src={logo} alt="로고" />
+        <img src={doucument} alt="문서" />
         <div>비타비딩 회원탈퇴</div>
         <br></br>
         <div> 탈퇴를 신청하기 전 탈퇴 절차를 꼭 확인해주세요. </div>

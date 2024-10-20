@@ -9,7 +9,7 @@ function SidebarC(props) {
   }
   return (
     <Section>
-      <Logoimg src={whiteLogo} alt="" onClick={onclickURLLogo} />
+      <Logoimg src={whiteLogo} alt="로고" onClick={onclickURLLogo} />
       <Nav
         justify
         variant="pills"

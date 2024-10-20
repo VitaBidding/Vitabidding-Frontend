@@ -11,7 +11,7 @@ function EndBox({ bidpoint, biduser }) {
   return (
     <AS>
       <Seciton1>
-        <MotionImage src={EndImage} alt="sample" />
+        <MotionImage src={EndImage} alt="endImg" />
       </Seciton1>
       <BidInfo>
         <Row>

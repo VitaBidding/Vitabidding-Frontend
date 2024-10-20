@@ -425,7 +425,7 @@ const Updatepage = ({ upproduct, UphandleClose }) => {
           {item.thumbnail && (
             <Thumbnaillabelfor htmlFor="thumbnail">
               <ThumbnailWrapper>
-                <Thumbnailimg src={Thumbnail} alt="" />
+                <Thumbnailimg src={Thumbnail} alt="썸네일" />
               </ThumbnailWrapper>
             </Thumbnaillabelfor>
           )}

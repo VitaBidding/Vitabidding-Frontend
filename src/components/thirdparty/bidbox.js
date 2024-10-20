@@ -11,7 +11,7 @@ function Bidbox({ bidpoint, biduser }) {
   return (
     <AS>
       <Seciton1>
-        <MotionImage src={BidImage} alt="sample" />
+        <MotionImage src={BidImage} alt="BidImg" />
       </Seciton1>
       <BidInfo>
         <Row>

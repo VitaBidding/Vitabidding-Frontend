@@ -4,7 +4,7 @@ import styled from "styled-components";
 function ItemImage({ selectproduct }) {
   return (
     <Wrapper>
-      <SeletImg src={selectproduct.img} />
+      <SeletImg src={selectproduct.img} alt="선택이미지" />
     </Wrapper>
   );
 }
