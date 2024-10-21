@@ -33,12 +33,14 @@ function Bidbox({ bidpoint, biduser }) {
 export default Bidbox;
 
 const AS = styled.div`
+  background-color: none;
   display: grid;
   grid-template-rows: repeat(3, 1fr);
   width: 100%;
   height: calc(100vw * 0.75); /* 800:600 비율 적용 */
 `;
 const Seciton1 = styled.div`
+  background-color: none;
   grid-row: 1 / 3;
   display: flex;
   justify-content: center;

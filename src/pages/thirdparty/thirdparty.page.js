@@ -1,12 +1,16 @@
 import React from "react";
-
+import styled from "styled-components";
 import Thirdparty from "../../containers/thirdparty/thirdparty.container";
 function ThirdpartyPage() {
   return (
-    <div>
+    <Wrapper>
       <Thirdparty />
-    </div>
+    </Wrapper>
   );
 }
 
 export default ThirdpartyPage;
+
+const Wrapper = styled.div`
+  background-color: none;
+`;
