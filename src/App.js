@@ -25,7 +25,7 @@ function App() {
       <Route path="/terms/detail/creator/*" element={<TermsPageC />} />
       <Route path="/withdrawal" element={<Withdrawalpage />} />
       <Route path="/creator/*" element={<Creatorpage />} />
-      <Route path="/auction/:userID" element={<AuctionPage />} />
+      <Route path="/auction/:userid" element={<AuctionPage />} />
       <Route path="/pointadd/*" element={<PointAddPage />} />
       <Route path="/thirdparty/*" element={<ThirdpartyPage />} />
       <Route path="/admin/*" element={<AdminPage />} />

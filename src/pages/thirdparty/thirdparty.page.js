@@ -12,5 +12,5 @@ function ThirdpartyPage() {
 export default ThirdpartyPage;
 
 const Wrapper = styled.div`
-  background-color: none;
+  background-color: transparent;
 `;

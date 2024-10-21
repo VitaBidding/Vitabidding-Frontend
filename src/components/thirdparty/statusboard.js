@@ -48,6 +48,7 @@ function Statusboard({ time, running, setTime, setTimerFinished, EndComment }) {
 export default Statusboard;
 
 const StatusBoard = styled.div`
+  background-color: transparent;
   width: 100%;
   height: calc(100vw * 0.75); /* 800:600 비율 적용 */
   padding: 1rem;
