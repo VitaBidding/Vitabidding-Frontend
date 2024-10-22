@@ -60,7 +60,6 @@ function EnrollmentThumbnail({ item, setItem }) {
   };
   return (
     <ThumbnailSection>
-      <Thumbnaillabel>썸네일 사진</Thumbnaillabel>
       <Thumbnailcontents>
         <ThumbnailInput
           type="file"
@@ -102,39 +101,6 @@ const ThumbnailSection = styled.div`
   flex-direction: column;
 `;
 
-const Thumbnaillabel = styled.label`
-  font-weight: bold;
-  width: 100%;
-  height: 10%;
-  display: flex;
-  justify-content: flex-start;
-
-  @media only screen and (max-width: 280px) {
-    font-size: 7pt;
-    padding: 0;
-  }
-  @media only screen and (min-width: 280px) {
-    font-size: 7pt;
-    padding: 0;
-  }
-  @media only screen and (min-width: 360px) {
-    font-size: 9pt;
-  }
-  @media only screen and (min-width: 420px) {
-    font-size: 12pt;
-  }
-  @media only screen and (min-width: 600px) {
-  }
-  @media only screen and (min-width: 768px) {
-    padding: 3px 10px;
-  }
-  @media only screen and (min-width: 992px) {
-  }
-  @media only screen and (min-width: 1200px) {
-  }
-  @media only screen and (min-width: 1480px) {
-  }
-`;
 const Thumbnailcontents = styled.div`
   display: flex;
   flex-direction: column;
