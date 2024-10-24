@@ -350,7 +350,9 @@ function ListComponent(props) {
           <CardContainer>
             {currentCards.map((card) => (
               <Card key={card.id} onClick={() => DetailPage(card)}>
-                <ProductImage src={card.thumbnail} alt="Product" />
+                <ImgSection>
+                  <ProductImage src={card.thumbnail} alt="Product" />
+                </ImgSection>
                 <TitleSection>
                   <Title>{card.name}</Title>
                 </TitleSection>
@@ -435,19 +437,28 @@ const Card = styled.div`
     cursor: pointer;
   }
 `;
-
-const ProductImage = styled.img`
+const ImgSection = styled.div`
   /* border: 1px solid red; */
   border-radius: 10px;
-  width: 100%;
+  width: 280px;
   height: 260px;
-  object-fit: cover;
-  margin: 0px;
   &:hover {
-    /* border: 1px solid #000; 보더 스타일 설정 */
-    border-radius: 10px;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* 그림자 스타일 설정 */
     cursor: pointer;
+  }
+  overflow: hidden;
+`;
+const ProductImage = styled.img`
+  /* border: 1px solid red; */
+
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  margin: 0px;
+  transition: transform 0.3s ease;
+  &:hover {
+    /* border: 1px solid #000; 보더 스타일 설정 */
+    transform: scale(1.05);
   }
 `;
 
