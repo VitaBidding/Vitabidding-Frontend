@@ -6,13 +6,8 @@ import ListData from "./list.data";
 import UpdateModal from "./update.modal";
 import TrackingModal from "./tracking.modal";
 import { fetchProducts } from "../../../lib/request";
-import KakaoImage from "../../../assets/img/KakaoTalk_20221126_235103258.png";
-import AImge from "../../../assets/img/vitaBiddingLogo.png";
-import BImg from "../../../assets/img/ticket.png";
-import CImg from "../../../assets/img/명품수석.png";
-import DImg from "../../../assets/img/vitaBiddingLogoBlack.png";
 function ListComponent(props) {
-  const [products, setProducts] = useState([{}]);
+  const [products, setProducts] = useState([]);
   const [effect, seteffect] = useState(0);
   useEffect(() => {
     fetchProducts()

@@ -57,7 +57,6 @@ const HeaderSection = styled.div`
   @media only screen and (min-width: 420px) {
   }
   @media only screen and (min-width: 600px) {
-   
   }
   @media only screen and (min-width: 768px) {
     padding: 10px 40px; /* Optional: add some padding */
@@ -73,7 +72,6 @@ const HeaderSection = styled.div`
 `;
 
 const BodySection = styled.div`
-
   display: flex;
   flex-direction: column;
   flex: 1;

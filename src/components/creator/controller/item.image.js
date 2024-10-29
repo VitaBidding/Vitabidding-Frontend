@@ -4,7 +4,11 @@ import styled from "styled-components";
 function ItemImage({ selectproduct }) {
   return (
     <Wrapper>
-      <SeletImg src={selectproduct.img} alt="선택이미지" />
+      {selectproduct && selectproduct.img ? (
+        <SeletImg src={selectproduct.img} alt="선택이미지" />
+      ) : (
+        <EmptyMessage>경매물건을 선택해주세요</EmptyMessage>
+      )}
     </Wrapper>
   );
 }
@@ -42,4 +46,10 @@ const SeletImg = styled.img`
   width: 100%;
   height: 100%;
   object-fit: contain; /* Maintains aspect ratio and fits the image within the container */
+`;
+
+const EmptyMessage = styled.div`
+  color: #ffffff;
+  font-size: 1.2rem;
+  text-align: center;
 `;
