@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import EndImage from "../../assets/img/도장14초.gif";
+
 function EndBox({ bidpoint, biduser }) {
   const addCommas = (value) => {
     const parts = (value || "").split(" ");
@@ -8,6 +8,8 @@ function EndBox({ bidpoint, biduser }) {
     return parts.join(".");
   };
   const formattedValue = addCommas(bidpoint);
+  const EndImage =
+    "https://lh3.googleusercontent.com/pw/AP1GczOp5WcQB9ejJgq6U3PKEj8GaS0LioB46fl98TFxw105siGIwdHmuKP7aKgmAIU1yz4kN4G-4dF6gvnoTfQj-yAh4lUyXvTTwsaOM--1SKyGa3lB6D0gPSwk15Q7EVDImebZcLEZe2nX2PQPjDsNO9_k=w601-h400-s-no-gm?authuser=0";
   return (
     <AS>
       <Seciton1>

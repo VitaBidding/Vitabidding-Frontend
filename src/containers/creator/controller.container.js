@@ -7,37 +7,10 @@ import AuctionBidStatus from "../../components/creator/controller/auction.bid.st
 import AuctionTimer from "../../components/creator/controller/auction.timer";
 import AuctionProcess from "../../components/creator/controller/auction.process";
 // import AuctionSound from "../../components/creator/controller/auction.sound";
-import KakaoImage from "../../assets/img/KakaoTalk_20221126_235103258.png";
-import AImge from "../../assets/img/vitaBiddingLogo.png";
-import BImg from "../../assets/img/ticket.png";
-import CImg from "../../assets/img/명품수석.png";
-import DImg from "../../assets/img/vitaBiddingLogoBlack.png";
+
 function ControllerContainer() {
   //선택 물품
-  const [products, setProducts] = useState([
-    {
-      name: "비타비딩 로고",
-      img: AImge,
-      category: "디자인",
-      item_status:"경매대기",
-      Descriptiontextarea:
-        " 이름긴거테스트하는중선택진행일시정지        이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지       이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지        이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지       테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지        이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선택진행일시정지이름긴거테스트하는중선",
-    },
-
-    {
-      name: "핸드 메이드 잠옷",
-      img: KakaoImage,
-      category: "의류",
-      Descriptiontextarea:
-        "편안함과 스타일을 동시에!\n100% 핸드메이드로 제작된 특별한 잠옷입니다.\n부드럽고 내추럴한 소재로 제작되어 피부에 자극 없이 편안하게 입으실 수 있습니다.\n디테일 하나하나 정성을 담아 제작된 이 잠옷은 하루의 피로를 풀어주고 숙면을 도와줍니다.\n\n특징\n\n프리미엄 소재: 통기성이 우수한 고급 면 소재로 여름철에도 쾌적함을 유지해줍니다.\n편안한 핏: 몸을 편안하게 감싸주는 여유 있는 핏으로 하루 종일 입고 싶어질 편안함을 선사합니다.\n섬세한 핸드메이드: 각 제품이 장인의 손길을 거쳐 정성스럽게 제작되었습니다.",
-    },
-
-    { name: "S석 스탠딩 티켓", img: BImg, category: "티켓/교환권" },
-    ,
-    { name: "감정(인) 명품 수석", img: CImg, category: "기타" },
-    ,
-    { name: "비타비딩 블랙 로고", img: DImg, category: "디자인" },
-  ]);
+  const [products, setProducts] = useState([]);
   const [selectproduct, setSelectedproduct] = useState({});
   //타이머
   const initialTime = 0;

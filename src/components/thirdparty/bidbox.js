@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import BidImage from "../../assets/img/bannyanimation.gif";
+
 function Bidbox({ bidpoint, biduser }) {
   const addCommas = (value) => {
     const parts = (value || "").split(" ");
@@ -8,10 +8,12 @@ function Bidbox({ bidpoint, biduser }) {
     return parts.join(".");
   };
   const formattedValue = addCommas(bidpoint);
+
+  const imageUrl = `https://lh3.googleusercontent.com/pw/AP1GczOPX-EbY3AI7E0aMRYXBcw40Lg8hK_1Mk-JDg-BP_rFpezseNXVx5zltXN27e4sZtTV2hltVWiidvG9ZK15QCSnbpqXwJCRQ6wGStHA7m_bPx2TrbAmQS51wDMhpPv-Bp7xnvfBDCD6DYqQnkh_yQa0=w300-h400-s-no-gm?authuser=0`;
   return (
     <AS>
       <Seciton1>
-        <MotionImage src={BidImage} alt="BidImg" />
+        <MotionImage src={imageUrl} alt="BidImg" />
       </Seciton1>
       <BidInfo>
         <Row>
