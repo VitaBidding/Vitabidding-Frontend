@@ -21,7 +21,7 @@ export const requestChekLogin = async () => {
 };
 
 //로그인===========================================================
-export const requestLogin = async ({ data }) => {
+export const requestLogin = async (data) => {
   // data = { email, password };
   try {
     const response = await axios.post(`/auth/login`, data);
