@@ -193,7 +193,7 @@ const AuthForm = () => {
       requestLogin({ email, password });
     } else if (mode === "signup") {
       if (isSignupFormValid()) {
-        requestSignup({ email, nickName, password, repeatPassword });
+        requestSignup({ email, nickName, password, roll: "user" });
       } else {
         // 에러 메시지 표시 또는 다른 처리
         console.log("회원가입 폼이 유효하지 않습니다.");

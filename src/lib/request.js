@@ -1,17 +1,16 @@
 import axios from "axios";
 
+axios.defaults.withCredentials = true;
+axios.defaults.baseURL = process.env.REACT_APP_VITE_SERVER_URL;
 //로그인체크
 export const requestChekLogin = async () => {
   const accessToken = localStorage.getItem("access_token");
   if (!accessToken) return null;
   try {
-    const response = await axios.get(
-      `${process.env.REACT_APP_VITE_SERVER_URL}/user/profile`,
-      {
-        headers: { Authorization: `Bearer ${accessToken}` },
-        // withCredentials: true,
-      }
-    );
+    const response = await axios.get(`/user/profile`, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+      // withCredentials: true,
+    });
     // console.log(response.data);
     return response;
   } catch (error) {
@@ -21,15 +20,11 @@ export const requestChekLogin = async () => {
   }
 };
 
-//로그인
+//로그인===========================================================
 export const requestLogin = async ({ data }) => {
   // data = { email, password };
   try {
-    const response = await axios.post(
-      `${process.env.REACT_APP_VITE_SERVER_URL}/auth/login`,
-      data
-    );
-    // console.log('로그인 성공:', response.data);
+    const response = await axios.post(`/auth/login`, data);
 
     const { access_token } = response.data;
     localStorage.setItem("access_token", access_token);
@@ -41,13 +36,10 @@ export const requestLogin = async ({ data }) => {
 };
 
 //소셜로그인 네이버
-export const requestLoginNaver = async (data) => {
+export const requestLoginNaver = async ({ data }) => {
   // data = { email, password };
   try {
-    const response = await axios.post(
-      `${process.env.REACT_APP_VITE_SERVER_URL}/auth/logiNnaver`,
-      data
-    );
+    const response = await axios.post(`/auth/logiNnaver`, data);
     // console.log('로그인 성공:', response.data);
 
     const { access_token } = response.data;
@@ -60,13 +52,10 @@ export const requestLoginNaver = async (data) => {
 };
 
 //소설로그인 구글
-export const requestLoginGoogle = async (data) => {
+export const requestLoginGoogle = async ({ data }) => {
   // data = { email, password };
   try {
-    const response = await axios.post(
-      `${process.env.REACT_APP_VITE_SERVER_URL}/auth/loginGoogle`,
-      data
-    );
+    const response = await axios.post(`/auth/loginGoogle`, data);
     // console.log('로그인 성공:', response.data);
 
     const { access_token } = response.data;
@@ -78,13 +67,13 @@ export const requestLoginGoogle = async (data) => {
   }
 };
 
-//로그아웃
+//로그아웃==========================================================
 export const requestLogout = async () => {
   const accessToken = localStorage.getItem("access_token");
   localStorage.removeItem("access_token");
   try {
     const response = await axios.post(
-      `${process.env.REACT_APP_VITE_SERVER_URL}/auth/logout`,
+      `/auth/logout`,
       {},
       {
         headers: { Authorization: `Bearer ${accessToken}` },
@@ -93,7 +82,7 @@ export const requestLogout = async () => {
     );
     return response;
   } catch (error) {
-    console.error("유저 정보 조회 실패:", error);
+    console.error("유저 로그아웃 실패", error);
     if (accessToken) {
       localStorage.removeItem("access_token");
     }
@@ -103,28 +92,20 @@ export const requestLogout = async () => {
 export const requestEmailVerification = async (data) => {
   // data = { email };
   try {
-    const response = await axios.post(
-      `${process.env.REACT_APP_VITE_SERVER_URL}/user/requestemailverification`,
-      data
-    );
-    // console.log('이미 존재하는 닉네임입니다. 다른 닉네임을 입력해주세요.', response.data);
-    // console.log('사용가능한 닉네입니다.', response.data);
+    const response = await axios.post(`/user/requestemailverification`, data);
+
     return response.data.message;
   } catch (error) {
     console.error("이메일 코드보내기 실패", error);
     return "네트워크 에러 이메일 코드 보내기 실패";
   }
 };
-//이메일 인증코드 보내기
+//이메일 인증코드 확인 보내기
 export const verifyEmailCode = async (data) => {
   // data = { email, verificationCode };
   try {
-    const response = await axios.post(
-      `${process.env.REACT_APP_VITE_SERVER_URL}/user/verifyemailcode`,
-      data
-    );
-    // console.log('이미 존재하는 닉네임입니다. 다른 닉네임을 입력해주세요.', response.data);
-    // console.log('사용가능한 닉네입니다.', response.data);
+    const response = await axios.post(`/user/verifyemailcode`, data);
+
     return response.data.message;
   } catch (error) {
     console.error("이메일 코드확인 실패", error);
@@ -136,10 +117,7 @@ export const verifyEmailCode = async (data) => {
 export const requestNicknameCheck = async (data) => {
   // data = { nickName };
   try {
-    const response = await axios.post(
-      `${process.env.REACT_APP_VITE_SERVER_URL}/user/nicknamecheck`,
-      data
-    );
+    const response = await axios.post(`/user/nicknamecheck`, data);
     // console.log('이미 존재하는 닉네임입니다. 다른 닉네임을 입력해주세요.', response.data);
     // console.log('사용가능한 닉네입니다.', response.data);
     return response.data.message;
@@ -149,13 +127,10 @@ export const requestNicknameCheck = async (data) => {
   }
 };
 //회원가입
-export const requestSignup = async (data) => {
-  //{ email, nickName, password, repeatPassword }
+export const requestSignup = async ({ data }) => {
+  //data = { email, nickName, password, roll: "user" }
   try {
-    const response = await axios.post(
-      `${process.env.REACT_APP_VITE_SERVER_URL}/user`,
-      data
-    );
+    const response = await axios.post(`/auth/signup1`, data);
     // console.log('회원가입 성공:', response.data);
     return response;
   } catch (error) {
@@ -178,14 +153,20 @@ export const requestUserProfile = async (
   try {
     await axios
       .get(
-        `${process.env.REACT_APP_VITE_SERVER_URL}/creator/register`,
+        `/auth/signup2`,
         {
-          userName: userName,
-          userPhone: userPhone,
-          Zonecode: Zonecode,
-          FuAddress: FuAddress,
-          ExAddress: ExAddress,
-          DeAddress: DeAddress,
+          realName: userName,
+          phone: userPhone,
+          address: {
+            zipCode: Zonecode,
+            streetAddress1: FuAddress,
+            state: ExAddress,
+            streetAddress2: DeAddress,
+          },
+          agreement: {
+            usagePolicyV: true,
+            personalInformationV: true,
+          },
         },
         { withCredentials: true }
       )
@@ -201,7 +182,7 @@ export const requestUserProfile = async (
 export const EnterPhoneNumber = async (userPhone) => {
   try {
     await axios.post(
-      `${process.env.REACT_APP_VITE_SERVER_URL}/sms/send`,
+      `/sms/send`,
       { phoneNumber: userPhone },
       { withCredentials: true }
     );
@@ -213,7 +194,7 @@ export const EnterPhoneNumber = async (userPhone) => {
 export const Certification = async (userPhone, CertificationNumber) => {
   await axios
     .post(
-      `${process.env.REACT_APP_VITE_SERVER_URL}/sms/verify`,
+      `/sms/verify`,
       {
         phoneNumber: userPhone,
         verifyCode: CertificationNumber,
@@ -233,7 +214,7 @@ export const Certification = async (userPhone, CertificationNumber) => {
 export const EditNickname = async (userNickname) => {
   await axios
     .patch(
-      `${process.env.REACT_APP_VITE_SERVER_URL}/edit/nickname`,
+      `/edit/nickname`,
       { nick_name: userNickname },
       { withCredentials: true }
     )
@@ -244,11 +225,7 @@ export const EditNickname = async (userNickname) => {
 
 export const EditPhoneNumber = async (userPhone) => {
   await axios
-    .patch(
-      `${process.env.REACT_APP_VITE_SERVER_URL}/edit/phone`,
-      { phone: userPhone },
-      { withCredentials: true }
-    )
+    .patch(`/edit/phone`, { phone: userPhone }, { withCredentials: true })
     .catch((err) => {
       console.error(err);
     });
@@ -262,7 +239,7 @@ export const EditAddress = async (
 ) => {
   axios
     .patch(
-      `${process.env.REACT_APP_VITE_SERVER_URL}/edit/address`,
+      `/edit/address`,
       {
         Zonecode: Zonecode,
         FuAddress: FuAddress,
@@ -280,7 +257,7 @@ export const EditAddress = async (
 
 export const requestWithdrawal = async () => {
   await axios
-    .delete(`${process.env.REACT_APP_VITE_SERVER_URL}/auth/delete`, {
+    .delete(`/auth/delete`, {
       withCredentials: true,
     })
     .then((res) => {
@@ -300,7 +277,7 @@ export const onclickURLAgreedV = async (checkItems) => {
   try {
     await axios
       .get(
-        `${process.env.REACT_APP_VITE_SERVER_URL}/viewer/agreement`,
+        `/viewer/agreement`,
         {
           usage_policy: usage_policy,
           personal_information: personal_information,
@@ -326,7 +303,7 @@ export const onclickURLAgreedC = async (checkItems) => {
   try {
     await axios
       .get(
-        `${process.env.REACT_APP_VITE_SERVER_URL}/creator/agreement`,
+        `/creator/agreement`,
         {
           usage_policy: usage_policy,
           personal_information: personal_information,
@@ -349,13 +326,9 @@ export const onclickURLAgreedC = async (checkItems) => {
 export const Channelurl = async (data) => {
   // data = { email, password, passwordConfirm, nick_name };
   try {
-    const response = await axios.post(
-      `${process.env.REACT_APP_VITE_SERVER_URL}/creator/studio/edit`,
-      data,
-      {
-        withCredentials: true,
-      }
-    );
+    const response = await axios.post(`/creator/studio/edit`, data, {
+      withCredentials: true,
+    });
     return response;
   } catch (error) {
     console.error("방송 LIVE URL 등록 실패", error);
@@ -365,12 +338,9 @@ export const Channelurl = async (data) => {
 // 경매위젯, 경매장주소, 등록된 live url 받아오기
 export const Loadwidget = async () => {
   try {
-    const response = await axios.get(
-      `${process.env.REACT_APP_VITE_SERVER_URL}/creator/studio`,
-      {
-        withCredentials: true,
-      }
-    ); // 서버의 API 엔드포인트에 맞게 설정
+    const response = await axios.get(`/creator/studio`, {
+      withCredentials: true,
+    }); // 서버의 API 엔드포인트에 맞게 설정
     return response;
   } catch (error) {
     console.error("경매위젯주소 불러오기 실패", error);
@@ -381,12 +351,9 @@ export const Loadwidget = async () => {
 //통장계좌 받아오기
 export const Accountreq = async () => {
   try {
-    const res = await axios.get(
-      `${process.env.REACT_APP_VITE_SERVER_URL}/account`,
-      {
-        withCredentials: true,
-      }
-    );
+    const res = await axios.get(`/account`, {
+      withCredentials: true,
+    });
     return res;
   } catch {
     return false;
@@ -401,7 +368,7 @@ export const Accountregistration = async ({
 }) => {
   try {
     const res = await axios.get(
-      `${process.env.REACT_APP_VITE_SERVER_URL}/Accountregistration`,
+      `/Accountregistration`,
       { selectedBank, userAccountNumber },
       {
         withCredentials: true,
@@ -417,13 +384,9 @@ export const Accountregistration = async ({
 
 export const EnrollmentItem = async (Data) => {
   try {
-    await axios.get(
-      `${process.env.REACT_APP_VITE_SERVER_URL}/creator/products/new`,
-      Data,
-      {
-        withCredentials: true,
-      }
-    ); // 서버의 API 엔드포인트에 맞게 설정
+    await axios.get(`/creator/products/new`, Data, {
+      withCredentials: true,
+    }); // 서버의 API 엔드포인트에 맞게 설정
     return true;
   } catch (error) {
     console.error("물건등록 실패", error);
@@ -435,12 +398,9 @@ export const EnrollmentItem = async (Data) => {
 
 export const TimeCheck = async () => {
   try {
-    const res = axios.get(
-      `${process.env.REACT_APP_VITE_SERVER_URL}/auth/timechk`,
-      {
-        withCredentials: true,
-      }
-    );
+    const res = axios.get(`/auth/timechk`, {
+      withCredentials: true,
+    });
     return res;
   } catch (error) {
     console.error("시간불러오기 실패", error);
@@ -468,13 +428,9 @@ export const fetchProducts = async () => {
 // 물건 수정
 export const EditItem = async (Data) => {
   try {
-    await axios.get(
-      `${process.env.REACT_APP_VITE_SERVER_URL}/creator/products/edit`,
-      Data,
-      {
-        withCredentials: true,
-      }
-    ); // 서버의 API 엔드포인트에 맞게 설정
+    await axios.get(`/creator/products/edit`, Data, {
+      withCredentials: true,
+    }); // 서버의 API 엔드포인트에 맞게 설정
     return true;
   } catch (error) {
     console.error("물건 수정 실패", error);
@@ -486,7 +442,7 @@ export const EditItem = async (Data) => {
 export const DeleteItem = async (id) => {
   try {
     await axios.get(
-      `${process.env.REACT_APP_VITE_SERVER_URL}/creator/products/remove`,
+      `/creator/products/remove`,
       { item_id: id },
       { withCredentials: true }
     ); // 서버의 API 엔드포인트에 맞게 설정
@@ -501,12 +457,9 @@ export const DeleteItem = async (id) => {
 
 export const getItemData = async () => {
   try {
-    const response = await axios.get(
-      `${process.env.REACT_APP_VITE_SERVER_URL}/products`,
-      {
-        withCredentials: true,
-      }
-    );
+    const response = await axios.get(`/products`, {
+      withCredentials: true,
+    });
     return response.data.result;
   } catch (error) {
     console.error("전체 물건 조회 실패", error);
@@ -517,12 +470,9 @@ export const getItemData = async () => {
 //낙찰완료 아이템(결제가 필요한 아이템목록) 조회
 export const WaitingForpaymentitemapi = async () => {
   try {
-    const response = await axios.get(
-      `${process.env.REACT_APP_VITE_SERVER_URL}/products/WaitingForpaymentitemapi`,
-      {
-        withCredentials: true,
-      }
-    );
+    const response = await axios.get(`/products/WaitingForpaymentitemapi`, {
+      withCredentials: true,
+    });
     return response.data.result;
   } catch (error) {
     console.error("낙찰된 물건 불러오기 실패", error);
@@ -533,12 +483,9 @@ export const WaitingForpaymentitemapi = async () => {
 //결제완료 후 배송진행상태의 아이템 조회
 export const completepaymentitemapi = async () => {
   try {
-    const response = await axios.get(
-      `${process.env.REACT_APP_VITE_SERVER_URL}/products/completepaymentitemapi`,
-      {
-        withCredentials: true,
-      }
-    );
+    const response = await axios.get(`/products/completepaymentitemapi`, {
+      withCredentials: true,
+    });
     return response.data.result;
   } catch (error) {
     console.error("결제완료 아이템 불러오기 실패", error);
@@ -549,12 +496,9 @@ export const completepaymentitemapi = async () => {
 //거래완료 아이템 조회
 export const transactioncompleteditemapi = async () => {
   try {
-    const response = await axios.get(
-      `${process.env.REACT_APP_VITE_SERVER_URL}/products/transactioncompleteditemapi`,
-      {
-        withCredentials: true,
-      }
-    );
+    const response = await axios.get(`/products/transactioncompleteditemapi`, {
+      withCredentials: true,
+    });
     return response.data.result;
   } catch (error) {
     console.error("거래완료 아이템 불러오기 실패", error);
@@ -575,7 +519,7 @@ export const itempayment = async ({
 }) => {
   try {
     const response = await axios.get(
-      `${process.env.REACT_APP_VITE_SERVER_URL}/products/itempayment`,
+      `/products/itempayment`,
       {
         userName: userName,
         userPhone: userPhone,
@@ -601,7 +545,7 @@ export const itempayment = async ({
 export const auctioncompleteapi = async ({ el }) => {
   try {
     const response = await axios.get(
-      `${process.env.REACT_APP_VITE_SERVER_URL}/auctioncompleteapi`,
+      `/auctioncompleteapi`,
       { item: el },
       {
         withCredentials: true,
