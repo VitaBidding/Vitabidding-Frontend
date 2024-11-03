@@ -26,8 +26,13 @@ export const requestLogin = async (data) => {
   try {
     const response = await axios.post(`/auth/login`, data);
 
-    const { access_token } = response.data;
-    localStorage.setItem("access_token", access_token);
+    const { accessToken, refreshToken } = response.data;
+    console.log("🚀 ~ requestLogin ~ refreshToken:", refreshToken);
+    console.log("🚀 ~ requestLogin ~ accessToken:", accessToken);
+    localStorage.setItem("access_token", accessToken);
+    if (refreshToken) {
+      localStorage.setItem("refresh_token", refreshToken);
+    }
 
     return response;
   } catch (error) {
