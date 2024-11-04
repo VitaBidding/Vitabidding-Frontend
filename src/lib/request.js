@@ -27,8 +27,7 @@ export const requestLogin = async (data) => {
     const response = await axios.post(`/auth/login`, data);
 
     const { accessToken, refreshToken } = response.data;
-    console.log("🚀 ~ requestLogin ~ refreshToken:", refreshToken);
-    console.log("🚀 ~ requestLogin ~ accessToken:", accessToken);
+
     localStorage.setItem("access_token", accessToken);
     if (refreshToken) {
       localStorage.setItem("refresh_token", refreshToken);
@@ -93,25 +92,23 @@ export const requestLogout = async () => {
     }
   }
 };
-//이메일 인증코드 보내기
+//이메일 인증코드 보내기 ========================================
 export const requestEmailVerification = async (data) => {
-  // data = { email };
   try {
-    const response = await axios.post(`/user/requestemailverification`, data);
+    const response = await axios.post(`/auth/send-code`, { email: data });
 
-    return response.data.message;
+    return response.status;
   } catch (error) {
     console.error("이메일 코드보내기 실패", error);
     return "네트워크 에러 이메일 코드 보내기 실패";
   }
 };
-//이메일 인증코드 확인 보내기
+//이메일 인증코드 확인 보내기======================================
 export const verifyEmailCode = async (data) => {
-  // data = { email, verificationCode };
   try {
-    const response = await axios.post(`/user/verifyemailcode`, data);
+    const response = await axios.post(`/auth/verify-code`, data);
 
-    return response.data.message;
+    return response.status;
   } catch (error) {
     console.error("이메일 코드확인 실패", error);
     return "네트워크 에러 이메일 코드 확인 실패";

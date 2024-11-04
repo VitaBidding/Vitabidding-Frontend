@@ -18,11 +18,14 @@ const AuthForm = () => {
   const [email, setEmail] = useState("");
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [emailError, setEmailError] = useState("");
+  const [isEmailVerificationLoading, setIsEmailVerificationLoading] =
+    useState(false);
   const [showVerificationInput, setShowVerificationInput] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
 
   const [codeError, setCodeError] = useState("");
   const [verificationCode, setVerificationCode] = useState("");
+  console.log("🚀 ~ AuthForm ~ verificationCode:", verificationCode);
   const [isVerified, setIsVerified] = useState(false);
   const [isEmailEditable, setIsEmailEditable] = useState(true);
   const [isVerificationComplete, setIsVerificationComplete] = useState(false);
@@ -73,9 +76,11 @@ const AuthForm = () => {
   };
 
   const handleEmailVerification = async () => {
+    setIsEmailVerificationLoading(true);
     try {
       const response = await requestEmailVerification(email);
-      if (response.success) {
+
+      if (response === 201) {
         setEmailError("인증 메일이 발송되었습니다.");
         setShowVerificationInput(true);
       } else {
@@ -83,9 +88,10 @@ const AuthForm = () => {
       }
     } catch (error) {
       setEmailError("오류가 발생했습니다.");
+    } finally {
+      setIsEmailVerificationLoading(false);
     }
   };
-
   const handleVerificationCodeChange = (e) => {
     const code = e.target.value.replace(/\D/g, ""); // 숫자가 아닌 문자는 제거
     setVerificationCode(code);
@@ -97,8 +103,11 @@ const AuthForm = () => {
 
   const handleVerificationCodeSubmit = async () => {
     try {
-      const response = await verifyEmailCode(email, verificationCode);
-      if (response.success) {
+      const response = await verifyEmailCode({
+        email: email,
+        code: verificationCode,
+      });
+      if (response === 201) {
         setSuccessMessage("이메일 인증이 완료되었습니다.");
         setCodeError("");
         setIsVerificationComplete(true);
@@ -261,7 +270,11 @@ const AuthForm = () => {
                 <DuplicateButton
                   variant="outline-primary"
                   onClick={handleEmailVerification}
-                  disabled={!isEmailValid || !isEmailEditable}
+                  disabled={
+                    !isEmailValid ||
+                    !isEmailEditable ||
+                    isEmailVerificationLoading
+                  }
                 >
                   메일 인증
                 </DuplicateButton>
