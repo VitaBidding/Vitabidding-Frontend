@@ -35,12 +35,14 @@ function EndBox({ bidpoint, biduser }) {
 export default EndBox;
 
 const AS = styled.div`
+  background-color: transparent;
   display: grid;
   grid-template-rows: repeat(3, 1fr);
   width: 100%;
   height: calc(100vw * 0.75); /* 800:600 비율 적용 */
 `;
 const Seciton1 = styled.div`
+  background-color: transparent;
   grid-row: 1 / 3;
   display: flex;
   justify-content: center;
@@ -51,6 +53,7 @@ const MotionImage = styled.img`
 `;
 
 const BidInfo = styled.div`
+  background-color: transparent;
   display: flex;
   flex-direction: column;
   align-items: center;

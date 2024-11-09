@@ -21,10 +21,14 @@ function Index(props) {
   function handleShow() {
     setShow(true);
   }
-
-  function LogOut() {
-    requestLogout();
-    window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}`;
+  async function LogOut() {
+    try {
+      await requestLogout();
+      window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}`;
+    } catch (error) {
+      console.error("Logout failed:", error);
+      // 에러 처리를 여기에 추가할 수 있습니다.
+    }
   }
   return (
     <Wrapper>

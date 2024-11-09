@@ -3,8 +3,8 @@ import axios from "axios";
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = process.env.REACT_APP_VITE_SERVER_URL;
 //로그인체크
-export const requestChekLogin = async () => {
-  const accessToken = localStorage.getItem("access_token");
+export const requestCheckProfile = async () => {
+  const accessToken = localStorage.getItem("accessToken");
   if (!accessToken) return null;
   try {
     const response = await axios.get(`/user/profile`, {
@@ -15,7 +15,7 @@ export const requestChekLogin = async () => {
     return response;
   } catch (error) {
     console.error("유저 정보 조회 실패:", error);
-    if (accessToken) localStorage.removeItem("access_token");
+    // if (accessToken) localStorage.removeItem("accessToken");
     return null;
   }
 };
@@ -28,14 +28,15 @@ export const requestLogin = async (data) => {
 
     const { accessToken, refreshToken } = response.data;
 
-    localStorage.setItem("access_token", accessToken);
+    localStorage.setItem("accessToken", accessToken);
     if (refreshToken) {
-      localStorage.setItem("refresh_token", refreshToken);
+      localStorage.setItem("refreshToken", refreshToken);
     }
 
     return response;
   } catch (error) {
     console.error("로그인 실패:", error);
+    return "로그인 실패";
   }
 };
 
@@ -46,8 +47,8 @@ export const requestLoginNaver = async ({ data }) => {
     const response = await axios.post(`/auth/logiNnaver`, data);
     // console.log('로그인 성공:', response.data);
 
-    const { access_token } = response.data;
-    localStorage.setItem("access_token", access_token);
+    const { accessToken } = response.data;
+    localStorage.setItem("accessToken", accessToken);
 
     return response;
   } catch (error) {
@@ -62,8 +63,8 @@ export const requestLoginGoogle = async ({ data }) => {
     const response = await axios.post(`/auth/loginGoogle`, data);
     // console.log('로그인 성공:', response.data);
 
-    const { access_token } = response.data;
-    localStorage.setItem("access_token", access_token);
+    const { accessToken } = response.data;
+    localStorage.setItem("accessToken", accessToken);
 
     return response;
   } catch (error) {
@@ -73,23 +74,24 @@ export const requestLoginGoogle = async ({ data }) => {
 
 //로그아웃==========================================================
 export const requestLogout = async () => {
-  const accessToken = localStorage.getItem("access_token");
-  localStorage.removeItem("access_token");
+  const accessToken = localStorage.getItem("accessToken");
+  console.log("🚀 ~ requestLogout ~ accessToken:", accessToken);
   try {
     const response = await axios.post(
       `/auth/logout`,
       {},
       {
         headers: { Authorization: `Bearer ${accessToken}` },
-        // withCredentials: true,
       }
     );
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
     return response;
   } catch (error) {
     console.error("유저 로그아웃 실패", error);
-    if (accessToken) {
-      localStorage.removeItem("access_token");
-    }
+
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
   }
 };
 //이메일 인증코드 보내기 ========================================
@@ -115,28 +117,36 @@ export const verifyEmailCode = async (data) => {
   }
 };
 
-//닉네임 중복 확인
+//닉네임 중복 확인 =============================================
 export const requestNicknameCheck = async (data) => {
-  // data = { nickName };
   try {
-    const response = await axios.post(`/user/nicknamecheck`, data);
-    // console.log('이미 존재하는 닉네임입니다. 다른 닉네임을 입력해주세요.', response.data);
-    // console.log('사용가능한 닉네입니다.', response.data);
+    const response = await axios.post(`/auth/check-nickname`, { name: data });
+
     return response.data.message;
   } catch (error) {
     console.error("중복확인 실패", error);
-    return "네트워크 에러 중복확인 실패";
+    if (error.status === 409) {
+      return "This nickname cannot be used";
+    } else {
+      return "네트워크 에러 중복확인 실패";
+    }
   }
 };
-//회원가입
-export const requestSignup = async ({ data }) => {
-  //data = { email, nickName, password, roll: "user" }
+//회원가입 ===================================================
+export const requestSignup = async (data) => {
   try {
     const response = await axios.post(`/auth/signup1`, data);
-    // console.log('회원가입 성공:', response.data);
+
+    const { accessToken, refreshToken } = response.data;
+
+    localStorage.setItem("accessToken", accessToken);
+    if (refreshToken) {
+      localStorage.setItem("refreshToken", refreshToken);
+    }
     return response;
   } catch (error) {
     console.error("회원가입 실패:", error);
+    alert(`${error.response.data.message}`);
   }
 };
 

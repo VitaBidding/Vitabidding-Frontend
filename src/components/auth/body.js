@@ -25,7 +25,7 @@ const AuthForm = () => {
 
   const [codeError, setCodeError] = useState("");
   const [verificationCode, setVerificationCode] = useState("");
-  console.log("🚀 ~ AuthForm ~ verificationCode:", verificationCode);
+
   const [isVerified, setIsVerified] = useState(false);
   const [isEmailEditable, setIsEmailEditable] = useState(true);
   const [isVerificationComplete, setIsVerificationComplete] = useState(false);
@@ -62,6 +62,7 @@ const AuthForm = () => {
     setRepeatPassword("");
     setPasswordError("");
     setRepeatPasswordError("");
+    setSuccessMessage("");
   };
 
   const validateEmail = (email) => {
@@ -143,15 +144,16 @@ const AuthForm = () => {
       setNickNameError("닉네임 형식이 올바르지 않습니다.");
       return;
     }
-
     try {
       const message = await requestNicknameCheck(nickName);
+
       if (message === "사용 가능한 닉네임입니다.") {
         setIsNicknameValid(true);
+        setNickNameError(message);
       } else {
         setIsNicknameValid(false);
+        setNickNameError(message);
       }
-      setNickNameError(message);
     } catch (error) {
       setNickNameError("중복 확인 중 오류가 발생했습니다.");
       setIsNicknameValid(false);
@@ -167,6 +169,7 @@ const AuthForm = () => {
   const handlePasswordChange = (e) => {
     const newPassword = e.target.value;
     setPassword(newPassword);
+
     if (!validatePassword(newPassword)) {
       setPasswordError(
         "비밀번호는 8자 이상이며, 영문, 숫자, 특수문자를 포함해야 합니다."
@@ -202,7 +205,12 @@ const AuthForm = () => {
       requestLogin({ email, password });
     } else if (mode === "signup") {
       if (isSignupFormValid()) {
-        requestSignup({ email, nickName, password, roll: "user" });
+        requestSignup({
+          email: email,
+          name: nickName,
+          password: password,
+          role: "user",
+        });
       } else {
         // 에러 메시지 표시 또는 다른 처리
         console.log("회원가입 폼이 유효하지 않습니다.");
@@ -339,7 +347,13 @@ const AuthForm = () => {
                   중복 확인
                 </DuplicateButton>
               </InputBlockFlex1>
-              <ErrorSection isError={!!nickNameError}>
+              <ErrorSection
+                isError={
+                  !!nickNameError &&
+                  nickNameError !== "사용 가능한 닉네임입니다."
+                }
+                isSuccess={nickNameError === "사용 가능한 닉네임입니다."}
+              >
                 {nickNameError ||
                   (nickName &&
                     !validateNickname(nickName) &&

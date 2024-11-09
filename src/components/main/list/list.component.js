@@ -10,11 +10,52 @@ import {
 } from "../../../redux/features/search/search.slice";
 import { getItemData } from "../../../lib/request";
 import { useDispatch } from "react-redux";
+import vitaBiddingLogoBlack from "../../../assets/img/vitaBiddingLogoBlack.png";
+
+import doucument1 from "../../../assets/img/321.png";
+import doucument2 from "../../../assets/img/123.png";
 
 function ListComponent(props) {
   const searchOn = useSelector(selectsearch);
 
-  const [cardData, setcardData] = useState([]);
+  const [cardData, setcardData] = useState([
+    {
+      id: 1,
+      thumbnail: vitaBiddingLogoBlack,
+      name: "비타비딩로고",
+      start_day: "시작날짜",
+      start_time: "시작시간",
+      Creator: { nick_name: "비타비딩" },
+      price: "10000",
+    },
+    {
+      id: 2,
+      thumbnail: doucument1,
+      name: "아무거나",
+      start_day: "시작날짜",
+      start_time: "시작시간",
+      Creator: { nick_name: "비타비딩" },
+      price: "10000",
+    },
+    {
+      id: 3,
+      thumbnail: doucument2,
+      name: "아무거나",
+      start_day: "시작날짜",
+      start_time: "시작시간",
+      Creator: { nick_name: "비타비딩" },
+      price: "10000",
+    },
+    {
+      id: 4,
+      thumbnail: doucument2,
+      name: "아무거나",
+      start_day: "시작날짜",
+      start_time: "시작시간",
+      Creator: { nick_name: "비타비딩" },
+      price: "10003230",
+    },
+  ]);
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [cardsPerPage, setcardsPerPage] = useState(8);
@@ -100,6 +141,9 @@ function ListComponent(props) {
     window.scrollTo(0, 0);
   };
 
+  function formatPrice(price) {
+    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
   return (
     <Wrapper ref={componentRef}>
       {isLoading ? (
@@ -132,7 +176,7 @@ function ListComponent(props) {
                 <CreatorNicname>{card.Creator.nick_name}</CreatorNicname>
                 <Row>
                   <PriceComment>경매 시작가</PriceComment>{" "}
-                  <Price>{card.price}</Price>
+                  <Price>{formatPrice(card.price)}</Price>
                   <PriceUnit> 포인트</PriceUnit>
                 </Row>
               </Card>
@@ -211,18 +255,21 @@ const ImgSection = styled.div`
   border-radius: 10px;
   width: 280px;
   height: 260px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   &:hover {
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* 그림자 스타일 설정 */
     cursor: pointer;
   }
-  overflow: hidden;
 `;
 const ProductImage = styled.img`
   /* border: 1px solid red; */
 
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   margin: 0px;
   transition: transform 0.3s ease;
   &:hover {
@@ -241,11 +288,12 @@ const Title = styled.h1`
   text-overflow: ellipsis;
   width: 280px;
   height: 20px;
-  font-size: 14px;
+  font-size: 16px;
   margin: 5px 0 0 0;
 
-  font-family: "NotoSansKR-Bold";
-  color: black;
+  font-family: "GmarketSansTTFMedium";
+  font-weight: bold;
+  color: #1a1a1a;
 `;
 
 const DateSection = styled.div`
@@ -258,6 +306,7 @@ const DateSection = styled.div`
   font-size: 12px;
   margin: 0 0 0 0;
   font-family: "GmarketSansTTFMedium";
+  color: #6d6d6d;
 `;
 const Startday = styled.div`
   margin: 0 0 0 0;
@@ -273,11 +322,11 @@ const PriceComment = styled.div`
   /* border: 1px solid red; */
   display: flex;
   align-items: center;
-  color: gray;
+  color: #6d6d6d;
   font-size: 16px;
   height: 20px;
   font-weight: 500;
-  margin: 0 10px 0 0;
+  margin: 0 5px 0 0;
   font-family: "GmarketSansTTFMedium";
   white-space: nowrap;
   overflow: hidden;
@@ -287,11 +336,11 @@ const PriceUnit = styled.div`
   /* border: 1px solid red; */
   display: flex;
   align-items: center;
-  color: gray;
+  color: #1a1a1a;
   font-size: 16px;
   height: 20px;
-  font-weight: 500;
-  margin: 0 0 0 5px;
+  font-weight: bold;
+  margin: 0 0 0 1px;
   font-family: "GmarketSansTTFMedium";
   white-space: nowrap;
   overflow: hidden;
@@ -301,10 +350,10 @@ const Price = styled.div`
   /* border: 1px solid red; */
   display: flex;
   align-items: center;
-  color: black;
-  font-size: 16px;
+  color: #1a1a1a;
+  font-size: 18px;
   height: 20px;
-  font-weight: bolder;
+  font-weight: bold;
   margin: 0 0 0 0;
   font-family: "GmarketSansTTFMedium";
   white-space: nowrap;
@@ -316,7 +365,7 @@ const CreatorNicname = styled.div`
   /* border: 1px solid red; */
   display: flex;
   align-items: center;
-  color: black;
+  color: #1a1a1a;
   height: 20px;
   margin: 0 0 0 0;
   font-family: "GmarketSansTTFMedium";
