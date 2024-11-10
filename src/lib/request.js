@@ -36,7 +36,7 @@ export const requestLogin = async (data) => {
     return response;
   } catch (error) {
     console.error("로그인 실패:", error);
-    return "로그인 실패";
+    return error.response.data.message;
   }
 };
 

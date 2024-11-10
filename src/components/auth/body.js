@@ -15,6 +15,8 @@ import { Button } from "react-bootstrap";
 
 const AuthForm = () => {
   const [mode, setMode] = useState("signin");
+  const [signinError, setSigninError] = useState("");
+
   const [email, setEmail] = useState("");
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [emailError, setEmailError] = useState("");
@@ -63,6 +65,7 @@ const AuthForm = () => {
     setPasswordError("");
     setRepeatPasswordError("");
     setSuccessMessage("");
+    setSigninError("");
   };
 
   const validateEmail = (email) => {
@@ -199,25 +202,28 @@ const AuthForm = () => {
     );
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setSigninError(""); // Clear previous error messages
+
     if (mode === "signin") {
-      requestLogin({ email, password });
+      const message = await requestLogin({ email, password });
+      setSigninError(message);
+
+      // Handle successful login (e.g., redirect to dashboard)
     } else if (mode === "signup") {
       if (isSignupFormValid()) {
-        requestSignup({
+        await requestSignup({
           email: email,
           name: nickName,
           password: password,
           role: "user",
         });
+        // Handle successful signup (e.g., show success message or redirect)
       } else {
-        // 에러 메시지 표시 또는 다른 처리
-        console.log("회원가입 폼이 유효하지 않습니다.");
       }
     }
   };
-
   return (
     <Container>
       <Links mode={mode}>
@@ -261,6 +267,7 @@ const AuthForm = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </InputBlock>
+            {signinError && <ErrorSection isError>{signinError}</ErrorSection>}
             <SigninButton onClick={handleSubmit}>로그인</SigninButton>
           </>
         )}
