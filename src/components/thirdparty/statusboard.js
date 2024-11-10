@@ -81,31 +81,81 @@ const Row = styled.div`
 const ItemName = styled.div`
   color: #000;
   font-family: "SBAggroB";
-  text-shadow: -5px -5px 0 #fff, 5px -5px 0 #fff, -5px 5px 0 #fff,
-    5px 5px 0 #fff; /* 검은색 외곽선 효과 */
-  font-size: 36pt;
+
+  @media only screen and (max-width: 280px) {
+    text-shadow: -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff,
+      2px 2px 0 #fff; /* 검은색 외곽선 효과 */
+    font-size: 1rem;
+  }
+  @media only screen and (min-width: 280px) {
+    text-shadow: -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff,
+      2px 2px 0 #fff; /* 검은색 외곽선 효과 */
+    font-size: 1rem;
+  }
+  @media only screen and (min-width: 600px) {
+    text-shadow: -5px -5px 0 #fff, 5px -5px 0 #fff, -5px 5px 0 #fff,
+      5px 5px 0 #fff; /* 검은색 외곽선 효과 */
+    font-size: 36pt;
+  }
 `;
 
 const BidUser = styled.div`
   color: #efb73e;
   font-family: "SBAggroB";
-  text-shadow: -5px -5px 0 #000, 5px -5px 0 #000, -5px 5px 0 #000,
-    5px 5px 0 #000; /* 검은색 외곽선 효과 */
-  font-size: 36pt;
+
+  @media only screen and (max-width: 280px) {
+    text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000,
+      2px 2px 0 #000; /* 검은색 외곽선 효과 */
+    font-size: 1rem;
+  }
+  @media only screen and (min-width: 280px) {
+    text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000,
+      2px 2px 0 #000; /* 검은색 외곽선 효과 */
+    font-size: 1rem;
+  }
+  @media only screen and (min-width: 600px) {
+    text-shadow: -5px -5px 0 #000, 5px -5px 0 #000, -5px 5px 0 #000,
+      5px 5px 0 #000; /* 검은색 외곽선 효과 */
+    font-size: 36pt;
+  }
 `;
 
 const BidPoint = styled.div`
   color: #fd9800;
   font-family: "SBAggroB";
-  text-shadow: -5px -5px 0 #000, 5px -5px 0 #000, -5px 5px 0 #000,
-    5px 5px 0 #000; /* 검은색 외곽선 효과 */
-  font-size: 36pt;
+  @media only screen and (max-width: 280px) {
+    text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000,
+      2px 2px 0 #000; /* 검은색 외곽선 효과 */
+    font-size: 1rem;
+  }
+  @media only screen and (min-width: 280px) {
+    text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000,
+      2px 2px 0 #000; /* 검은색 외곽선 효과 */
+    font-size: 1rem;
+  }
+  @media only screen and (min-width: 600px) {
+    text-shadow: -5px -5px 0 #000, 5px -5px 0 #000, -5px 5px 0 #000,
+      5px 5px 0 #000; /* 검은색 외곽선 효과 */
+    font-size: 36pt;
+  }
 `;
 
 const BidComent = styled.div`
   color: #fff;
   font-family: "yg-jalnan";
-  text-shadow: -5px -5px 0 #000, 5px -5px 0 #000, -5px 5px 0 #000,
-    5px 5px 0 #000; /* 검은색 외곽선 효과 */
-  font-size: 32pt;
+  @media only screen and (max-width: 280px) {
+    text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000,
+      2px 2px 0 #000; /* 검은색 외곽선 효과 */
+    font-size: 0.8rem;
+  }
+  @media only screen and (min-width: 280px) {
+    text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000,
+      2px 2px 0 #000; /* 검은색 외곽선 효과 */
+    font-size: 0.8rem;
+  }
+  @media only screen and (min-width: 600px) {
+    text-shadow: -5px -5px 0 #000, 5px -5px 0 #000, -5px 5px 0 #000,
+      5px 5px 0 #000; /* 검은색 외곽선 효과 */
+    font-size: 32pt;
+  }
 `;

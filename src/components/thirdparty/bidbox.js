@@ -48,17 +48,28 @@ const Seciton1 = styled.div`
   justify-content: center;
 `;
 const MotionImage = styled.img`
-  width: 600px;
   height: 100%;
+  @media only screen and (max-width: 280px) {
+    width: 100%;
+  }
+  @media only screen and (min-width: 280px) {
+    width: 100%;
+  }
+  @media only screen and (min-width: 360px) {
+  }
+  @media only screen and (min-width: 420px) {
+  }
+  @media only screen and (min-width: 600px) {
+    width: 600px;
+  }
 `;
 
 const BidInfo = styled.div`
-  background-color: transparent;
+  grid-row: 3 / 4;
   display: flex;
   flex-direction: column;
   align-items: center;
   font-family: "LOTTERIACHAB";
-  grid-row: 3 / 4;
 `;
 const Row = styled.div`
   display: flex;
@@ -67,23 +78,72 @@ const Row = styled.div`
 const BidUser = styled.div`
   color: #efb73e;
   font-family: "LOTTERIACHAB";
-  text-shadow: -3px -3px 0 #000, 3px -3px 0 #000, -3px 3px 0 #000,
-    3px 3px 0 #000; /* 검은색 외곽선 효과 */
-  font-size: 30pt;
+  @media only screen and (max-width: 280px) {
+    font-size: 1.5rem;
+    text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000,
+      2px 2px 0 #000; /* 검은색 외곽선 효과 */
+  }
+  @media only screen and (min-width: 280px) {
+    text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000,
+      2px 2px 0 #000; /* 검은색 외곽선 효과 */
+    font-size: 1.5rem;
+  }
+  @media only screen and (min-width: 360px) {
+  }
+  @media only screen and (min-width: 420px) {
+  }
+  @media only screen and (min-width: 600px) {
+    font-size: 2.5rem;
+    text-shadow: -3px -3px 0 #000, 3px -3px 0 #000, -3px 3px 0 #000,
+      3px 3px 0 #000; /* 검은색 외곽선 효과 */
+  }
 `;
 
 const BidPoint = styled.div`
   color: #fd9800;
   font-family: "LOTTERIACHAB";
-  text-shadow: -3px -3px 0 #000, 3px -3px 0 #000, -3px 3px 0 #000,
-    3px 3px 0 #000; /* 검은색 외곽선 효과 */
-  font-size: 30pt;
+
+  @media only screen and (max-width: 280px) {
+    font-size: 1.5rem;
+    text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000,
+      2px 2px 0 #000; /* 검은색 외곽선 효과 */
+  }
+  @media only screen and (min-width: 280px) {
+    text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000,
+      2px 2px 0 #000; /* 검은색 외곽선 효과 */
+    font-size: 1.5rem;
+  }
+  @media only screen and (min-width: 360px) {
+  }
+  @media only screen and (min-width: 420px) {
+  }
+  @media only screen and (min-width: 600px) {
+    font-size: 2.5rem;
+    text-shadow: -3px -3px 0 #000, 3px -3px 0 #000, -3px 3px 0 #000,
+      3px 3px 0 #000; /* 검은색 외곽선 효과 */
+  }
 `;
 
 const BidComent = styled.div`
   color: #fff;
   font-family: "LOTTERIACHAB";
-  text-shadow: -3px -3px 0 #000, 3px -3px 0 #000, -3px 3px 0 #000,
-    3px 3px 0 #000; /* 검은색 외곽선 효과 */
-  font-size: 30pt;
+  @media only screen and (max-width: 280px) {
+    font-size: 1.5rem;
+    text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000,
+      2px 2px 0 #000; /* 검은색 외곽선 효과 */
+  }
+  @media only screen and (min-width: 280px) {
+    text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000,
+      2px 2px 0 #000; /* 검은색 외곽선 효과 */
+    font-size: 1.5rem;
+  }
+  @media only screen and (min-width: 360px) {
+  }
+  @media only screen and (min-width: 420px) {
+  }
+  @media only screen and (min-width: 600px) {
+    font-size: 2.5rem;
+    text-shadow: -3px -3px 0 #000, 3px -3px 0 #000, -3px 3px 0 #000,
+      3px 3px 0 #000; /* 검은색 외곽선 효과 */
+  }
 `;

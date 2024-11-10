@@ -61,38 +61,89 @@ const TimerContainer = styled.div`
 `;
 
 const Minutes = styled.div`
-  width: 100px;
   color: #000;
   font-family: "yg-jalnan";
-  text-shadow: -5px -5px 0 #fff, 5px -5px 0 #fff, -5px 5px 0 #fff,
-    5px 5px 0 #fff; /* 검은색 외곽선 효과 */
-  font-size: 60pt;
+  @media only screen and (max-width: 280px) {
+    text-shadow: -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff,
+      2px 2px 0 #fff; /* 검은색 외곽선 효과 */
+    font-size: 3rem;
+  }
+  @media only screen and (min-width: 280px) {
+    text-shadow: -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff,
+      2px 2px 0 #fff; /* 검은색 외곽선 효과 */
+    font-size: 3rem;
+  }
+  @media only screen and (min-width: 600px) {
+    width: 100px;
+    text-shadow: -5px -5px 0 #fff, 5px -5px 0 #fff, -5px 5px 0 #fff,
+      5px 5px 0 #fff; /* 검은색 외곽선 효과 */
+    font-size: 60pt;
+  }
 `;
 
 const Seconds = styled.div`
-  width: ${(props) => (props.isWarning ? "150px" : "100px")};
   color: #fd9800;
   font-family: "yg-jalnan";
-  text-shadow: -5px -5px 0 #000, 5px -5px 0 #000, -5px 5px 0 #000,
-    5px 5px 0 #000; /* 검은색 외곽선 효과 */
-  font-size: ${(props) => (props.isWarning ? "100pt" : "60pt")};
+
+  @media only screen and (max-width: 280px) {
+    text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000,
+      2px 2px 0 #000; /* 검은색 외곽선 효과 */
+    font-size: ${(props) => (props.isWarning ? "3.5rem" : "3rem")};
+  }
+  @media only screen and (min-width: 280px) {
+    text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000,
+      2px 2px 0 #000; /* 검은색 외곽선 효과 */
+    font-size: ${(props) => (props.isWarning ? "3.5rem" : "3rem")};
+  }
+  @media only screen and (min-width: 600px) {
+    width: ${(props) => (props.isWarning ? "150px" : "100px")};
+    text-shadow: -5px -5px 0 #000, 5px -5px 0 #000, -5px 5px 0 #000,
+      5px 5px 0 #000; /* 검은색 외곽선 효과 */
+    font-size: ${(props) => (props.isWarning ? "100pt" : "60pt")};
+  }
 `;
 
 const Milliseconds = styled.div`
-  width: ${(props) => (props.isWarning ? "150px" : "100px")};
   color: #efb73e;
   font-family: "yg-jalnan";
-  text-shadow: -5px -5px 0 #000, 5px -5px 0 #000, -5px 5px 0 #000,
-    5px 5px 0 #000; /* 검은색 외곽선 효과 */
-  font-size: ${(props) => (props.isWarning ? "100pt" : "60pt")};
+
+  @media only screen and (max-width: 280px) {
+    text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000,
+      2px 2px 0 #000; /* 검은색 외곽선 효과 */
+    font-size: ${(props) => (props.isWarning ? "3.5rem" : "3rem")};
+  }
+  @media only screen and (min-width: 280px) {
+    text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000,
+      2px 2px 0 #000; /* 검은색 외곽선 효과 */
+    font-size: ${(props) => (props.isWarning ? "3.5rem" : "3rem")};
+  }
+  @media only screen and (min-width: 600px) {
+    width: ${(props) => (props.isWarning ? "150px" : "100px")};
+    text-shadow: -5px -5px 0 #000, 5px -5px 0 #000, -5px 5px 0 #000,
+      5px 5px 0 #000; /* 검은색 외곽선 효과 */
+    font-size: ${(props) => (props.isWarning ? "100pt" : "60pt")};
+  }
 `;
 
 // For colon or text like "분", "초"
 const Label = styled.div`
-  width: ${(props) => (props.isWarning ? "160px" : "120px")};
   color: #fff;
   font-family: "yg-jalnan";
-  text-shadow: -5px -5px 0 #000, 5px -5px 0 #000, -5px 5px 0 #000,
-    5px 5px 0 #000; /* 검은색 외곽선 효과 */
-  font-size: ${(props) => (props.isWarning ? "70pt" : "50pt")};
+
+  @media only screen and (max-width: 280px) {
+    text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000,
+      2px 2px 0 #000; /* 검은색 외곽선 효과 */
+    font-size: ${(props) => (props.isWarning ? "3rem" : "2rem")};
+  }
+  @media only screen and (min-width: 280px) {
+    text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000,
+      2px 2px 0 #000; /* 검은색 외곽선 효과 */
+    font-size: ${(props) => (props.isWarning ? "3rem" : "2rem")};
+  }
+  @media only screen and (min-width: 600px) {
+    width: ${(props) => (props.isWarning ? "160px" : "120px")};
+    text-shadow: -5px -5px 0 #000, 5px -5px 0 #000, -5px 5px 0 #000,
+      5px 5px 0 #000; /* 검은색 외곽선 효과 */
+    font-size: ${(props) => (props.isWarning ? "70pt" : "50pt")};
+  }
 `;

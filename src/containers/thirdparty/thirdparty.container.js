@@ -14,8 +14,8 @@ function ThirdpartyContainer({ roomName }) {
   const audioRef1 = useRef(new Audio(EndSound));
   const audioTimeoutRef1 = useRef(null);
   // 상태 관리
-  const [showStatusboard, setShowStatusboard] = useState(false);
-  const [showBid, setShowBid] = useState(true);
+  const [showStatusboard, setShowStatusboard] = useState(true);
+  const [showBid, setShowBid] = useState(false);
   const [showEndComponent, setShowEndComponent] = useState(false);
   const [EndComment, setEndComment] = useState(false);
   const [socket, setSocket] = useState(null);
