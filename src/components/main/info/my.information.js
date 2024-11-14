@@ -5,6 +5,7 @@ import {
   selectreal_name,
   selectNickName,
   selectlogin_type,
+  selectEmail,
   selectphone,
   selectFuAddress,
 } from "../../../redux/features/user/user.slice";
@@ -31,7 +32,7 @@ function MyInformation(props) {
 
   const real_name = useSelector(selectreal_name);
   const nickname = useSelector(selectNickName);
-  const login_type = useSelector(selectlogin_type);
+  const email = useSelector(selectEmail);
   const phone = useSelector(selectphone);
   const address = useSelector(selectFuAddress);
 
@@ -64,7 +65,7 @@ function MyInformation(props) {
           <tr>
             <td className="column">이메일</td>
             <td className="info">
-              <InfoValue>{login_type}</InfoValue>
+              <InfoValue>{email}</InfoValue>
             </td>
           </tr>
           <tr>
