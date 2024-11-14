@@ -89,9 +89,21 @@ function Userinfo(props) {
     }
   }, [sec]);
 
-  function CertificationBotton() {
-    const data = Certification(userPhone, CertificationNumber);
-    setCertificationSuccess(data);
+  async function CertificationBotton() {
+    try {
+      const data = await Certification(userPhone, CertificationNumber);
+
+      if (data === "인증완료") {
+        setCertificationSuccess(true);
+      } else {
+        // 인증 실패 처리
+        // console.log("인증 실패:", data);
+        alert(`${data}`);
+      }
+    } catch (error) {
+      // console.error("인증 과정에서 오류 발생:", error);
+      alert(`${error}`);
+    }
   }
 
   const open = useDaumPostcodePopup(
@@ -386,7 +398,7 @@ function Userinfo(props) {
             !userNameError &&
             CertificationSuccess &&
             AddressError &&
-            !buttonColor
+            buttonColor
           )
         }
       >

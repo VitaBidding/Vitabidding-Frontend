@@ -208,19 +208,29 @@ const AuthForm = () => {
 
     if (mode === "signin") {
       const message = await requestLogin({ email, password });
-      setSigninError(message);
+
+      if (message === "success") {
+        window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}`;
+      } else {
+        setSigninError(message);
+      }
 
       // Handle successful login (e.g., redirect to dashboard)
     } else if (mode === "signup") {
       if (isSignupFormValid()) {
-        await requestSignup({
+        const message = await requestSignup({
           email: email,
           name: nickName,
           password: password,
           role: "user",
         });
+
+        if (message === "success") {
+          window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}/additionalinformation`;
+        } else {
+          alert(`${message}`);
+        }
         // Handle successful signup (e.g., show success message or redirect)
-      } else {
       }
     }
   };
@@ -267,7 +277,7 @@ const AuthForm = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </InputBlock>
-            {signinError && <ErrorSection isError>{signinError}</ErrorSection>}
+            {signinError && <ErrorSection $isError>{signinError}</ErrorSection>}
             <SigninButton onClick={handleSubmit}>로그인</SigninButton>
           </>
         )}
@@ -295,13 +305,13 @@ const AuthForm = () => {
                 </DuplicateButton>
               </InputBlockFlex1>
               {email && !isEmailValid && (
-                <ErrorSection isError>
+                <ErrorSection $isError>
                   올바른 이메일 형식이 아닙니다.
                 </ErrorSection>
               )}
               <ErrorSection
-                isError={emailError !== "인증 메일이 발송되었습니다."}
-                isSuccess={emailError === "인증 메일이 발송되었습니다."}
+                $isError={emailError !== "인증 메일이 발송되었습니다."}
+                $isSuccess={emailError === "인증 메일이 발송되었습니다."}
               >
                 {emailError}
               </ErrorSection>
@@ -325,17 +335,17 @@ const AuthForm = () => {
                   </DuplicateButton>
                 </InputBlockFlex1>
                 {!isVerified && (
-                  <ErrorSection isError>
+                  <ErrorSection $isError>
                     6자리 숫자를 입력해주세요.
                   </ErrorSection>
                 )}
                 <ErrorSection
                   isError={codeError !== "이메일 인증이 완료되었습니다."}
-                  isSuccess={codeError === "이메일 인증이 완료되었습니다."}
+                  $isSuccess={codeError === "이메일 인증이 완료되었습니다."}
                 >
                   {codeError}
                 </ErrorSection>
-                <ErrorSection isSuccess>{successMessage}</ErrorSection>
+                <ErrorSection $isSuccess>{successMessage}</ErrorSection>
               </Col>
             )}
             <Col>
@@ -355,11 +365,11 @@ const AuthForm = () => {
                 </DuplicateButton>
               </InputBlockFlex1>
               <ErrorSection
-                isError={
+                $isError={
                   !!nickNameError &&
                   nickNameError !== "사용 가능한 닉네임입니다."
                 }
-                isSuccess={nickNameError === "사용 가능한 닉네임입니다."}
+                $isSuccess={nickNameError === "사용 가능한 닉네임입니다."}
               >
                 {nickNameError ||
                   (nickName &&
@@ -376,7 +386,7 @@ const AuthForm = () => {
                   onChange={handlePasswordChange}
                 />
               </InputBlockFlex2>
-              <ErrorSection isError={!!passwordError}>
+              <ErrorSection $isError={!!passwordError}>
                 {passwordError}
               </ErrorSection>
             </Col>
@@ -389,7 +399,7 @@ const AuthForm = () => {
                   onChange={handleRepeatPasswordChange}
                 />
               </InputBlockFlex2>
-              <ErrorSection isError={!!repeatPasswordError}>
+              <ErrorSection $isError={!!repeatPasswordError}>
                 {repeatPasswordError}
               </ErrorSection>
             </Col>
@@ -588,7 +598,7 @@ const ErrorSection = styled.div`
   width: 90%;
   font-size: 9pt;
   color: ${(props) =>
-    props.isSuccess ? "green" : props.isError ? "red" : "gray"};
+    props.$isSuccess ? "green" : props.$isError ? "red" : "gray"};
 `;
 
 const SigninButton = styled.button`

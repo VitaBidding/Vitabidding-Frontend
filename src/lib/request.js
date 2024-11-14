@@ -2,12 +2,12 @@ import axios from "axios";
 
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = process.env.REACT_APP_VITE_SERVER_URL;
-//로그인체크
+//로그인체크===========================================================
 export const requestCheckProfile = async () => {
   const accessToken = localStorage.getItem("accessToken");
   if (!accessToken) return null;
   try {
-    const response = await axios.get(`/user/profile`, {
+    const response = await axios.get(`/auth/profile`, {
       headers: { Authorization: `Bearer ${accessToken}` },
       // withCredentials: true,
     });
@@ -33,7 +33,7 @@ export const requestLogin = async (data) => {
       localStorage.setItem("refreshToken", refreshToken);
     }
 
-    return response;
+    return "success";
   } catch (error) {
     console.error("로그인 실패:", error);
     return error.response.data.message;
@@ -75,7 +75,7 @@ export const requestLoginGoogle = async ({ data }) => {
 //로그아웃==========================================================
 export const requestLogout = async () => {
   const accessToken = localStorage.getItem("accessToken");
-  console.log("🚀 ~ requestLogout ~ accessToken:", accessToken);
+  // console.log("🚀 ~ requestLogout ~ accessToken:", accessToken);
   try {
     const response = await axios.post(
       `/auth/logout`,
@@ -124,9 +124,9 @@ export const requestNicknameCheck = async (data) => {
 
     return response.data.message;
   } catch (error) {
-    console.error("중복확인 실패", error);
+    // console.error("중복확인 실패", error);
     if (error.status === 409) {
-      return "This nickname cannot be used";
+      return "이미 사용중인 닉네임 입니다";
     } else {
       return "네트워크 에러 중복확인 실패";
     }
@@ -143,14 +143,15 @@ export const requestSignup = async (data) => {
     if (refreshToken) {
       localStorage.setItem("refreshToken", refreshToken);
     }
-    return response;
+    return "success";
   } catch (error) {
-    console.error("회원가입 실패:", error);
-    alert(`${error.response.data.message}`);
+    // console.error("회원가입 실패:", error);
+
+    return error.response.data.message;
   }
 };
 
-//회원추가정보(핸드폰,주소)
+//회원추가정보(이름,핸드폰,주소) ===============================================
 export const requestUserProfile = async (
   userName,
   userPhone,
@@ -159,12 +160,12 @@ export const requestUserProfile = async (
   ExAddress,
   DeAddress
 ) => {
-  if (DeAddress === "") {
-    DeAddress = null;
-  }
   try {
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) return null;
+
     await axios
-      .get(
+      .post(
         `/auth/signup2`,
         {
           realName: userName,
@@ -180,66 +181,80 @@ export const requestUserProfile = async (
             personalInformationV: true,
           },
         },
-        { withCredentials: true }
+        {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        }
       )
       .then(() => {
-        window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}/creator/widget`;
+        window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}`;
       });
   } catch (error) {
-    window.location.href = process.env.REACT_APP_MAIN_CLIENT_URL;
-    console.error("회원추가정보(핸드폰,주소) 등록 실패", error);
+    // console.error("회원추가정보(핸드폰,주소) 등록 실패", error);
+    if (error.data.message === "이미 추가 정보가 등록되어 있습니다.") {
+      window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}`;
+    } else {
+      alert("회원추가정보(이름,핸드폰,주소) 등록 실패");
+    }
   }
 };
-//핸드폰번호 입력
+//핸드폰번호 입력===================================================
 export const EnterPhoneNumber = async (userPhone) => {
   try {
-    await axios.post(
-      `/sms/send`,
-      { phoneNumber: userPhone },
-      { withCredentials: true }
-    );
+    await axios.post(`/auth/send-phone-code`, { phoneNumber: userPhone });
   } catch (error) {
     console.error("핸드폰 번호 전송 실패:", error);
+    alert("핸드폰 번호 전송 실패:");
   }
 };
-//핸드폰 인증
+//핸드폰 인증=============================================================
 export const Certification = async (userPhone, CertificationNumber) => {
-  await axios
-    .post(
-      `/sms/verify`,
-      {
-        phoneNumber: userPhone,
-        verifyCode: CertificationNumber,
-      },
-      { withCredentials: true }
-    )
-    .then((req) => {
-      if (req.data.message === "본인인증 성공") {
-        return true;
-      } else {
-      }
-    })
-    .catch((error) => console.log(error));
+  try {
+    const res = await axios.post(`/auth/verify-phone-code`, {
+      phoneNumber: userPhone,
+      code: CertificationNumber,
+    });
+
+    if (res.data.message === "Phone number verified successfully") {
+      return "인증완료";
+    } else {
+      return "잘못된 인증 번호 입니다";
+    }
+  } catch (error) {
+    console.log(error);
+    return "잘못된 인증 번호 입니다";
+  }
 };
 
-//회원정보 edit
+//회원정보 edit=======================================================
 export const EditNickname = async (userNickname) => {
+  const accessToken = localStorage.getItem("accessToken");
+  if (!accessToken) return null;
   await axios
-    .patch(
-      `/edit/nickname`,
-      { nick_name: userNickname },
-      { withCredentials: true }
+    .put(
+      `/auth/profile`,
+      { name: userNickname },
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      }
     )
     .catch((err) => {
       console.error(err);
+      alert(`${err.response.data.message}`);
     });
 };
 
 export const EditPhoneNumber = async (userPhone) => {
+  const accessToken = localStorage.getItem("accessToken");
+  if (!accessToken) return null;
   await axios
-    .patch(`/edit/phone`, { phone: userPhone }, { withCredentials: true })
+    .put(
+      `/auth/profile`,
+      { phone: userPhone },
+      { headers: { Authorization: `Bearer ${accessToken}` } }
+    )
     .catch((err) => {
       console.error(err);
+      alert(`${err.response.data.message}`);
     });
 };
 
@@ -249,63 +264,48 @@ export const EditAddress = async (
   ExAddress,
   DeAddress
 ) => {
+  const accessToken = localStorage.getItem("accessToken");
+  if (!accessToken) return null;
   axios
-    .patch(
-      `/edit/address`,
+    .put(
+      `/auth/profile`,
       {
-        Zonecode: Zonecode,
-        FuAddress: FuAddress,
-        ExAddress: ExAddress,
-        DeAddress: DeAddress,
+        address: {
+          zipCode: Zonecode,
+          streetAddress1: FuAddress,
+          state: ExAddress,
+          streetAddress2: DeAddress,
+        },
       },
-      { withCredentials: true }
+      { headers: { Authorization: `Bearer ${accessToken}` } }
     )
     .catch((err) => {
       console.error(err);
+      alert(`${err.response.data.message}`);
     });
 };
 
-//회원 탈퇴
+//회원 탈퇴 ========================================================
 
 export const requestWithdrawal = async () => {
+  const accessToken = localStorage.getItem("accessToken");
+  if (!accessToken) return null;
   await axios
-    .delete(`/auth/delete`, {
-      withCredentials: true,
+    .delete(`/auth/delete-account`, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+      // withCredentials: true,
     })
     .then((res) => {
-      if (res.data.message === "회원탈퇴 성공") {
+      console.log("🚀 ~ .then ~ res:", res);
+      if (res.data.message === "회원 탈퇴가 완료되었습니다.") {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
         window.location.href = process.env.REACT_APP_MAIN_CLIENT_URL;
       }
     })
     .catch((err) => {
       console.error(err);
     });
-};
-
-//이용약관,개인정보 수집 및 동의 (뷰어)
-export const onclickURLAgreedV = async (checkItems) => {
-  const usage_policy = checkItems.includes("usage_policy");
-  const personal_information = checkItems.includes("personal_information");
-  try {
-    await axios
-      .get(
-        `/viewer/agreement`,
-        {
-          usage_policy: usage_policy,
-          personal_information: personal_information,
-        },
-        { withCredentials: true }
-      )
-      .then((req) => {
-        if (req.data.code === 1005) {
-          window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}/info`;
-        } else if (req.data.code === 3005) {
-          window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}`;
-        }
-      });
-  } catch (error) {
-    console.error("이용약관,개인정보 수집 및 동의 실패:", error);
-  }
 };
 
 //이용약관,개인정보 수집 및 동의 (크리에이터)

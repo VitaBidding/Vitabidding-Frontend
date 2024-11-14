@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import NonLogin from "../../components/header/non.login";
 import LoginVIcon from "../../components/header/login.v";
-
+import { useCheckProfile } from "../../lib/useCheckProfile";
 export default function LoginContainer() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -16,6 +16,11 @@ export default function LoginContainer() {
     checkAuthStatus();
   }, []);
 
+  const checkProfile = useCheckProfile();
+
+  useEffect(() => {
+    checkProfile();
+  }, []);
   return (
     <SearchSection>
       {isAuthenticated ? (
