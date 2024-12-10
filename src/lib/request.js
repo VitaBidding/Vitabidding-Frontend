@@ -310,17 +310,19 @@ export const requestWithdrawal = async () => {
 
 //이용약관,개인정보 수집 및 동의 (크리에이터)
 export const onclickURLAgreedC = async (checkItems) => {
+  const accessToken = localStorage.getItem("accessToken");
+  if (!accessToken) return null;
   const usage_policy = checkItems.includes("usage_policy");
   const personal_information = checkItems.includes("personal_information");
   try {
     await axios
-      .get(
-        `/creator/agreement`,
+      .post(
+        `/auth/convert-to-business`,
         {
-          usage_policy: usage_policy,
-          personal_information: personal_information,
+          usagePolicyC: usage_policy,
+          personalInformationC: personal_information,
         },
-        { withCredentials: true }
+        { headers: { Authorization: `Bearer ${accessToken}` } }
       )
       .then((req) => {
         if (req.data.code === 1005) {
