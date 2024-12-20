@@ -23,6 +23,7 @@ function ListComponent(props) {
 
   const [show, setShow] = useState(false);
   const [upproduct, setupproduct] = useState({});
+
   const handleClose = () => {
     seteffect(effect + 1);
     setShow(false);

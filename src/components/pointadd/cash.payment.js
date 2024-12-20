@@ -1,9 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-function CashPayment({ cashPayment, depositorName, view_fk_phone }) {
-  const paymentUrl = `${process.env.REACT_APP_MAIN_CLIENT_URL}/pointadd/acconttransfer`;
-
+function CashPayment({ cashPayment, depositorName, view_fk_phone, onCharge }) {
   const formattedValue =
     cashPayment !== null && cashPayment !== undefined
       ? cashPayment.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
@@ -19,17 +17,17 @@ function CashPayment({ cashPayment, depositorName, view_fk_phone }) {
       </CashPaymentSection>
       <CommetSection>*결제 금액에는 세금이 포함되어 있습니다.</CommetSection>
       <ButtonSection>
-        <PaymentLink
-          href={isDisabled ? "#" : paymentUrl}
+        <PaymentButton
           disabled={isDisabled}
           onClick={(e) => {
-            if (isDisabled) {
-              e.preventDefault();
+            e.preventDefault();
+            if (!isDisabled) {
+              onCharge();
             }
           }}
         >
           구매하기
-        </PaymentLink>
+        </PaymentButton>
       </ButtonSection>
     </Wrapper>
   );
@@ -77,7 +75,7 @@ const ButtonSection = styled.div`
   justify-content: center;
 `;
 
-const PaymentLink = styled.a`
+const PaymentButton = styled.button`
   display: inline-block;
   width: 100%;
   height: 50px;

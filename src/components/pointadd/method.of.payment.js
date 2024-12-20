@@ -7,10 +7,11 @@ function MethodOfPayment({
   view_fk_phone,
   setview_fk_phone,
 }) {
-  const [isInputActive1, setIsInputActive1] = useState(false); // 입력 상태 관리
-  const [isInputActive2, setIsInputActive2] = useState(false); // 입력 상태 관리
+  const [isInputActive1, setIsInputActive1] = useState(false);
+  const [isInputActive2, setIsInputActive2] = useState(false);
+
   function onChange(e) {
-    const value = e.target.value.replace(/[^0-9]/g, ""); // 숫자가 아닌 문자는 제거
+    const value = e.target.value.replace(/[^0-9]/g, "");
     setview_fk_phone(value);
   }
 
@@ -21,23 +22,23 @@ function MethodOfPayment({
         <Select>계좌 이체</Select>
         <ContentSection>
           <Label>입금자명</Label>
-          <InputBox isActive={isInputActive1}>
+          <InputBox $isActive={isInputActive1}>
             <Inputcontents
               value={depositorName}
               placeholder="홍길동"
               onChange={(e) => setdepositorName(e.target.value)}
-              onFocus={() => setIsInputActive1(true)} // 포커스 시 활성화
-              onBlur={() => setIsInputActive1(false)} // 포커스 해제 시 비활성화
+              onFocus={() => setIsInputActive1(true)}
+              onBlur={() => setIsInputActive1(false)}
             />
           </InputBox>
           <Label>문자 받을 전화번호</Label>
-          <InputBox isActive={isInputActive2}>
+          <InputBox $isActive={isInputActive2}>
             <Inputcontents
               value={view_fk_phone}
               placeholder="01099991234"
               onChange={(e) => onChange(e)}
-              onFocus={() => setIsInputActive2(true)} // 포커스 시 활성화
-              onBlur={() => setIsInputActive2(false)} // 포커스 해제 시 비활성화
+              onFocus={() => setIsInputActive2(true)}
+              onBlur={() => setIsInputActive2(false)}
             />
           </InputBox>
         </ContentSection>
@@ -93,7 +94,7 @@ const Label = styled.div`
   justify-content: start;
 `;
 const InputBox = styled.div`
-  border: 2px solid ${(props) => (props.isActive ? "#fd9800" : "lightgray")}; // 포커스 시 색상 변경
+  border: 2px solid ${(props) => (props.$isActive ? "#fd9800" : "lightgray")};
   width: 100%;
   display: flex;
   flex-direction: row;

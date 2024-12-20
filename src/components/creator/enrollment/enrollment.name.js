@@ -3,13 +3,13 @@ import styled from "styled-components";
 function EnrollmentName({ item, handleInputChange }) {
   return (
     <NameSection>
-      <Namelabel htmlFor="item_name">제품이름</Namelabel>
+      <Namelabel htmlFor="name">제품이름</Namelabel>
       <Namecontent>
         <NameInput
           type="text"
-          id="item_name"
-          name="item_name"
-          value={item.item_name}
+          id="name"
+          name="name"
+          value={item.name}
           onChange={handleInputChange}
           placeholder="제품명을 입력하세요"
         />

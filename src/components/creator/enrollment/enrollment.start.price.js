@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { AiOutlineClose } from "react-icons/ai";
+
 function EnrollmentStartPrice({ item, setItem }) {
-  const [isInputActive, setIsInputActive] = useState(false); // 입력 상태 관리
+  const [isFocused, setIsFocused] = useState(false);
   const addCommas = (value) => {
     const stringValue = String(value);
     const parts = stringValue.split(".");
@@ -11,54 +12,56 @@ function EnrollmentStartPrice({ item, setItem }) {
   };
 
   function resetpoint() {
-    setItem((prevItem) => ({ ...prevItem, starting_price: 0 }));
+    setItem((prevItem) => ({ ...prevItem, price: 0 }));
   }
 
   const handlepriceChange = (event) => {
     const rawValue = event.target.value;
     const numericValue = rawValue.replace(/\D/g, ""); // 숫자 이외의 문자 제거
-    setItem((prevItem) => ({ ...prevItem, starting_price: numericValue }));
+    setItem((prevItem) => ({ ...prevItem, price: numericValue }));
   };
   function AddOneThousandPoint() {
     setItem((prevItem) => ({
       ...prevItem,
-      starting_price: (parseInt(prevItem.starting_price) || 0) + 1000,
+      price: (parseInt(prevItem.price) || 0) + 1000,
     }));
   }
 
   function AddTenThousandPoint() {
     setItem((prevItem) => ({
       ...prevItem,
-      starting_price: (parseInt(prevItem.starting_price) || 0) + 10000,
+      price: (parseInt(prevItem.price) || 0) + 10000,
     }));
   }
 
   function AddFiftyThousandPoint() {
     setItem((prevItem) => ({
       ...prevItem,
-      starting_price: (parseInt(prevItem.starting_price) || 0) + 50000,
+      price: (parseInt(prevItem.price) || 0) + 50000,
     }));
   }
 
   function AddOneHundredThousandPoint() {
     setItem((prevItem) => ({
       ...prevItem,
-      starting_price: (parseInt(prevItem.starting_price) || 0) + 100000,
+      price: (parseInt(prevItem.price) || 0) + 100000,
     }));
   }
-  const formattedValue = addCommas(item.starting_price);
+  const formattedValue = addCommas(item.price);
   return (
     <PriceSection>
-      <Pricelabel htmlFor="starting_price">경매 시작 금액</Pricelabel>
+      <Pricelabel htmlFor="price">경매 시작 금액</Pricelabel>
       <PriceContents>
-        <InputBox isActive={isInputActive}>
+        <InputBox $isFocused={isFocused}>
           <Inputcontents
             type="text"
-            id="starting_price"
-            name="starting_price"
+            id="price"
+            name="price"
             value={formattedValue}
             onChange={handlepriceChange}
             placeholder="숫자만 입력하세요"
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
           />
           <UnitSection>
             <IconSection onClick={() => resetpoint()}>
@@ -85,7 +88,6 @@ function EnrollmentStartPrice({ item, setItem }) {
     </PriceSection>
   );
 }
-
 export default EnrollmentStartPrice;
 
 //시작가격
@@ -161,7 +163,7 @@ const PriceContents = styled.div`
 `;
 
 const InputBox = styled.div`
-  border: 2px solid ${(props) => (props.isActive ? "#fd9800" : "lightgray")}; // 포커스 시 색상 변경
+  border: 2px solid ${(props) => (props.$isFocused ? "#fd9800" : "lightgray")};
   width: 100%;
   display: flex;
   flex-direction: row;

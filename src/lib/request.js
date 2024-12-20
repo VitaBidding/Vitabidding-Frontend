@@ -296,7 +296,6 @@ export const requestWithdrawal = async () => {
       // withCredentials: true,
     })
     .then((res) => {
-      console.log("🚀 ~ .then ~ res:", res);
       if (res.data.message === "회원 탈퇴가 완료되었습니다.") {
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
@@ -308,31 +307,81 @@ export const requestWithdrawal = async () => {
     });
 };
 
-//이용약관,개인정보 수집 및 동의 (크리에이터)
+//이용약관,개인정보 수집 및 동의 (크리에이터) =======================================
 export const onclickURLAgreedC = async (checkItems) => {
   const accessToken = localStorage.getItem("accessToken");
-  if (!accessToken) return null;
+  if (!accessToken) {
+    window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}`;
+    return;
+  }
+
   const usage_policy = checkItems.includes("usage_policy");
   const personal_information = checkItems.includes("personal_information");
+
   try {
-    await axios
-      .post(
-        `/auth/convert-to-business`,
-        {
-          usagePolicyC: usage_policy,
-          personalInformationC: personal_information,
-        },
-        { headers: { Authorization: `Bearer ${accessToken}` } }
-      )
-      .then((req) => {
-        if (req.data.code === 1005) {
-          window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}/creator`;
-        } else if (req.data.code === 3005) {
-          window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}`;
-        }
-      });
+    const response = await axios.post(
+      `/auth/convert-to-business`,
+      {
+        usagePolicyC: usage_policy,
+        personalInformationC: personal_information,
+      },
+      { headers: { Authorization: `Bearer ${accessToken}` } }
+    );
+
+    // 성공적으로 사업자 계정으로 전환된 경우
+    if (response.status === 201) {
+      window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}/creator`;
+      return;
+    }
+
+    // 예상치 못한 응답 상태 처리
+    console.error("예상치 못한 응답:", response);
+    alert("예상치 못한 오류가 발생했습니다. 다시 시도해 주세요.");
   } catch (error) {
-    console.error("이용약관,개인정보 수집 및 동의 실패(크리에이터):", error);
+    if (error.response) {
+      // 서버가 응답을 반환한 경우
+      if (
+        error.response.status === 400 &&
+        error.response.data.domain === "agreement"
+      ) {
+        // 이미 사업자 계정으로 전환된 경우
+        window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}/creator`;
+        return;
+      }
+      // 다른 종류의 에러 처리
+      console.error("서버 에러:", error.response.data);
+      alert(`오류가 발생했습니다: ${error.response.data.message}`);
+    } else if (error.request) {
+      // 요청이 전송되었지만 응답을 받지 못한 경우
+      console.error("응답 없음:", error.request);
+      alert(
+        "서버로부터 응답을 받지 못했습니다. 네트워크 연결을 확인해 주세요."
+      );
+    } else {
+      // 요청 설정 중 오류가 발생한 경우
+      console.error("요청 오류:", error.message);
+      alert("요청 중 오류가 발생했습니다. 다시 시도해 주세요.");
+    }
+  }
+};
+//이용약관,개인정보 수집 및 동의 (크리에이터) 체크 ===================================
+export const checkBusinessStatus = async () => {
+  const accessToken = localStorage.getItem("accessToken");
+  if (!accessToken) {
+    throw new Error("No access token");
+  }
+
+  try {
+    const response = await axios.get("/auth/business-status", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("사업자 상태 확인 중 오류 발생:", error);
+    throw error;
   }
 };
 
@@ -346,19 +395,6 @@ export const Channelurl = async (data) => {
     return response;
   } catch (error) {
     console.error("방송 LIVE URL 등록 실패", error);
-  }
-};
-
-// 경매위젯, 경매장주소, 등록된 live url 받아오기
-export const Loadwidget = async () => {
-  try {
-    const response = await axios.get(`/creator/studio`, {
-      withCredentials: true,
-    }); // 서버의 API 엔드포인트에 맞게 설정
-    return response;
-  } catch (error) {
-    console.error("경매위젯주소 불러오기 실패", error);
-    return;
   }
 };
 
@@ -394,87 +430,105 @@ export const Accountregistration = async ({
   }
 };
 //---------------------물건 crud-----------------------------
-//물건등록
+//물건등록 =================================================================
 
-export const EnrollmentItem = async (Data) => {
+export const EnrollmentItem = async (formData) => {
+  const accessToken = localStorage.getItem("accessToken");
+  if (!accessToken) {
+    window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}`;
+    return;
+  }
+
   try {
-    await axios.get(`/creator/products/new`, Data, {
-      withCredentials: true,
+    const result = await axios.post(`business/products`, formData, {
+      headers: { Authorization: `Bearer ${accessToken}` },
     }); // 서버의 API 엔드포인트에 맞게 설정
-    return true;
+
+    return result;
   } catch (error) {
     console.error("물건등록 실패", error);
-    return false;
+    return;
   }
 };
 
-//시간체크
+//시간체크 ===============================================
 
 export const TimeCheck = async () => {
   try {
-    const res = axios.get(`/auth/timechk`, {
-      withCredentials: true,
-    });
-    return res;
+    const res = await axios.get(`/auth/server-time`);
+    return res.data; // 서버로부터 받은 데이터만 반환
   } catch (error) {
     console.error("시간불러오기 실패", error);
     return false;
   }
 };
 
-// 물건 조회
-
+// 물건 조회 =============================================
 export const fetchProducts = async () => {
+  const accessToken = localStorage.getItem("accessToken");
+  if (!accessToken) {
+    window.location.href = `${process.env.REACT_APP_MAIN_CLIENT_URL}`;
+    return;
+  }
+
   try {
-    const response = await axios.get(
-      `${process.env.REACT_APP_SERVER_URL}/creator/products`,
-      {
-        withCredentials: true,
-      }
-    ); // 서버의 API 엔드포인트에 맞게 설정
-    return response;
+    const result = await axios.get(`/business/products/my-products`, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    }); // 서버의 API 엔드포인트에 맞게 설정
+
+    return result.data;
   } catch (error) {
-    console.error(error);
-    return false;
+    console.error("물건등록 실패", error);
+    return;
   }
 };
 
 // 물건 수정
 export const EditItem = async (Data) => {
+  const accessToken = localStorage.getItem("accessToken");
+  if (!accessToken) {
+    return;
+  }
   try {
-    await axios.get(`/creator/products/edit`, Data, {
-      withCredentials: true,
+    const result = await axios.put(`/business/products`, Data, {
+      headers: { Authorization: `Bearer ${accessToken}` },
     }); // 서버의 API 엔드포인트에 맞게 설정
-    return true;
+    return result;
   } catch (error) {
     console.error("물건 수정 실패", error);
-    return false;
+    return;
   }
 };
 
 //물건삭제
 export const DeleteItem = async (id) => {
+  const accessToken = localStorage.getItem("accessToken");
+  if (!accessToken) {
+    return;
+  }
   try {
-    await axios.get(
-      `/creator/products/remove`,
-      { item_id: id },
-      { withCredentials: true }
+    const result = await axios.delete(
+      `/business/products`,
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      },
+      { productId: id }
     ); // 서버의 API 엔드포인트에 맞게 설정
-    return true;
+    return result;
   } catch (error) {
     console.error("물건 삭제 실패", error);
     return false;
   }
 };
 
-//물건 전체 검색 조회
+//물건 전체 검색 조회 ========================================
 
 export const getItemData = async () => {
   try {
-    const response = await axios.get(`/products`, {
+    const response = await axios.get(`/business/products`, {
       withCredentials: true,
     });
-    return response.data.result;
+    return response.data;
   } catch (error) {
     console.error("전체 물건 조회 실패", error);
     throw error; // 에러를 던져서 상위 함수에서 처리할 수 있게 함
@@ -569,5 +623,55 @@ export const auctioncompleteapi = async ({ el }) => {
   } catch (error) {
     console.error("거래완료 아이템 불러오기 실패", error);
     throw error; // 에러를 던져서 상위 함수에서 처리할 수 있게 함
+  }
+};
+
+// ==========================point 관련 api ================================
+
+// 사용자 포인트 조회=============================================
+export const getUserPointBalance = async () => {
+  const accessToken = localStorage.getItem("accessToken");
+  if (!accessToken) return null;
+
+  try {
+    const response = await axios.get("/point/balance", {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("포인트 조회 실패:", error);
+    return null;
+  }
+};
+
+// 사용자 기본 정보 요청=========================================
+export const getUserInfo = async () => {
+  const accessToken = localStorage.getItem("accessToken");
+  if (!accessToken) return null;
+
+  try {
+    const response = await axios.get("/point/user-info", {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("사용자 정보 조회 실패:", error);
+    return null;
+  }
+};
+
+// 포인트 충전 요청=========================================
+export const requestPointCharge = async (data) => {
+  const accessToken = localStorage.getItem("accessToken");
+  if (!accessToken) return null;
+
+  try {
+    const response = await axios.post("/point/request", data, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("포인트 충전 요청 실패:", error);
+    return null;
   }
 };

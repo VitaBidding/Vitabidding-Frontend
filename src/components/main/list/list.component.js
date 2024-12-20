@@ -10,52 +10,14 @@ import {
 } from "../../../redux/features/search/search.slice";
 import { getItemData } from "../../../lib/request";
 import { useDispatch } from "react-redux";
-import vitaBiddingLogoBlack from "../../../assets/img/vitaBiddingLogoBlack.png";
 
-import doucument1 from "../../../assets/img/321.png";
-import doucument2 from "../../../assets/img/123.png";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 function ListComponent(props) {
   const searchOn = useSelector(selectsearch);
 
-  const [cardData, setcardData] = useState([
-    {
-      id: 1,
-      thumbnail: vitaBiddingLogoBlack,
-      name: "비타비딩로고",
-      start_day: "시작날짜",
-      start_time: "시작시간",
-      Creator: { nick_name: "비타비딩" },
-      price: "10000",
-    },
-    {
-      id: 2,
-      thumbnail: doucument1,
-      name: "아무거나",
-      start_day: "시작날짜",
-      start_time: "시작시간",
-      Creator: { nick_name: "비타비딩" },
-      price: "10000",
-    },
-    {
-      id: 3,
-      thumbnail: doucument2,
-      name: "아무거나",
-      start_day: "시작날짜",
-      start_time: "시작시간",
-      Creator: { nick_name: "비타비딩" },
-      price: "10000",
-    },
-    {
-      id: 4,
-      thumbnail: doucument2,
-      name: "아무거나",
-      start_day: "시작날짜",
-      start_time: "시작시간",
-      Creator: { nick_name: "비타비딩" },
-      price: "10003230",
-    },
-  ]);
+  const [cardData, setcardData] = useState([]);
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [cardsPerPage, setcardsPerPage] = useState(8);
@@ -72,14 +34,14 @@ function ListComponent(props) {
   const filterAndSortData = (data) => {
     const filteredData = data.filter(
       (item) =>
-        item.item_name.includes(searchOn) ||
+        item.name.includes(searchOn) ||
         item.category.includes(searchOn) ||
-        item.Creator.nick_name.includes(searchOn)
+        item.seller.name.includes(searchOn)
     );
 
     const sortedData = filteredData.sort((a, b) => {
-      const dateA = new Date(`${a.start_day}T${a.start_time}`);
-      const dateB = new Date(`${b.start_day}T${b.start_time}`);
+      const dateA = new Date(`${a.startDay}T${a.startTime}`);
+      const dateB = new Date(`${b.startDay}T${b.startTime}`);
       return dateA - dateB;
     });
 
@@ -133,7 +95,7 @@ function ListComponent(props) {
 
   const navigate = useNavigate();
   const DetailPage = (e) => {
-    navigate(`/auction/${e.id}`, { state: e });
+    navigate(`/auction/${e.seller.id}`, { state: e });
   };
 
   const handlePageChange = (page) => {
@@ -164,16 +126,16 @@ function ListComponent(props) {
             {currentCards.map((card) => (
               <Card key={card.id} onClick={() => DetailPage(card)}>
                 <ImgSection>
-                  <ProductImage src={card.thumbnail} alt="Product" />
+                  <ProductImage src={card.images[0].imageUrl} alt="Product" />
                 </ImgSection>
                 <TitleSection>
                   <Title>{card.name}</Title>
                 </TitleSection>
                 <DateSection>
-                  <Startday>{card.start_day}</Startday>
-                  <StartTime>{card.start_time}</StartTime>
+                  <Startday>{card.startDay}</Startday>
+                  <StartTime>{card.startTime}</StartTime>
                 </DateSection>
-                <CreatorNicname>{card.Creator.nick_name}</CreatorNicname>
+                <CreatorNicname>{card.seller.name}</CreatorNicname>
                 <Row>
                   <PriceComment>경매 시작가</PriceComment>{" "}
                   <Price>{formatPrice(card.price)}</Price>

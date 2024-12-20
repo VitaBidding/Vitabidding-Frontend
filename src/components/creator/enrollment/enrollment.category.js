@@ -25,7 +25,7 @@ function EnrollmentCategory({ item, handleInputChange }) {
           name="category"
           value={item.category}
           onChange={handleInputChange}
-          isDefault={item.category === ""}
+          $isDefault={item.category === ""}
         >
           <Option value="" disabled hidden>
             카테고리를 선택하세요
@@ -125,7 +125,7 @@ const Select = styled.select`
   margin: 0;
   text-align: center;
 
-  color: ${({ isDefault }) => (isDefault ? "gray" : "#000")};
+  color: ${({ $isDefault }) => ($isDefault ? "gray" : "#000")};
   border: none;
   border-radius: 10px;
   font-weight: bold;

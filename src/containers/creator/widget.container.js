@@ -2,11 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import WidgetComponent from "../../components/creator/widget/widget.component";
 import HowToComponent from "../../components/creator/widget/how.to.component";
-function WidgetContainer(props) {
+function WidgetContainer({ studio }) {
   return (
     <Wrapper>
       <Section1>
-        <WidgetComponent />
+        <WidgetComponent studio={studio} />
       </Section1>
       <Section2>
         <HowToComponent />

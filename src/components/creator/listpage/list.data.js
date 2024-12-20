@@ -44,7 +44,7 @@ function ListData({ products, handleShow, ThandleShow, setupproduct }) {
             <ADatatr key={product.id}>
               <Asection>
                 <Updatetd>
-                  {product.item_status === "경매대기" ? (
+                  {product.status === "경매대기" ? (
                     <UpButton
                       variant="secondary"
                       onClick={() => updateClick(product)}
@@ -54,7 +54,7 @@ function ListData({ products, handleShow, ThandleShow, setupproduct }) {
                   ) : (
                     <div></div>
                   )}
-                  {product.item_status === "결제완료" ? (
+                  {product.status === "결제완료" ? (
                     <InButton
                       variant="info"
                       onClick={() => inputTrackingClick()}
@@ -65,11 +65,17 @@ function ListData({ products, handleShow, ThandleShow, setupproduct }) {
                     <div></div>
                   )}
                 </Updatetd>
-                <Nametd>{product.item_name}</Nametd>
+                <Nametd>{product.name}</Nametd>
                 <AThumbnailtd>
-                  <ImageA src={product.thumbnail} alt="썸네일" />
+                  <ImageA
+                    src={
+                      product.images?.[0]?.imageUrl ??
+                      "https://via.placeholder.com/250x250"
+                    }
+                    alt="썸네일"
+                  />
                 </AThumbnailtd>
-                <AItemstatustd>{product.item_status}</AItemstatustd>
+                <AItemstatustd>{product.status}</AItemstatustd>
               </Asection>
             </ADatatr>
           ))}
@@ -100,20 +106,26 @@ function ListData({ products, handleShow, ThandleShow, setupproduct }) {
               <BDatatr key={product.id}>
                 <BsectionData>
                   <BThumbnailtd>
-                    <ImageB src={product.thumbnail} alt="썸네일" />
+                    <ImageB
+                      src={
+                        product.images?.[0]?.imageUrl ??
+                        "https://via.placeholder.com/250x250"
+                      }
+                      alt="썸네일"
+                    />
                   </BThumbnailtd>
-                  <BItemstatustd>{product.item_status}</BItemstatustd>
+                  <BItemstatustd>{product.status}</BItemstatustd>
                   <Waybilltd>
                     <Deliverycompany>
                       {product.delivery_company}
                     </Deliverycompany>
                     <TrackingNumber>{product.trackingNumber}</TrackingNumber>
                   </Waybilltd>
-                  <StartDatetd>{product.start_day}</StartDatetd>
-                  <StartTimetd>{product.start_time}</StartTimetd>
-                  <Descriptiontd>{product.detailed_description}</Descriptiontd>
+                  <StartDatetd>{product.startDay}</StartDatetd>
+                  <StartTimetd>{product.startTime}</StartTimetd>
+                  <Descriptiontd>{product.description}</Descriptiontd>
                   <Categorytd>{product.category}</Categorytd>
-                  <Pricetd>{product.starting_price}</Pricetd>
+                  <Pricetd>{product.price}</Pricetd>
                   <Bidpricetd>{product.bid_price}</Bidpricetd>
                   <Vnamenicktd>{product.view_fk_nickname}</Vnamenicktd>
                   <Vnametd>{product.view_fk_name}</Vnametd>

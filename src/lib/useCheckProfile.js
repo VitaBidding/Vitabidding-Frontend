@@ -17,7 +17,6 @@ export const useCheckProfile = () => {
   const checkProfile = async () => {
     try {
       const res = await requestCheckProfile();
-      console.log("🚀 ~ checkProfile ~ res:", res.data);
 
       if (res.data.message === "사용자 정보 조회 성공") {
         dispatch(real_name(res.data.user.realName));

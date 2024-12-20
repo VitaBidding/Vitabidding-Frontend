@@ -1,17 +1,18 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { AiOutlineClose } from "react-icons/ai";
+
 function PointPurchaseAmount({ purchasePoint, setpurchasePoint }) {
-  const [isInputActive, setIsInputActive] = useState(false); // 입력 상태 관리
+  const [isInputActive, setIsInputActive] = useState(false);
 
   function onChange(e) {
-    const value = e.target.value.replace(/[^0-9]/g, ""); // 숫자가 아닌 문자는 제거
+    const value = e.target.value.replace(/[^0-9]/g, "");
     setpurchasePoint(value);
   }
 
   const formattedValue =
-    purchasePoint !== null && purchasePoint !== undefined //0일경우 생략
-      ? purchasePoint.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") // 세 자리마다 쉼표 추가
+    purchasePoint !== null && purchasePoint !== undefined
+      ? purchasePoint.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
       : "";
 
   function resetpoint() {
@@ -29,15 +30,16 @@ function PointPurchaseAmount({ purchasePoint, setpurchasePoint }) {
   function AddFiftyThousandPoint() {
     setpurchasePoint((prev) => (parseInt(prev) || 0) + 50000);
   }
+
   return (
     <Wrapper>
       <Title>구매 금액</Title>
-      <InputBox isActive={isInputActive}>
+      <InputBox $isActive={isInputActive}>
         <Inputcontents
           value={formattedValue}
           onChange={(e) => onChange(e)}
-          onFocus={() => setIsInputActive(true)} // 포커스 시 활성화
-          onBlur={() => setIsInputActive(false)} // 포커스 해제 시 비활성화
+          onFocus={() => setIsInputActive(true)}
+          onBlur={() => setIsInputActive(false)}
         />
         <UnitSection>
           <IconSection onClick={() => resetpoint()}>
@@ -65,7 +67,6 @@ function PointPurchaseAmount({ purchasePoint, setpurchasePoint }) {
 export default PointPurchaseAmount;
 
 const Wrapper = styled.div`
-  /* border: 1px solid red; */
   width: 100%;
   height: 100%;
   display: flex;
@@ -85,7 +86,7 @@ const Title = styled.div`
 `;
 
 const InputBox = styled.div`
-  border: 2px solid ${(props) => (props.isActive ? "#fd9800" : "lightgray")}; // 포커스 시 색상 변경
+  border: 2px solid ${(props) => (props.$isActive ? "#fd9800" : "lightgray")};
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -112,6 +113,7 @@ const Inputcontents = styled.input`
     width: 250px;
   }
 `;
+
 const UnitSection = styled.div`
   display: flex;
   justify-content: center;
@@ -129,6 +131,7 @@ const IconSection = styled.div`
     cursor: pointer;
   }
 `;
+
 const IconReset = styled(AiOutlineClose)`
   margin: 0;
   padding: 0;
@@ -152,6 +155,7 @@ const AddSection = styled.div`
   font-family: "TheJamsil5Bold";
   color: #495057;
 `;
+
 const AddButton = styled.div`
   border: 1px solid lightgray;
   display: flex;
@@ -159,7 +163,6 @@ const AddButton = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 8px;
-
   background-color: #f8f9fa;
   &:hover {
     cursor: pointer;

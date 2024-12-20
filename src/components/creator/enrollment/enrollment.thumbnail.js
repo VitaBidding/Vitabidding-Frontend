@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { BsCamera } from "react-icons/bs";
-function EnrollmentThumbnail({ item, setItem }) {
-  const [Thumbnail, setThumbnail] = useState(null);
-  const handleThumbnailChange = (event) => {
-    const imageFile = event.target.files[0];
 
-    if (imageFile) {
-      // FileReader로 이미지 읽기
+function EnrollmentThumbnail({ item, setItem }) {
+  const [thumbnails, setThumbnails] = useState([]);
+
+  const handleThumbnailChange = (event) => {
+    const imageFiles = Array.from(event.target.files);
+
+    imageFiles.forEach((imageFile, index) => {
       const reader = new FileReader();
       reader.onloadend = () => {
         const img = new Image();
@@ -16,7 +17,6 @@ function EnrollmentThumbnail({ item, setItem }) {
           const canvas = document.createElement("canvas");
           const ctx = canvas.getContext("2d");
 
-          // 이미지 크기 조정 (예: 600px 고정 너비)
           const maxWidth = 600;
           const scale = maxWidth / img.width;
           canvas.width = maxWidth;
@@ -24,40 +24,38 @@ function EnrollmentThumbnail({ item, setItem }) {
 
           ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-          // canvas에서 PNG로 변환
-          canvas.toBlob(
-            (blob) => {
-              // PNG 형식의 blob 생성
-              const pngFile = new File(
-                [blob],
-                imageFile.name.replace(/\.\w+$/, ".png"),
+          canvas.toBlob((blob) => {
+            const pngFile = new File([blob], `image${index + 1}.png`, {
+              type: "image/png",
+            });
+
+            const newThumbnail = {
+              file: pngFile,
+              preview: URL.createObjectURL(pngFile),
+            };
+
+            setThumbnails((prevThumbnails) => [
+              ...prevThumbnails,
+              newThumbnail,
+            ]);
+            setItem((prevItem) => ({
+              ...prevItem,
+              images: [
+                ...prevItem.images,
                 {
-                  type: "image/png",
-                }
-              );
-
-              // PNG 파일을 FormData에 추가
-              const formData = new FormData();
-              formData.append("thumbnail", pngFile);
-
-              // 미리보기 업데이트
-              const readerForPreview = new FileReader();
-              readerForPreview.onloadend = () => {
-                setThumbnail(readerForPreview.result);
-              };
-              readerForPreview.readAsDataURL(pngFile);
-
-              // setItem 호출 (업데이트된 PNG 파일 전송)
-              setItem((prevItem) => ({ ...prevItem, thumbnail: formData }));
-            },
-            "image/png" // 파일 형식을 PNG로 지정
-          );
+                  file: pngFile,
+                  imageUrl: `image${index + 1}.png`,
+                  isThumbnail: index === 0,
+                },
+              ],
+            }));
+          }, "image/png");
         };
       };
-
       reader.readAsDataURL(imageFile);
-    }
+    });
   };
+
   return (
     <ThumbnailSection>
       <Thumbnailcontents>
@@ -67,8 +65,9 @@ function EnrollmentThumbnail({ item, setItem }) {
           name="thumbnail"
           accept="image/jpeg,image/png"
           onChange={handleThumbnailChange}
+          multiple
         />
-        {!item.thumbnail && (
+        {thumbnails.length === 0 && (
           <Thumbnaillabelno htmlFor="thumbnail">
             <BsCamera
               style={{ width: "100px", height: "100px", color: "#fd9800" }}
@@ -76,12 +75,16 @@ function EnrollmentThumbnail({ item, setItem }) {
             No Image
           </Thumbnaillabelno>
         )}
-        {item.thumbnail && (
-          <Thumbnaillabelfor htmlFor="thumbnail">
-            <ThumbnailWrapper>
-              <Thumbnailimg src={Thumbnail} alt="썸네일" />
-            </ThumbnailWrapper>
-          </Thumbnaillabelfor>
+        {thumbnails.length > 0 && (
+          <ThumbnailWrapper>
+            {thumbnails.map((thumbnail, index) => (
+              <Thumbnailimg
+                key={index}
+                src={thumbnail.preview}
+                alt={`썸네일 ${index + 1}`}
+              />
+            ))}
+          </ThumbnailWrapper>
         )}
       </Thumbnailcontents>
     </ThumbnailSection>

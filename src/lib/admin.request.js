@@ -2,7 +2,7 @@ import axios from "axios";
 
 // 기본 axios 인스턴스 생성 (필요시 API 기본 URL 설정 가능)
 const apiClient = axios.create({
-  baseURL: "https://your-server.com/api", // 서버 기본 URL
+  baseURL: process.env.REACT_APP_VITE_SERVER_URL, // 서버 기본 URL
   timeout: 10000, // 요청 타임아웃 설정
 });
 
@@ -53,17 +53,6 @@ export const fetchProducts = async () => {
   }
 };
 
-export const fetchPoint = async () => {
-  try {
-    const response = await apiClient.get("/point");
-    return response.data;
-  } catch (error) {
-    console.error("포인트 정보를 가져오는 중 오류가 발생했습니다:", error);
-    throw error;
-  }
-};
-
-
 // 에러 로그 가져오기
 export const fetchErrorLogs = async () => {
   try {
@@ -97,5 +86,49 @@ export const fetchSalesAndTraffic = async () => {
       error
     );
     throw error;
+  }
+};
+
+// 모든 충전 요청 조회 (관리자용)
+export const getAllPointRequests = async () => {
+  try {
+    const response = await axios.get("/point/requests");
+    return response.data;
+  } catch (error) {
+    console.error("충전 요청 조회 실패:", error);
+    return null;
+  }
+};
+
+// 특정 상태의 충전 요청 조회 (관리자용)
+export const getPointRequestsByStatus = async (status) => {
+  try {
+    const response = await axios.get(`/point/requests?status=${status}`);
+    return response.data;
+  } catch (error) {
+    console.error(`${status} 상태의 충전 요청 조회 실패:`, error);
+    return null;
+  }
+};
+
+// 특정 사용자의 충전 요청 조회 (관리자용)
+export const getPointRequestsByUserId = async (userId) => {
+  try {
+    const response = await axios.get(`/point/requests?userId=${userId}`);
+    return response.data;
+  } catch (error) {
+    console.error("사용자별 충전 요청 조회 실패:", error);
+    return null;
+  }
+};
+
+// 충전 요청 승인 또는 거절 (관리자용)
+export const approveOrRejectPointRequest = async (requestId, data) => {
+  try {
+    const response = await axios.post(`/point/approve/${requestId}`, data);
+    return response.data;
+  } catch (error) {
+    console.error("충전 요청 승인/거절 실패:", error);
+    return null;
   }
 };

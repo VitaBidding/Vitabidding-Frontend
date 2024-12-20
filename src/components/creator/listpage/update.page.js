@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import styled from "styled-components";
 import DatePicker from "react-datepicker";
@@ -10,6 +10,7 @@ import { EditItem, DeleteItem } from "../../../lib/request";
 import "../../../assets/bootstrap/react-datepicker.fd9800.css";
 
 const Updatepage = ({ upproduct, UphandleClose }) => {
+  console.log("🚀 ~ Updatepage ~ upproduct:", upproduct);
   const categories = [
     "전자기기",
     "공구용품",
@@ -25,16 +26,21 @@ const Updatepage = ({ upproduct, UphandleClose }) => {
 
   const CurrentTime = new Date();
   const [item, setItem] = useState({
-    item_id: upproduct.id,
+    productId: upproduct.id,
     category: upproduct.category,
-    item_name: upproduct.item_name,
-    detailed_description: upproduct.detailed_description,
-    starting_price: upproduct.starting_price,
-    thumbnail: upproduct.Item_thumbnail.thumbnail,
-    // detailed_images: [],
-    start_day: upproduct.start_day,
-    start_time: upproduct.start_time, // 현재 시간 기준으로 설정
+    name: upproduct.name,
+    description: upproduct.description,
+    price: upproduct.price,
+    images: upproduct.images,
+    startDay: upproduct.startDay,
+    startTime: upproduct.startTime,
+    stock: "1",
+    status: "경매대기",
   });
+
+  const [thumbnail, setThumbnail] = useState(
+    upproduct.images[0]?.imageUrl || null
+  );
 
   // 유효성검사
   const [show, setShow] = useState(false);
@@ -43,22 +49,22 @@ const Updatepage = ({ upproduct, UphandleClose }) => {
   const handleShow = () => setShow(true);
 
   function validation() {
-    if (item.start_day === null) {
+    if (item.startDay === null) {
       setmesseage("경매 날짜를 선택해 주세요");
       handleShow();
-    } else if (item.start_time === null) {
+    } else if (item.startTime === null) {
       setmesseage("경매 시간를 선택해 주세요");
       handleShow();
     } else if (item.category === "") {
       setmesseage("카테고리를 선택해 주세요");
       handleShow();
-    } else if (item.item_name === "") {
+    } else if (item.name === "") {
       setmesseage("제품명을 입력해 주세요");
       handleShow();
-    } else if (item.starting_price === "") {
+    } else if (item.price === "") {
       setmesseage("경매 시작 금액를 입력해 주세요");
       handleShow();
-    } else if (item.detailed_description === "") {
+    } else if (item.description === "") {
       setmesseage("상세설명을 입력해 주세요");
       handleShow();
     } else if (item.thumbnail === null) {
@@ -78,9 +84,25 @@ const Updatepage = ({ upproduct, UphandleClose }) => {
   const EditShow = () => setEditSuccess(true);
   const handleSubmit = () => {
     const formData = new FormData();
-
-    formData.append("item", JSON.stringify(item));
-    // console.log(formData);
+    item.images.forEach((image, index) => {
+      formData.append("files", image.file);
+    });
+    const updateProductDto = {
+      productId: item.productId,
+      name: item.name,
+      description: item.description,
+      price: item.price,
+      stock: item.stock,
+      startDay: item.startDay,
+      startTime: item.startTime,
+      category: item.category,
+      status: item.status,
+      images: item.images.map((image, index) => ({
+        imageUrl: `image${index + 1}.png`,
+        isThumbnail: index === 0,
+      })),
+    };
+    formData.append("updateProductDto", JSON.stringify(updateProductDto));
 
     EditItem(formData)
       .then((response) => {
@@ -102,11 +124,11 @@ const Updatepage = ({ upproduct, UphandleClose }) => {
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setItem((prevItem) => ({ ...prevItem, [name]: value }));
-    if (name === "starting_price") {
+    if (name === "price") {
     }
   };
   // 날짜 관련 함수
-  const result = convertToDateTime(upproduct.start_day, upproduct.start_time);
+  const result = convertToDateTime(upproduct.startDay, upproduct.startTime);
 
   const yesterday = new Date(CurrentTime); // 현재 날짜를 복사하여 새로운 Date 객체 생성
   yesterday.setDate(CurrentTime.getDate() - 1); // 하루를 빼줌
@@ -135,7 +157,7 @@ const Updatepage = ({ upproduct, UphandleClose }) => {
       const month = String(date.getMonth() + 1).padStart(2, "0");
       const day = String(date.getDate()).padStart(2, "0");
       const formattedDate = `${year}-${month}-${day}`;
-      setItem((prevItem) => ({ ...prevItem, start_day: formattedDate }));
+      setItem((prevItem) => ({ ...prevItem, startDay: formattedDate }));
       setSelectedDate(date);
     }
   };
@@ -144,7 +166,7 @@ const Updatepage = ({ upproduct, UphandleClose }) => {
     const minutes = time.getMinutes().toString().padStart(2, "0");
     const formattedTime = `${hours}:${minutes}`;
     setSelectedTime(time);
-    setItem((prevItem) => ({ ...prevItem, start_time: formattedTime }));
+    setItem((prevItem) => ({ ...prevItem, startTime: formattedTime }));
   };
 
   // 숫자를 한글로 변환하는 함수
@@ -187,7 +209,7 @@ const Updatepage = ({ upproduct, UphandleClose }) => {
     const rawValue = event.target.value;
     const numericValue = rawValue.replace(/\D/g, ""); // 숫자 이외의 문자 제거
     const formattedValue = addCommas(numericValue);
-    setItem((prevItem) => ({ ...prevItem, starting_price: formattedValue }));
+    setItem((prevItem) => ({ ...prevItem, price: formattedValue }));
     setkoreanCurrency(numberToKorean(rawValue) + "포인트");
   };
 
@@ -198,15 +220,11 @@ const Updatepage = ({ upproduct, UphandleClose }) => {
   };
 
   // 썸네일 관련 함수
-  const [Thumbnail, setThumbnail] = useState(
-    upproduct.Item_thumbnail.thumbnail
-  );
 
   const handleThumbnailChange = (event) => {
-    const imageFile = event.target.files[0];
+    const imageFiles = Array.from(event.target.files);
 
-    if (imageFile) {
-      // FileReader로 이미지 읽기
+    imageFiles.forEach((imageFile, index) => {
       const reader = new FileReader();
       reader.onloadend = () => {
         const img = new Image();
@@ -215,7 +233,6 @@ const Updatepage = ({ upproduct, UphandleClose }) => {
           const canvas = document.createElement("canvas");
           const ctx = canvas.getContext("2d");
 
-          // 이미지 크기 조정 (예: 600px 고정 너비)
           const maxWidth = 600;
           const scale = maxWidth / img.width;
           canvas.width = maxWidth;
@@ -223,41 +240,55 @@ const Updatepage = ({ upproduct, UphandleClose }) => {
 
           ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-          // canvas에서 PNG로 변환
-          canvas.toBlob(
-            (blob) => {
-              // PNG 형식의 blob 생성
-              const pngFile = new File(
-                [blob],
-                imageFile.name.replace(/\.\w+$/, ".png"),
+          canvas.toBlob((blob) => {
+            const pngFile = new File([blob], `image${index + 1}.png`, {
+              type: "image/png",
+            });
+
+            setThumbnail(URL.createObjectURL(pngFile));
+            setItem((prevItem) => ({
+              ...prevItem,
+              images: [
                 {
-                  type: "image/png",
-                }
-              );
-
-              // PNG 파일을 FormData에 추가
-              const formData = new FormData();
-              formData.append("thumbnail", pngFile);
-
-              // 미리보기 업데이트
-              const readerForPreview = new FileReader();
-              readerForPreview.onloadend = () => {
-                setThumbnail(readerForPreview.result);
-              };
-              readerForPreview.readAsDataURL(pngFile);
-
-              // setItem 호출 (업데이트된 PNG 파일 전송)
-              setItem((prevItem) => ({ ...prevItem, thumbnail: formData }));
-            },
-            "image/png" // 파일 형식을 PNG로 지정
-          );
+                  file: pngFile,
+                  imageUrl: `image${index + 1}.png`,
+                  isThumbnail: index === 0,
+                },
+              ],
+            }));
+          }, "image/png");
         };
       };
-
       reader.readAsDataURL(imageFile);
-    }
+    });
   };
 
+  useEffect(() => {
+    if (upproduct.images && upproduct.images.length > 0) {
+      const imageUrl = upproduct.images[0].imageUrl;
+      handleThumbnailChange2(imageUrl);
+    }
+  }, []);
+
+  const handleThumbnailChange2 = (imageUrl) => {
+    fetch(imageUrl)
+      .then((response) => response.blob())
+      .then((blob) => {
+        const file = new File([blob], "image1.png", { type: "image/png" });
+        setThumbnail(URL.createObjectURL(file));
+        setItem((prevItem) => ({
+          ...prevItem,
+          images: [
+            {
+              file: file,
+              imageUrl: "image1.png",
+              isThumbnail: true,
+            },
+          ],
+        }));
+      })
+      .catch((error) => console.error("이미지 가져오기 오류:", error));
+  };
   //삭제 관련함수
   const [delSuccess, setDelSuccess] = useState(false);
   const DelClose = () => {
@@ -292,7 +323,7 @@ const Updatepage = ({ upproduct, UphandleClose }) => {
       <Title>경매 물품 수정</Title>
       <Form onSubmit={handleSubmit}>
         <TimeSection>
-          <Timelabel htmlFor="start_time">경매 시작 시간</Timelabel>
+          <Timelabel htmlFor="startTime">경매 시작 시간</Timelabel>
           <Timecontents>
             <div>
               <StyledDatePicker
@@ -349,12 +380,12 @@ const Updatepage = ({ upproduct, UphandleClose }) => {
           </Categorycontents>
         </CategorySection>
         <NameSection>
-          <Namelabel htmlFor="item_name">제품이름</Namelabel>
+          <Namelabel htmlFor="name">제품이름</Namelabel>
           <input
             type="text"
-            id="item_name"
-            name="item_name"
-            value={item.item_name}
+            id="name"
+            name="name"
+            value={item.name}
             onChange={handleInputChange}
             placeholder="제품명을 입력하세요"
             style={{
@@ -367,14 +398,14 @@ const Updatepage = ({ upproduct, UphandleClose }) => {
           />
         </NameSection>
         <PriceSection>
-          <Pricelabel htmlFor="starting_price">경매 시작 금액</Pricelabel>
+          <Pricelabel htmlFor="price">경매 시작 금액</Pricelabel>
           <PriceContents>
             <div>
               <Priceinput
                 type="text"
-                id="starting_price"
-                name="starting_price"
-                value={item.starting_price}
+                id="price"
+                name="price"
+                value={item.price}
                 onChange={handlepriceChange}
                 placeholder=" 숫자만 입력하세요"
                 style={{
@@ -387,19 +418,15 @@ const Updatepage = ({ upproduct, UphandleClose }) => {
               />
               포인트
             </div>
-            {item.starting_price && (
-              <KoreanCurrency>{koreanCurrency}</KoreanCurrency>
-            )}
+            {item.price && <KoreanCurrency>{koreanCurrency}</KoreanCurrency>}
           </PriceContents>
         </PriceSection>
         <DescriptionSection>
-          <Descriptionlabel htmlFor="detailed_description">
-            상세설명
-          </Descriptionlabel>
+          <Descriptionlabel htmlFor="description">상세설명</Descriptionlabel>
           <Descriptiontextarea
-            id="detailed_description"
-            name="detailed_description"
-            value={item.detailed_description}
+            id="description"
+            name="description"
+            value={item.description}
             placeholder={
               "내용을 입력해주세요\nex)\n상태: S급\n정품 인증여부: O\n물품에 대한 설명을 해주세요!"
             }
@@ -416,21 +443,19 @@ const Updatepage = ({ upproduct, UphandleClose }) => {
             onChange={handleThumbnailChange}
             style={{ display: "none" }}
           />
-          {!item.thumbnail && (
+          {!thumbnail ? (
             <Thumbnaillabelno htmlFor="thumbnail">
               <BsCamera style={{ width: "50px", height: "50px" }} />
               No Image
             </Thumbnaillabelno>
-          )}
-          {item.thumbnail && (
+          ) : (
             <Thumbnaillabelfor htmlFor="thumbnail">
               <ThumbnailWrapper>
-                <Thumbnailimg src={Thumbnail} alt="썸네일" />
+                <Thumbnailimg src={thumbnail} alt="썸네일" />
               </ThumbnailWrapper>
             </Thumbnaillabelfor>
           )}
         </ThumbnailSection>
-
         <DeleteButton variant="dark" onClick={() => DeleteitemBT()}>
           삭제
         </DeleteButton>
@@ -995,6 +1020,7 @@ const Thumbnailimg = styled.img`
   background-repeat: no-repeat;
   background-size: cover;
 `;
+
 //상세 사진
 // const DetailedImagesSection = styled.div`
 //   display: flex;

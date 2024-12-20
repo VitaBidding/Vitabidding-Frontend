@@ -4,9 +4,10 @@ import { Button } from "react-bootstrap";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { HiOutlineDocumentDuplicate } from "react-icons/hi";
 import WidgetModal from "./widget.modal";
-import { Loadwidget } from "../../../lib/request";
-function WidgetComponet(props) {
+
+function WidgetComponet({ studio }) {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
@@ -14,38 +15,35 @@ function WidgetComponet(props) {
 
     window.addEventListener("resize", handleResize);
 
-    // cleanup function to remove the event listener
     return () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-  const [widgeturl, setwidgeturl] = useState(
-    "https://example.com/thirdparty/blind/abcdfadhguiahguiahjibvliah"
-  );
-  const [auctionurl, setauctionurl] = useState(
-    "https://vitabiding.shop/abcdef"
-  );
+
+  const [widgeturl, setwidgeturl] = useState("");
+  const [auctionurl, setauctionurl] = useState("");
   const [channelurl, setchannelurl] = useState(
     "ex) https://www.youtube.com/watch?v=vitabiding"
   );
-  const [effect, seteffect] = useState(0);
+
   useEffect(() => {
-    Loadwidget()
-      .then((res) => {
-        if (res) {
-          setwidgeturl(res.data.result.obs_url);
-          setauctionurl(res.data.result.auction_url);
-          setchannelurl(res.data.result.video_live_url);
-        }
-      })
-      .catch();
-  }, [effect]);
+    if (studio) {
+      setwidgeturl(studio.obsUrl || "");
+      setauctionurl(studio.auctionUrl || "");
+      setchannelurl(
+        studio.videoLiveUrl || "ex) https://www.youtube.com/watch?v=vitabiding"
+      );
+    } else {
+      setwidgeturl("");
+      setauctionurl("");
+      setchannelurl("ex) https://www.youtube.com/watch?v=vitabiding");
+    }
+  }, [studio]);
 
   const handleButtonClick = (e) => {
-    // 복사할 데이터
-    const copiedData = e;
-    // 클립보드에 데이터 복사
-    navigator.clipboard.writeText(copiedData);
+    if (e) {
+      navigator.clipboard.writeText(e);
+    }
   };
 
   const [blurOn, setBlurOn] = useState(true);
@@ -53,18 +51,14 @@ function WidgetComponet(props) {
   const handleBlurToggle = () => {
     setBlurOn(!blurOn);
   };
+
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   return (
     <Wrapper>
-      <WidgetModal
-        show={show}
-        handleClose={handleClose}
-        effect={effect}
-        seteffect={seteffect}
-      ></WidgetModal>
+      <WidgetModal show={show} handleClose={handleClose} />
       <ContentSection width={windowWidth - 30}>
         <Contenthead>
           <ContentName>경매 위젯</ContentName>
@@ -81,19 +75,27 @@ function WidgetComponet(props) {
         </Contenthead>
         <ContentURLSection>
           <ContentURL blurOn={blurOn} width={windowWidth - 140}>
-            {widgeturl}
+            {widgeturl
+              ? `https://vitabidding.shop/thirdparty/${widgeturl}`
+              : "URL이 없습니다."}
           </ContentURL>
           <ButtonSection>
             <BlindButton variant="light" onClick={handleBlurToggle}>
-              {blurOn && <AiFillEye></AiFillEye>}{" "}
-              {!blurOn && <AiFillEyeInvisible></AiFillEyeInvisible>}
+              {blurOn ? <AiFillEye /> : <AiFillEyeInvisible />}
             </BlindButton>
-            <CopyButton1 onClick={() => handleButtonClick(widgeturl)}>
-              <HiOutlineDocumentDuplicate></HiOutlineDocumentDuplicate>
+            <CopyButton1
+              onClick={() =>
+                handleButtonClick(
+                  `https://vitabidding.shop/thirdparty/${widgeturl}`
+                )
+              }
+            >
+              <HiOutlineDocumentDuplicate />
             </CopyButton1>
           </ButtonSection>
         </ContentURLSection>
       </ContentSection>
+
       <ContentSection>
         <Contenthead>
           <ContentName>경매장 주소</ContentName>
@@ -102,12 +104,23 @@ function WidgetComponet(props) {
           </ContentAnnotation>
         </Contenthead>
         <ContentURLSection>
-          <ContentURL width={windowWidth - 140}>{auctionurl}</ContentURL>
-          <CopyButton2 onClick={() => handleButtonClick(auctionurl)}>
-            <HiOutlineDocumentDuplicate></HiOutlineDocumentDuplicate>
+          <ContentURL width={windowWidth - 140}>
+            {auctionurl
+              ? `https://vitabidding.shop/auction/${auctionurl}`
+              : "주소가 없습니다."}
+          </ContentURL>
+          <CopyButton2
+            onClick={() =>
+              handleButtonClick(
+                `https://vitabidding.shop/auction/${auctionurl}`
+              )
+            }
+          >
+            <HiOutlineDocumentDuplicate />
           </CopyButton2>
         </ContentURLSection>
       </ContentSection>
+
       <ContentSection>
         <Contenthead>
           <ContentName>LIVE URL</ContentName>
@@ -117,7 +130,7 @@ function WidgetComponet(props) {
         </Contenthead>
         <ContentURLSection>
           <ContentURL width={windowWidth - 140}>{channelurl}</ContentURL>
-          <CopyButton3 onClick={() => handleShow()}>등록하기</CopyButton3>
+          <CopyButton3 onClick={handleShow}>등록하기</CopyButton3>
         </ContentURLSection>
       </ContentSection>
     </Wrapper>

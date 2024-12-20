@@ -14,14 +14,15 @@ import { Button } from "react-bootstrap";
 function EnrollmentContainer(props) {
   const [item, setItem] = useState({
     category: "",
-    item_name: "",
-    detailed_description: "",
-    starting_price: "",
-    thumbnail: null,
-    start_day: null,
-    start_time: null, // 현재 시간 기준으로 설정
+    name: "",
+    description: "",
+    stock: "1",
+    price: "",
+    images: [], // 기존 thumbnail 대신 사용
+    startDay: null,
+    startTime: null,
+    status: "경매대기", // 추가
   });
-  // console.log("🚀 ~ EnrollmentContainer ~ item:", item);
 
   // 유효성검사
   const [show, setShow] = useState(false);
@@ -30,22 +31,22 @@ function EnrollmentContainer(props) {
   const handleShow = () => setShow(true);
 
   function validation() {
-    if (item.start_day === null) {
+    if (item.startDay === null) {
       setmesseage("경매 날짜를 선택해 주세요");
       handleShow();
-    } else if (item.start_time === null) {
+    } else if (item.startTime === null) {
       setmesseage("경매 시간를 선택해 주세요");
       handleShow();
     } else if (item.category === "") {
       setmesseage("카테고리를 선택해 주세요");
       handleShow();
-    } else if (item.item_name === "") {
+    } else if (item.name === "") {
       setmesseage("제품명을 입력해 주세요");
       handleShow();
-    } else if (item.starting_price === "") {
+    } else if (item.price === "") {
       setmesseage("경매 시작 금액를 입력해 주세요");
       handleShow();
-    } else if (item.detailed_description === "") {
+    } else if (item.description === "") {
       setmesseage("상세설명을 입력해 주세요");
       handleShow();
     } else if (item.thumbnail === null) {
@@ -62,12 +63,14 @@ function EnrollmentContainer(props) {
     setenrollmentSuccess(false);
     setItem({
       category: "",
-      item_name: "",
-      detailed_description: "",
-      starting_price: "",
-      thumbnail: null,
-      start_day: null,
-      start_time: null,
+      name: "",
+      description: "",
+      price: "",
+      stock: "1",
+      images: [],
+      startDay: null,
+      startTime: null,
+      status: "경매대기",
     });
     setSelectedDate(null);
     setSelectedTime(null);
@@ -75,7 +78,29 @@ function EnrollmentContainer(props) {
   const SuccessShow = () => setenrollmentSuccess(true);
   const handleSubmit = () => {
     const formData = new FormData();
-    formData.append("item", JSON.stringify(item));
+
+    // 이미지 파일 추가
+    item.images.forEach((image, index) => {
+      formData.append("files", image.file);
+    });
+
+    // JSON 데이터 추가
+    const createProductDto = {
+      name: item.name,
+      description: item.description,
+      price: item.price,
+      stock: item.stock,
+      startDay: item.startDay,
+      startTime: item.startTime,
+      category: item.category,
+      status: item.status,
+      images: item.images.map((image, index) => ({
+        imageUrl: `image${index + 1}.png`,
+        isThumbnail: index === 0,
+      })),
+    };
+    formData.append("createProductDto", JSON.stringify(createProductDto));
+
     EnrollmentItem(formData)
       .then((response) => {
         if (response) {
@@ -90,13 +115,14 @@ function EnrollmentContainer(props) {
         console.error(error);
       });
   };
+
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
   const handleInputChange = (event) => {
     const { name, value } = event.target;
 
     setItem((prevItem) => ({ ...prevItem, [name]: value }));
-    if (name === "starting_price") {
+    if (name === "price") {
     }
   };
 

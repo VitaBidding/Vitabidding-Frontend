@@ -1,63 +1,111 @@
 import React from "react";
 import { AiFillAppstore } from "react-icons/ai";
 import { BiTime } from "react-icons/bi";
-import { BsCashCoin, BsCashStack, BsFillBoxSeamFill, BsTruck, BsXSquare } from "react-icons/bs";
+import {
+  BsCashCoin,
+  BsCashStack,
+  BsFillBoxSeamFill,
+  BsTruck,
+  BsXSquare,
+} from "react-icons/bs";
 import { FaHandshake } from "react-icons/fa";
 import { RiAuctionFill } from "react-icons/ri";
 import styled from "styled-components";
 function ListStatusComponent({ products }) {
   const 전체갯수 = products.length;
-  const 경매대기갯수 = products.filter((item) => item.item_status === "경매대기").length;
-  const 경매중갯수 = products.filter((item) => item.item_status === "경매중").length;
-  const 결제대기갯수 = products.filter((item) => item.item_status === "결제대기").length;
-  const 결제완료갯수 = products.filter((item) => item.item_status === "결제완료").length;
-  const 배송진행갯수 = products.filter((item) => item.item_status === "배송진행").length;
-  const 배송완료갯수 = products.filter((item) => item.item_status === "배송완료").length;
-  const 거래완료갯수 = products.filter((item) => item.item_status === "거래완료").length;
-  const 거래금지갯수 = products.filter((item) => item.item_status === "거래금지").length;
+  const 경매대기갯수 = products.filter(
+    (item) => item.status === "경매대기"
+  ).length;
+  const 경매중갯수 = products.filter((item) => item.status === "경매중").length;
+  const 결제대기갯수 = products.filter(
+    (item) => item.status === "결제대기"
+  ).length;
+  const 결제완료갯수 = products.filter(
+    (item) => item.status === "결제완료"
+  ).length;
+  const 배송진행갯수 = products.filter(
+    (item) => item.status === "배송진행"
+  ).length;
+  const 배송완료갯수 = products.filter(
+    (item) => item.status === "배송완료"
+  ).length;
+  const 거래완료갯수 = products.filter(
+    (item) => item.status === "거래완료"
+  ).length;
+  const 거래금지갯수 = products.filter(
+    (item) => item.status === "거래금지"
+  ).length;
   const itemstatus = [
     {
-      icon: <AiFillAppstore style={{ width: "25px", height: "25px", color: "black" }} />,
+      icon: (
+        <AiFillAppstore
+          style={{ width: "25px", height: "25px", color: "black" }}
+        />
+      ),
       title: "전체",
       count: 전체갯수,
     },
     {
-      icon: <BiTime style={{ width: "25px", height: "25px", color: "black" }} />,
+      icon: (
+        <BiTime style={{ width: "25px", height: "25px", color: "black" }} />
+      ),
       title: "경매대기",
       count: 경매대기갯수,
     },
     {
-      icon: <RiAuctionFill style={{ width: "25px", height: "25px", color: "black" }} />,
+      icon: (
+        <RiAuctionFill
+          style={{ width: "25px", height: "25px", color: "black" }}
+        />
+      ),
       title: "경매중",
       count: 경매중갯수,
     },
     {
-      icon: <BsCashCoin style={{ width: "25px", height: "25px", color: "black" }} />,
+      icon: (
+        <BsCashCoin style={{ width: "25px", height: "25px", color: "black" }} />
+      ),
       title: "결제대기",
       count: 결제대기갯수,
     },
     {
-      icon: <BsCashStack style={{ width: "25px", height: "25px", color: "black" }} />,
+      icon: (
+        <BsCashStack
+          style={{ width: "25px", height: "25px", color: "black" }}
+        />
+      ),
       title: "결제완료",
       count: 결제완료갯수,
     },
     {
-      icon: <BsTruck style={{ width: "25px", height: "25px", color: "black" }} />,
+      icon: (
+        <BsTruck style={{ width: "25px", height: "25px", color: "black" }} />
+      ),
       title: "배송진행",
       count: 배송진행갯수,
     },
     {
-      icon: <BsFillBoxSeamFill style={{ width: "25px", height: "25px", color: "black" }} />,
+      icon: (
+        <BsFillBoxSeamFill
+          style={{ width: "25px", height: "25px", color: "black" }}
+        />
+      ),
       title: "배송완료",
       count: 배송완료갯수,
     },
     {
-      icon: <FaHandshake style={{ width: "25px", height: "25px", color: "black" }} />,
+      icon: (
+        <FaHandshake
+          style={{ width: "25px", height: "25px", color: "black" }}
+        />
+      ),
       title: "거래완료",
       count: 거래완료갯수,
     },
     {
-      icon: <BsXSquare style={{ width: "25px", height: "25px", color: "black" }} />,
+      icon: (
+        <BsXSquare style={{ width: "25px", height: "25px", color: "black" }} />
+      ),
       title: "거래금지",
       count: 거래금지갯수,
     },

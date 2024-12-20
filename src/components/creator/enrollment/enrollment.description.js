@@ -3,14 +3,12 @@ import styled from "styled-components";
 function EnrollmentDescription({ item, handleInputChange }) {
   return (
     <DescriptionSection>
-      <Descriptionlabel htmlFor="detailed_description">
-        상세설명
-      </Descriptionlabel>
+      <Descriptionlabel htmlFor="description">상세설명</Descriptionlabel>
       <Descriptioncontent>
         <Descriptiontextarea
-          id="detailed_description"
-          name="detailed_description"
-          value={item.detailed_description}
+          id="description"
+          name="description"
+          value={item.description}
           placeholder={
             "내용을 입력해주세요\nex)\nSS급, 진품 여부, 직접 제작\n물품에 대한 설명을 해주세요!"
           }

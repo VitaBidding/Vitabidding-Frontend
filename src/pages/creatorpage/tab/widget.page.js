@@ -2,10 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import WidgetContainer from "../../../containers/creator/widget.container";
 
-function Widgetpage(props) {
+function Widgetpage({ studio }) {
   return (
     <Wrapper>
-      <WidgetContainer />
+      <WidgetContainer studio={studio} />
     </Wrapper>
   );
 }

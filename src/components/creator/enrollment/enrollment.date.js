@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { TimeCheck } from "../../../lib/request";
 import DatePicker from "react-datepicker";
+
 function EnrollmentDate({
   setItem,
   selectedDate,
@@ -9,21 +10,25 @@ function EnrollmentDate({
   selectedTime,
   setSelectedTime,
 }) {
-  const [currentTime, setcurrentTime] = useState(new Date());
+  const [currentTime, setCurrentTime] = useState(new Date());
+
   useEffect(() => {
     TimeCheck()
       .then((res) => {
-        if (res) {
-          setcurrentTime(res.data.currentTime);
+        if (res && res.serverTime) {
+          // serverTime을 Date 객체로 변환
+          const serverDate = new Date(res.serverTime.replace(" ", "T"));
+          setCurrentTime(serverDate);
         }
       })
       .catch((error) => {
         console.error(error);
       });
   }, []);
+
   // 날짜 관련 함수
-  const yesterday = new Date(currentTime); // 현재 날짜를 복사하여 새로운 Date 객체 생성
-  yesterday.setDate(currentTime.getDate() - 1); // 하루를 빼줌
+  const yesterday = new Date(currentTime);
+  yesterday.setDate(currentTime.getDate() - 1);
 
   const handleDateChange = (date) => {
     if (date) {
@@ -34,29 +39,31 @@ function EnrollmentDate({
         const month = String(date.getMonth() + 1).padStart(2, "0");
         const day = String(date.getDate()).padStart(2, "0");
         const formattedDate = `${year}-${month}-${day}`;
-        setItem((prevItem) => ({ ...prevItem, start_day: formattedDate }));
+        setItem((prevItem) => ({ ...prevItem, startDay: formattedDate }));
         setSelectedDate(date);
       }
     }
   };
+
   const handleTimeChange = (time) => {
     if (time) {
       const hours = time.getHours().toString().padStart(2, "0");
       const minutes = time.getMinutes().toString().padStart(2, "0");
       const formattedTime = `${hours}:${minutes}`;
       setSelectedTime(time);
-      setItem((prevItem) => ({ ...prevItem, start_time: formattedTime }));
+      setItem((prevItem) => ({ ...prevItem, startTime: formattedTime }));
     }
   };
 
   const getMaxDate = () => {
-    const today = new Date(`${currentTime}`);
-    today.setFullYear(today.getFullYear() + 1); // 1년 이후의 날짜를 얻습니다.
-    return today;
+    const maxDate = new Date(currentTime);
+    maxDate.setFullYear(maxDate.getFullYear() + 1);
+    return maxDate;
   };
+
   return (
     <TimeSection>
-      <Timelabel htmlFor="start_time">경매 시작 시간</Timelabel>
+      <Timelabel htmlFor="startTime">경매 시작 시간</Timelabel>
       <Timecontents>
         <StyledDatePicker
           selected={selectedDate}
@@ -65,10 +72,10 @@ function EnrollmentDate({
           minDate={currentTime}
           placeholderText="날짜를 선택하세요"
           maxDate={getMaxDate()}
-          autoComplete="off" // 자동 완성 기능 비활성화 (숫자 입력 방지)
-          onKeyDown={(e) => e.preventDefault()} // 키 입력 막기
+          autoComplete="off"
+          onKeyDown={(e) => e.preventDefault()}
           popperPlacement="auto"
-          showPopperArrow={false} /* 화살표 숨기기 (필요한 경우) */
+          showPopperArrow={false}
         />
 
         <StyledDatePicker2
@@ -80,10 +87,10 @@ function EnrollmentDate({
           timeCaption="Time"
           dateFormat="h:mm aa"
           placeholderText="시간를 선택하세요"
-          autoComplete="off" // 자동 완성 기능 비활성화 (숫자 입력 방지)
-          onKeyDown={(e) => e.preventDefault()} // 키 입력 막기
+          autoComplete="off"
+          onKeyDown={(e) => e.preventDefault()}
           popperPlacement="auto"
-          showPopperArrow={false} /* 화살표 숨기기 (필요한 경우) */
+          showPopperArrow={false}
         />
       </Timecontents>
     </TimeSection>

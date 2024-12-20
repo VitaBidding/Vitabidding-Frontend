@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Sidebar from "../../containers/sidebar/sidebar";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -14,9 +14,14 @@ import Listpage from "./tab/list.page";
 import Pointpage from "./tab/point.page";
 import Info from "./tab/info.page";
 import ControllerPage from "./tab/controller.page";
+import { checkBusinessStatus } from "../../lib/request";
 
 function Index(props) {
+  const [isLoading, setIsLoading] = useState(true);
   const [show, setShow] = useState(false);
+  const [studio, setStudio] = useState({});
+
+  const navigate = useNavigate();
 
   function handleShow() {
     setShow(true);
@@ -30,6 +35,37 @@ function Index(props) {
       // 에러 처리를 여기에 추가할 수 있습니다.
     }
   }
+
+  useEffect(() => {
+    const verifyBusinessStatus = async () => {
+      try {
+        const { businessChk, obsStudio } = await checkBusinessStatus();
+        if (businessChk) {
+          setStudio(obsStudio);
+        }
+
+        if (!businessChk) {
+          navigate("/terms/creator");
+        }
+      } catch (error) {
+        console.error("사업자 상태 확인 실패:", error);
+        if (error.message === "No access token") {
+          navigate("/"); // 메인 페이지로 이동
+        } else {
+          navigate("/oauth");
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    verifyBusinessStatus();
+  }, [navigate]);
+
+  if (isLoading) {
+    return <div>로딩 중...</div>;
+  }
+
   return (
     <Wrapper>
       <SideSection>
@@ -59,7 +95,7 @@ function Index(props) {
         </Topbar>
         <Routes>
           <Route exact path="/" element={<Dashboard />} />
-          <Route path="widget" element={<Widgetpage />} />
+          <Route path="widget" element={<Widgetpage studio={studio} />} />
           <Route path="enrollment" element={<Enrollmentpage />} />
           <Route path="list" element={<Listpage />} />
           <Route path="point" element={<Pointpage />} />
